@@ -63,7 +63,7 @@ class NotesFragment : Fragment()  , NoteCardAdapter.NoteClicklistener{
             bundle)
     }
 
-//    override fun onDeleteButtonClickListener(note : Note) {
-//        vm.deleteNote(note.id)
-//    }
+    override fun onDeleteButtonClick(note : Note) {
+        vm.deleteNote(note)
+    }
 }

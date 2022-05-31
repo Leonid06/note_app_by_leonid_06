@@ -21,7 +21,7 @@ class NoteCardAdapter( private val listener: NoteClicklistener) :
 
     interface NoteClicklistener{
         fun onClickedNote(note : Note)
-//        fun onDeleteButtonClickListener(note : Note)
+        fun onDeleteButtonClick(note : Note)
     }
 
     private val notes = ArrayList<Note>()
@@ -34,6 +34,9 @@ class NoteCardAdapter( private val listener: NoteClicklistener) :
 
         init {
             view.setOnClickListener(this)
+            deleteButton.setOnClickListener {
+                listener.onDeleteButtonClick(note)
+            }
         }
 
         fun bind(note: Note) {
@@ -43,10 +46,6 @@ class NoteCardAdapter( private val listener: NoteClicklistener) :
 
         override fun onClick(p0: View?) {
             listener.onClickedNote(note)
-            listener.onDeleteButtonClickListener(note)
-            deleteButton.setOnClickListener {
-                listener.onDeleteButtonClickListener(note)
-            }
         }
     }
 
@@ -69,6 +68,3 @@ class NoteCardAdapter( private val listener: NoteClicklistener) :
 
 }
 
-private fun ImageButton.setOnClickListener(onDeleteButtonClickListener: Unit) {
-
-}
