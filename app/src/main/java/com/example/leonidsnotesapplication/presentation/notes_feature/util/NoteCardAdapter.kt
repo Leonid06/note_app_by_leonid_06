@@ -39,12 +39,11 @@ class NoteCardAdapter(private val vm : NotesViewModel) :
         viewHolder.titleView.text = notes.elementAt(position).title
         viewHolder.itemView.setOnClickListener{
             val navController = Navigation.findNavController(viewHolder.itemView)
-            val clickedNote = vm.getNoteByPosition(position)
 
             val bundle = Bundle()
+            val clickedNote = vm.getNoteByPosition(position)
 
-            bundle.putString("title" , clickedNote?.title)
-            bundle.putString("content" , clickedNote?.content)
+            bundle.putParcelable("note" , clickedNote)
 
             navController.navigate(R.id.action_notesFragment_to_singleNoteFragment , bundle)
         }

@@ -32,7 +32,7 @@ class NotesViewModel  @Inject constructor (
     fun deleteNote(position : Int){
 
         viewModelScope.launch(Dispatchers.IO) {
-            notesLiveData.value?.get(position)?.let { deleteNoteUseCase.execute(it)
+            notesLiveDataMutable.value?.get(position)?.let { deleteNoteUseCase.execute(it)
             updateNotes()}
         }
     }
@@ -43,9 +43,14 @@ class NotesViewModel  @Inject constructor (
 
     fun updateNotes(){
         viewModelScope.launch(Dispatchers.IO) {
-            notesLiveDataMutable.postValue(getAllNotes())
+                notesLiveDataMutable.postValue(getAllNotes())
+
         }
     }
+
+//    fun getNoteById(id : Int) : Note {
+//
+//    }
 
     private fun  getAllNotes(): List<Note> {
         return getAllNotesUseCase.execute()

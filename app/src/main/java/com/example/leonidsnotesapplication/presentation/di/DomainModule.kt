@@ -1,6 +1,5 @@
 package com.example.leonidsnotesapplication.presentation.di
 
-import android.provider.ContactsContract
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
 import com.example.leonidsnotesapplication.domain.usecase.AddNoteUseCase
 import com.example.leonidsnotesapplication.domain.usecase.DeleteNoteUseCase

@@ -19,6 +19,10 @@ class SingleNoteFragment : Fragment() {
 
     private val vm  : NotesViewModel  by viewModels()
 
+    private lateinit var clickedNote : Note
+
+    private var isEdit  : Boolean = false
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,14 +37,33 @@ class SingleNoteFragment : Fragment() {
         val noteTitleEditText = view.findViewById<EditText>(R.id.etNoteTitle)
         val noteContentEditText = view.findViewById<EditText>(R.id.etNoteContent)
 
-        noteTitleEditText.setText(arguments?.getString("title"))
-        noteContentEditText.setText(arguments?.getString("content"))
+        if(arguments != null){
+            isEdit = true
+            clickedNote = arguments?.getParcelable("note")!!
 
+            noteTitleEditText.setText(clickedNote.title)
+            noteContentEditText.setText(clickedNote.content)
+
+        }
         addNoteButton.setOnClickListener{
-            findNavController().navigateUp()
-            val note =  Note(noteTitleEditText.text.toString(), noteContentEditText.text.toString())
-            vm.addNote(note)
+
+            if(isEdit){
+
+
+                val note =  Note(
+                    noteTitleEditText.text.toString(),
+                    noteContentEditText.text.toString() ,
+                    clickedNote.id)
+                vm.addNote(note)
+            }else{
+                clickedNote = Note(
+                    noteTitleEditText.text.toString(),
+                    noteContentEditText.text.toString()
+                )
+                vm.addNote(clickedNote)
+            }
             vm.updateNotes()
+            findNavController().navigateUp()
         }
     }
 }
