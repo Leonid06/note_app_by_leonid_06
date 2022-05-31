@@ -39,6 +39,7 @@ class NotesFragment : Fragment() {
 
         vm.notesLiveData.observe(viewLifecycleOwner){
             adapter.setData(it)
+            adapter.notifyDataSetChanged()
         }
 
         vm.updateNotes()

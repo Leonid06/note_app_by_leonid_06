@@ -1,11 +1,14 @@
 package com.example.leonidsnotesapplication.presentation.notes_feature.util
 
 
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.domain.model.Note
@@ -28,14 +31,25 @@ class NoteCardAdapter(private val vm : NotesViewModel) :
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.note_card_view, parent,  false)
+
         return ViewHolder(view)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.titleView.text = notes.elementAt(position).title
+        viewHolder.itemView.setOnClickListener{
+            val navController = Navigation.findNavController(viewHolder.itemView)
+            val clickedNote = vm.getNoteByPosition(position)
+
+            val bundle = Bundle()
+
+            bundle.putString("title" , clickedNote?.title)
+            bundle.putString("content" , clickedNote?.content)
+
+            navController.navigate(R.id.action_notesFragment_to_singleNoteFragment , bundle)
+        }
         viewHolder.deleteButton.setOnClickListener {
             vm.deleteNote(position)
-            vm.updateNotes()
         }
     }
 

@@ -33,6 +33,8 @@ class SingleNoteFragment : Fragment() {
         val noteTitleEditText = view.findViewById<EditText>(R.id.etNoteTitle)
         val noteContentEditText = view.findViewById<EditText>(R.id.etNoteContent)
 
+        noteTitleEditText.setText(arguments?.getString("title"))
+        noteContentEditText.setText(arguments?.getString("content"))
 
         addNoteButton.setOnClickListener{
             findNavController().navigateUp()

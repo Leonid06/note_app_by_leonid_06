@@ -37,11 +37,14 @@ class NotesViewModel  @Inject constructor (
         }
     }
 
+    fun getNoteByPosition(position: Int): Note? {
+        return notesLiveDataMutable.value?.get(position)
+    }
+
     fun updateNotes(){
         viewModelScope.launch(Dispatchers.IO) {
             notesLiveDataMutable.postValue(getAllNotes())
         }
-
     }
 
     private fun  getAllNotes(): List<Note> {
