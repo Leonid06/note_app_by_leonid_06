@@ -9,7 +9,11 @@
         android:id="@+id/notesFragment"
         android:name="com.example.leonidsnotesapplication.presentation.notes_feature.NotesFragment"
         android:label="fragment_notes"
-        tools:layout="@layout/fragment_notes" >
+        tools:layout="@layout/fragment_notes"
+        >
+        <argument android:name="note"
+            app:argType="com.example.leonidsnotesapplication.domain.model.Note"
+            />
         <action
             android:id="@+id/action_notesFragment_to_singleNoteFragment"
             app:destination="@id/singleNoteFragment" />

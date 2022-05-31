@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import com.example.leonidsnotesapplication.domain.model.Note
 
 interface NoteRepository {
-    fun getAllNotes() : List<Note>
+    fun getAllNotes() : ArrayList<Note>
 
     suspend fun deleteNote(note : Note)
 

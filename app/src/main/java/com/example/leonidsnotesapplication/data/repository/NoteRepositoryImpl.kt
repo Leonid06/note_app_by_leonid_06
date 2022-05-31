@@ -7,8 +7,8 @@ import com.example.leonidsnotesapplication.domain.repository.NoteRepository
 class NoteRepositoryImpl(
     private val dao : NoteDao
 ) : NoteRepository {
-    override fun getAllNotes(): List<Note> {
-        return dao.getAllNotes()
+    override fun getAllNotes(): ArrayList<Note> {
+        return ArrayList(dao.getAllNotes())
     }
 
     override suspend fun deleteNote(note: Note) {

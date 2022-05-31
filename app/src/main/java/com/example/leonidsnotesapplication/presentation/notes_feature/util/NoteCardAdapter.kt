@@ -16,45 +16,59 @@ import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewM
 
 
 
-class NoteCardAdapter(private val vm : NotesViewModel) :
+class NoteCardAdapter( private val listener: NoteClicklistener) :
     RecyclerView.Adapter<NoteCardAdapter.ViewHolder>() {
 
+    interface NoteClicklistener{
+        fun onClickedNote(note : Note)
+//        fun onDeleteButtonClickListener(note : Note)
+    }
 
-    private var notes : List<Note> = emptyList()
+    private val notes = ArrayList<Note>()
 
 
-    class ViewHolder(view : View) : RecyclerView.ViewHolder(view){
-        val titleView : TextView = view.findViewById(R.id.tvNoteTitle)
-        val deleteButton  : ImageButton = view.findViewById(R.id.ibDelete)
+    class ViewHolder(view : View ,  private val listener  : NoteClicklistener) : RecyclerView.ViewHolder(view) , View.OnClickListener {
+        val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
+        val deleteButton: ImageButton = view.findViewById(R.id.ibDelete)
+        private lateinit var note: Note
+
+        init {
+            view.setOnClickListener(this)
+        }
+
+        fun bind(note: Note) {
+            this.note = note
+            titleView.text = note.title
+        }
+
+        override fun onClick(p0: View?) {
+            listener.onClickedNote(note)
+            listener.onDeleteButtonClickListener(note)
+            deleteButton.setOnClickListener {
+                listener.onDeleteButtonClickListener(note)
+            }
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.note_card_view, parent,  false)
 
-        return ViewHolder(view)
+        return ViewHolder(view , listener)
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.titleView.text = notes.elementAt(position).title
-        viewHolder.itemView.setOnClickListener{
-            val navController = Navigation.findNavController(viewHolder.itemView)
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) =
+        viewHolder.bind(notes[position])
 
-            val bundle = Bundle()
-            val clickedNote = vm.getNoteByPosition(position)
-
-            bundle.putParcelable("note" , clickedNote)
-
-            navController.navigate(R.id.action_notesFragment_to_singleNoteFragment , bundle)
-        }
-        viewHolder.deleteButton.setOnClickListener {
-            vm.deleteNote(position)
-        }
-    }
-
-    fun setData(notes : List<Note>){
-        this.notes = notes
+    fun setData(notes : ArrayList<Note>){
+        this.notes.clear()
+        this.notes.addAll(notes)
+        notifyDataSetChanged()
     }
     override fun getItemCount(): Int =  notes.size
+
+}
+
+private fun ImageButton.setOnClickListener(onDeleteButtonClickListener: Unit) {
 
 }
