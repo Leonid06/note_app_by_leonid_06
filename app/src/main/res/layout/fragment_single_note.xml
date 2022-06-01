@@ -35,7 +35,7 @@
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:backgroundTint="#ECC744"
+        android:backgroundTint="@color/notes_color_2"
         android:id="@+id/add_note_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

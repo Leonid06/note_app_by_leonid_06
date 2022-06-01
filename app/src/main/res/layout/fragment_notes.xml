@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F4F2F2"
     tools:context=".presentation.notes_feature.NotesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -13,7 +14,7 @@
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:backgroundTint="#ECC744"
+        android:backgroundTint="@color/notes_color_2"
         android:id="@+id/go_to_add_note_fragment_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
