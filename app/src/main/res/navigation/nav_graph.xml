@@ -14,9 +14,11 @@
         <argument android:name="note"
             app:argType="com.example.leonidsnotesapplication.domain.model.Note"
             />
+
         <action
             android:id="@+id/action_notesFragment_to_singleNoteFragment"
-            app:destination="@id/singleNoteFragment" />
+            app:destination="@id/singleNoteFragment"
+            app:popUpTo="@id/notesFragment" />
     </fragment>
     <fragment
         android:id="@+id/singleNoteFragment"
