@@ -20,8 +20,8 @@ class NotesViewModel  @Inject constructor (
     private val getAllNotesUseCase: GetAllNotesUseCase
 ) : ViewModel() {
 
-    private val notesLiveDataMutable  = MutableLiveData<List<Note>>()
-    val notesLiveData : LiveData<List<Note>> = notesLiveDataMutable
+    private val notesLiveDataMutable  = MutableLiveData<ArrayList<Note>>()
+    val notesLiveData : LiveData<ArrayList<Note>> = notesLiveDataMutable
 
     fun addNote(note : Note){
         viewModelScope.launch(Dispatchers.IO) {
@@ -29,17 +29,14 @@ class NotesViewModel  @Inject constructor (
         }
     }
 
-    fun deleteNote(position : Int){
+    fun deleteNote(note : Note){
 
         viewModelScope.launch(Dispatchers.IO) {
-            notesLiveDataMutable.value?.get(position)?.let { deleteNoteUseCase.execute(it)
-            updateNotes()}
+            deleteNoteUseCase.execute(note)
+            updateNotes()
         }
     }
 
-    fun getNoteByPosition(position: Int): Note? {
-        return notesLiveDataMutable.value?.get(position)
-    }
 
     fun updateNotes(){
         viewModelScope.launch(Dispatchers.IO) {
@@ -48,11 +45,7 @@ class NotesViewModel  @Inject constructor (
         }
     }
 
-//    fun getNoteById(id : Int) : Note {
-//
-//    }
-
-    private fun  getAllNotes(): List<Note> {
+    private fun  getAllNotes(): ArrayList<Note> {
         return getAllNotesUseCase.execute()
     }
 

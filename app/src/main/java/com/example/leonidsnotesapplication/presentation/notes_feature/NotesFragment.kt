@@ -6,17 +6,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
+import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteCardAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class NotesFragment : Fragment() {
+class NotesFragment : Fragment()  , NoteCardAdapter.NoteClicklistener{
 
     private lateinit var adapter : NoteCardAdapter
     private val vm : NotesViewModel by viewModels()
@@ -35,7 +37,7 @@ class NotesFragment : Fragment() {
         val addNoteButton = view.findViewById<FloatingActionButton>(R.id.go_to_add_note_fragment_button)
 
 
-        adapter = NoteCardAdapter(vm)
+        adapter = NoteCardAdapter(this)
 
         vm.notesLiveData.observe(viewLifecycleOwner){
             adapter.setData(it)
@@ -50,5 +52,18 @@ class NotesFragment : Fragment() {
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
+    }
+
+    override fun onClickedNote(note: Note) {
+        val  bundle = Bundle()
+
+        bundle.putParcelable("note" , note)
+        Navigation.findNavController(requireView()).navigate(
+            R.id.action_notesFragment_to_singleNoteFragment ,
+            bundle)
+    }
+
+    override fun onDeleteButtonClick(note : Note) {
+        vm.deleteNote(note)
     }
 }

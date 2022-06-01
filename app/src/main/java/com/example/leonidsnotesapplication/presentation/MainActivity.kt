@@ -19,5 +19,11 @@ class MainActivity : AppCompatActivity() {
 
         navController = navHostFragment.navController
 
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        navController.navigateUp()
     }
 }

@@ -7,7 +7,7 @@ import com.example.leonidsnotesapplication.domain.repository.NoteRepository
 class GetAllNotesUseCase(
     private val repository: NoteRepository
 ) {
-    fun execute() : List<Note> {
+    fun execute() : ArrayList<Note> {
         return repository.getAllNotes()
     }
 }

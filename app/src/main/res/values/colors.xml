@@ -7,4 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name ="notes_color_1">#92F4B9</color>
+    <color name="notes_color_2">#4BEA8A</color>
+    <color name="notes_color_3">#27A0E3</color>
+    <color name="alpha_notes_color">#ECC744</color>
+    <color name="default_delete_color">#F12B2B</color>
 </resources>
