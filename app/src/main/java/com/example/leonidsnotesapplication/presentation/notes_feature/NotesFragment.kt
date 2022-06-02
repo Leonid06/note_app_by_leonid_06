@@ -13,13 +13,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.domain.model.Note
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.DeleteDialogFragment
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteCardAdapter
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class NotesFragment : Fragment()  , NoteCardAdapter.NoteClickListener{
+class NotesFragment : Fragment()  ,
+    NoteCardAdapter.NoteClickListener ,
+    DeleteDialogFragment.OnNegativeButtonClickListener {
 
     private lateinit var adapter : NoteCardAdapter
     private val vm : NotesViewModel by viewModels()
@@ -65,6 +68,12 @@ class NotesFragment : Fragment()  , NoteCardAdapter.NoteClickListener{
     }
 
     override fun onDeleteButtonClick(note : Note) {
+        DeleteDialogFragment(note, this).show(
+            childFragmentManager,
+            DeleteDialogFragment.TAG)
+    }
+
+    override fun onClick(note: Note) {
         vm.deleteNote(note)
         Toast.makeText(requireContext(), "Note deleted", Toast.LENGTH_SHORT).show()
     }
