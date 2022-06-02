@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.leonidsnotesapplication.R
@@ -50,21 +51,23 @@ class SingleNoteFragment : Fragment() {
 
             if(isEdit){
 
-
                 val note =  Note(
                     noteTitleEditText.text.toString(),
                     noteContentEditText.text.toString() ,
                     clickedNote.id)
+                Toast.makeText(requireContext(), "Note edited", Toast.LENGTH_SHORT).show()
                 vm.addNote(note)
             }else{
                 clickedNote = Note(
                     noteTitleEditText.text.toString(),
                     noteContentEditText.text.toString()
                 )
+                Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
                 vm.addNote(clickedNote)
             }
             vm.updateNotes()
             findNavController().navigateUp()
+
         }
     }
 }
