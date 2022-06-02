@@ -1,25 +1,20 @@
 package com.example.leonidsnotesapplication.presentation.notes_feature.util
 
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.domain.model.Note
-import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewModel
 
 
-
-class NoteCardAdapter( private val listener: NoteClicklistener) :
+class NoteCardAdapter( private val listener: NoteClickListener) :
     RecyclerView.Adapter<NoteCardAdapter.ViewHolder>() {
 
-    interface NoteClicklistener{
+    interface NoteClickListener{
         fun onClickedNote(note : Note)
         fun onDeleteButtonClick(note : Note)
     }
@@ -27,8 +22,9 @@ class NoteCardAdapter( private val listener: NoteClicklistener) :
     private val notes = ArrayList<Note>()
 
 
-    class ViewHolder(view : View ,  private val listener  : NoteClicklistener) : RecyclerView.ViewHolder(view) , View.OnClickListener {
+    class ViewHolder(view : View ,  private val listener  : NoteClickListener) : RecyclerView.ViewHolder(view) , View.OnClickListener {
         val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
+        val datetimeView : TextView = view.findViewById(R.id.tvNoteDatetime)
         val deleteButton: ImageButton = view.findViewById(R.id.ibDelete)
         private lateinit var note: Note
 
@@ -42,6 +38,7 @@ class NoteCardAdapter( private val listener: NoteClicklistener) :
         fun bind(note: Note) {
             this.note = note
             titleView.text = note.title
+            datetimeView.text  = note.datetime
         }
 
         override fun onClick(p0: View?) {

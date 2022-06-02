@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.leonidsnotesapplication.R
@@ -14,6 +15,11 @@ import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 @AndroidEntryPoint
 class SingleNoteFragment : Fragment() {
@@ -48,23 +54,33 @@ class SingleNoteFragment : Fragment() {
         }
         addNoteButton.setOnClickListener{
 
-            if(isEdit){
+            val localDateTime = LocalDateTime.now()
+            val dateFormatter : DateTimeFormatter = DateTimeFormatter
+                .ofLocalizedDateTime(FormatStyle.MEDIUM)
+                .withZone(ZoneId.systemDefault())
+            val dateTime : String = localDateTime.format(dateFormatter)
 
+            if(isEdit){
 
                 val note =  Note(
                     noteTitleEditText.text.toString(),
                     noteContentEditText.text.toString() ,
+                    dateTime,
                     clickedNote.id)
+                Toast.makeText(requireContext(), "Note edited", Toast.LENGTH_SHORT).show()
                 vm.addNote(note)
             }else{
                 clickedNote = Note(
                     noteTitleEditText.text.toString(),
-                    noteContentEditText.text.toString()
+                    noteContentEditText.text.toString(),
+                    dateTime
                 )
+                Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
                 vm.addNote(clickedNote)
             }
             vm.updateNotes()
             findNavController().navigateUp()
+
         }
     }
 }

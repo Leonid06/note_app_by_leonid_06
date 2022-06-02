@@ -30,6 +30,19 @@
             tools:text="Title"
             android:singleLine="true"/>
 
+
+        <TextView
+            android:id="@+id/tvNoteDatetime"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvNoteTitle"
+            tools:text="3 Jun 2008 11:05:30" />
+
         <ImageButton
             android:id="@+id/ibDelete"
             android:layout_width="30dp"
