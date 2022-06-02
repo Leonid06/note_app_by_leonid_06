@@ -37,8 +37,7 @@ class DataModule {
             NoteDatabase::class.java,
             "notes",
 
-        )
-            .fallbackToDestructiveMigration()
+        ).fallbackToDestructiveMigration()
             .build()
     }
 }

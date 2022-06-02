@@ -24,6 +24,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
 
     class ViewHolder(view : View ,  private val listener  : NoteClickListener) : RecyclerView.ViewHolder(view) , View.OnClickListener {
         val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
+        val datetimeView : TextView = view.findViewById(R.id.tvNoteDatetime)
         val deleteButton: ImageButton = view.findViewById(R.id.ibDelete)
         private lateinit var note: Note
 
@@ -37,6 +38,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
         fun bind(note: Note) {
             this.note = note
             titleView.text = note.title
+            datetimeView.text  = note.datetime
         }
 
         override fun onClick(p0: View?) {
