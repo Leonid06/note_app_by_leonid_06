@@ -4,6 +4,8 @@ package com.example.leonidsnotesapplication.presentation.notes_feature.util
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
@@ -21,12 +23,17 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
 
     private val notes = ArrayList<Note>()
 
+    //for animation
+//    private var lastPosition = -1
+
+
 
     class ViewHolder(view : View ,  private val listener  : NoteClickListener) : RecyclerView.ViewHolder(view) , View.OnClickListener {
         val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
         val datetimeView : TextView = view.findViewById(R.id.tvNoteDatetime)
         val deleteButton: ImageButton = view.findViewById(R.id.ibDelete)
         private lateinit var note: Note
+
 
         init {
             view.setOnClickListener(this)
@@ -53,8 +60,16 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
         return ViewHolder(view , listener)
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) =
+    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.bind(notes[position])
+//        setAnimation(viewHolder.itemView, position)
+    }
+
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        super.onViewDetachedFromWindow(holder)
+    }
+
+
 
     fun setData(notes : ArrayList<Note>){
         this.notes.clear()
@@ -62,6 +77,17 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
         notifyDataSetChanged()
     }
     override fun getItemCount(): Int =  notes.size
+
+    //testing out animations for cardview
+//    private fun setAnimation(view: View , position: Int) {
+//        if(position > lastPosition){
+//            val animation: Animation =
+//                AnimationUtils.loadAnimation(view.context, android.R.anim.slide_in_left)
+//            view.startAnimation(animation)
+//            lastPosition = position
+//        }
+//
+//    }
 
 }
 

@@ -12,4 +12,7 @@
     <color name="notes_color_3">#27A0E3</color>
     <color name="alpha_notes_color">#ECC744</color>
     <color name="default_delete_color">#F12B2B</color>
+    <color name ="note_background_color_1">#FFCEA3</color>
+    <color name ="note_background_color_2">#DD96C6</color>
+    <color name ="default_background_color">#F4F2F2</color>
 </resources>
