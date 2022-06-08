@@ -26,8 +26,6 @@ class SingleNoteFragment : Fragment() {
 
     private val vm  : NotesViewModel  by viewModels()
 
-    private lateinit var clickedNote : Note
-
     private var isEdit  : Boolean = false
 
     override fun onCreateView(
@@ -46,41 +44,64 @@ class SingleNoteFragment : Fragment() {
 
         if(arguments != null){
             isEdit = true
-            clickedNote = arguments?.getParcelable("note")!!
 
-            noteTitleEditText.setText(clickedNote.title)
-            noteContentEditText.setText(clickedNote.content)
+            noteTitleEditText.setText(arguments?.getParcelable<Note>("note")!!.title)
+            noteContentEditText.setText(arguments?.getParcelable<Note>("note")!!.content)
 
         }
         addNoteButton.setOnClickListener{
 
-            val localDateTime = LocalDateTime.now()
-            val dateFormatter : DateTimeFormatter = DateTimeFormatter
-                .ofLocalizedDateTime(FormatStyle.MEDIUM)
-                .withZone(ZoneId.systemDefault())
-            val dateTime : String = localDateTime.format(dateFormatter)
+
+            val date : String = getDate()
+            val title = noteTitleEditText.text.toString()
+            val content = noteContentEditText.text.toString()
 
             if(isEdit){
 
-                val note =  Note(
-                    noteTitleEditText.text.toString(),
-                    noteContentEditText.text.toString() ,
-                    dateTime,
-                    clickedNote.id)
-                Toast.makeText(requireContext(), "Note edited", Toast.LENGTH_SHORT).show()
-                vm.addNote(note)
+                val clickedNote : Note = arguments?.getParcelable("note")!!
+
+                createNote(title,  content, date, clickedNote.id)
+
             }else{
-                clickedNote = Note(
-                    noteTitleEditText.text.toString(),
-                    noteContentEditText.text.toString(),
-                    dateTime
-                )
-                Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
-                vm.addNote(clickedNote)
+                 createNote(title, content, date)
             }
             vm.updateNotes()
             findNavController().navigateUp()
 
+        }
+
+    }
+
+    fun createNote(title : String,  content : String,  date : String,  id : Int){
+        val note = Note(
+            title,
+            content,
+            date,
+            id
+        )
+        Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
+
+        vm.addNote(note)
+    }
+
+    fun createNote(title : String,  content : String,  date : String){
+        val note = Note(
+            title,
+            content,
+            date
+        )
+        Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
+
+        vm.addNote(note)
+    }
+
+    companion object{
+        fun getDate() : String {
+            val localDateTime = LocalDateTime.now()
+            val dateFormatter : DateTimeFormatter = DateTimeFormatter
+                .ofLocalizedDateTime(FormatStyle.MEDIUM)
+                .withZone(ZoneId.systemDefault())
+            return localDateTime.format(dateFormatter)
         }
     }
 }
