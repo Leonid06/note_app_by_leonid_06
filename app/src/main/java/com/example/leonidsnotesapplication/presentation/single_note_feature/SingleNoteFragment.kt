@@ -1,5 +1,6 @@
 package com.example.leonidsnotesapplication.presentation.single_note_feature
 
+import android.graphics.Typeface
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -37,22 +38,24 @@ class SingleNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val addNoteButton = view.findViewById<FloatingActionButton>(R.id.add_note_button)
-        val noteTitleEditText = view.findViewById<EditText>(R.id.etNoteTitle)
         val noteContentEditText = view.findViewById<EditText>(R.id.etNoteContent)
 
         if(arguments != null){
             isEdit = true
-
-            noteTitleEditText.setText(arguments?.getParcelable<Note>("note")!!.title)
             noteContentEditText.setText(arguments?.getParcelable<Note>("note")!!.content)
-
         }
         addNoteButton.setOnClickListener{
 
 
             val date : String = getDate()
-            val title = noteTitleEditText.text.toString()
+            val title : String
             val content = noteContentEditText.text.toString()
+
+            title = if(content.contains("\n")){
+                content.split("\n")[0]
+            }else{
+                content
+            }
 
             if(isEdit){
 
