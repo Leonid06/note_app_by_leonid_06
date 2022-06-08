@@ -19,10 +19,18 @@
             android:id="@+id/action_notesFragment_to_singleNoteFragment"
             app:destination="@id/singleNoteFragment"
             app:popUpTo="@id/notesFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
         android:id="@+id/singleNoteFragment"
         android:name="com.example.leonidsnotesapplication.presentation.single_note_feature.SingleNoteFragment"
         android:label="fragment_single_note"
         tools:layout="@layout/fragment_single_note" />
+    <fragment
+        android:id="@+id/settingsFragment"
+        android:name="com.example.leonidsnotesapplication.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

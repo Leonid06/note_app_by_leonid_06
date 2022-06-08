@@ -20,12 +20,13 @@ class DeleteDialogFragment(
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())
             .setMessage("Delete confirmation")
-            .setPositiveButton("cancel") { _,_ -> }
-            .setNegativeButton("confirm"){
-                _,_ -> listener.onClick(note)
+            .setPositiveButton("confirm"){
+                    _,_ -> listener.onClick(note)
             }
-            .create()
+            .setNegativeButton("cancel") { _,_ -> }
 
+            .create()
+    
     companion object {
         const val TAG = "PurchaseConfirmationDialog"
     }

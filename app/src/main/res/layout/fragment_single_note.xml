@@ -6,19 +6,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.single_note_feature.SingleNoteFragment"
+    android:background="@color/default_background_color"
     android:fitsSystemWindows="true">
+
+<!--    <Button-->
+<!--        android:layout_margin="20dp"-->
+<!--        android:id="@+id/default_round_button"-->
+<!--        android:background="@drawable/default_round_button"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+
+<!--    <Button-->
+<!--        android:layout_margin="20dp"-->
+<!--        android:id="@+id/round_button_1"-->
+<!--        android:background="@drawable/round_button_1"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/default_round_button"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+
+<!--    <Button-->
+<!--        android:layout_margin="20dp"-->
+<!--        android:id="@+id/round_button_2"-->
+<!--        android:background="@drawable/round_button_2"-->
+<!--        android:layout_width="50dp"-->
+<!--        android:layout_height="50dp"-->
+<!--        app:layout_constraintStart_toEndOf="@id/round_button_1"-->
+<!--        app:layout_constraintTop_toTopOf="parent"/>-->
+
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
+        android:focusable="true"
         >
 
         <LinearLayout
             android:id="@+id/noteGroup"
             android:layout_width="match_parent"
-            android:layout_height="660dp"
-            android:isScrollContainer="true"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -40,7 +69,9 @@
                 android:id="@+id/etNoteContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
                 android:background="@null"
                 android:hint="@string/content_hint"
                 android:isScrollContainer="true"

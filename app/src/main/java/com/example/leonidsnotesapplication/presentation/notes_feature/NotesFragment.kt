@@ -40,6 +40,7 @@ class NotesFragment : Fragment()  ,
         val recyclerView = view.findViewById<RecyclerView>(R.id.notesRecyclerView)
         val addNoteButton = view.findViewById<FloatingActionButton>(R.id.go_to_add_note_fragment_button)
 
+        recyclerView.isNestedScrollingEnabled = false
 
         adapter = NoteCardAdapter(this)
 
