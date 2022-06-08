@@ -1,7 +1,7 @@
 package com.example.leonidsnotesapplication.presentation.single_note_feature
 
-import android.graphics.Typeface
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,7 +25,7 @@ class SingleNoteFragment : Fragment() {
 
     private val vm  : NotesViewModel  by viewModels()
 
-    private var isEdit  : Boolean = false
+    private var isEdit = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,36 +46,40 @@ class SingleNoteFragment : Fragment() {
         }
         addNoteButton.setOnClickListener{
 
-
-            val date : String = getDate()
-            val title : String
             val content = noteContentEditText.text.toString()
+            val title : String
+            val subtitle : String
+            val date = getDate()
 
-            title = if(content.contains("\n")){
-                content.split("\n")[0]
+
+            if(content.contains("\n")){
+                title = content.split("\n")[0]
+                subtitle = content.split("\n")[1]
             }else{
-                content
+                title = content
+                subtitle = "No additional information"
             }
 
             if(isEdit){
 
                 val clickedNote : Note = arguments?.getParcelable("note")!!
 
-                createNote(title,  content, date, clickedNote.id)
+                createNote(title, subtitle,  content, date, clickedNote.id)
 
             }else{
-                 createNote(title, content, date)
+                 createNote(title, subtitle, content, date)
             }
-            vm.updateNotes()
+
             findNavController().navigateUp()
 
         }
 
     }
 
-    private fun createNote(title : String, content : String, date : String, id : Int){
+    private fun createNote(title : String,subtitle : String, content : String, date : String, id : Int){
         val note = Note(
             title,
+            subtitle,
             content,
             date,
             id
@@ -85,9 +89,10 @@ class SingleNoteFragment : Fragment() {
         vm.addNote(note)
     }
 
-    private fun createNote(title : String, content : String, date : String){
+    private fun createNote(title : String, subtitle: String, content : String, date : String){
         val note = Note(
             title,
+            subtitle,
             content,
             date
         )

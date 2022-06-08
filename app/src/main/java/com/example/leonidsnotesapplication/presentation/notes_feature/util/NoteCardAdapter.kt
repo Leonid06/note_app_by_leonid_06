@@ -23,15 +23,11 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
 
     private val notes = ArrayList<Note>()
 
-    //for animation
-//    private var lastPosition = -1
-
-
-
     class ViewHolder(view : View ,  private val listener  : NoteClickListener) : RecyclerView.ViewHolder(view) , View.OnClickListener {
-        val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
-        val datetimeView : TextView = view.findViewById(R.id.tvNoteDatetime)
-        val deleteButton: ImageButton = view.findViewById(R.id.ibDelete)
+        private val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
+        private val subtitleView : TextView = view.findViewById(R.id.tvNoteSubtitle)
+        private val datetimeView : TextView = view.findViewById(R.id.tvNoteDatetime)
+        private val deleteButton: ImageButton = view.findViewById(R.id.ibDelete)
         private lateinit var note: Note
 
 
@@ -46,6 +42,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
             this.note = note
             titleView.text = note.title
             datetimeView.text  = note.datetime
+            subtitleView.text = note.subtitle
         }
 
         override fun onClick(p0: View?) {
@@ -62,13 +59,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         viewHolder.bind(notes[position])
-//        setAnimation(viewHolder.itemView, position)
     }
-
-    override fun onViewDetachedFromWindow(holder: ViewHolder) {
-        super.onViewDetachedFromWindow(holder)
-    }
-
 
 
     fun setData(notes : ArrayList<Note>){
@@ -78,16 +69,6 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
     }
     override fun getItemCount(): Int =  notes.size
 
-    //testing out animations for cardview
-//    private fun setAnimation(view: View , position: Int) {
-//        if(position > lastPosition){
-//            val animation: Animation =
-//                AnimationUtils.loadAnimation(view.context, android.R.anim.slide_in_left)
-//            view.startAnimation(animation)
-//            lastPosition = position
-//        }
-//
-//    }
 
 }
 

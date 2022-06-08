@@ -26,6 +26,7 @@ class NotesViewModel  @Inject constructor (
     fun addNote(note : Note){
         viewModelScope.launch(Dispatchers.IO) {
             addNoteUseCase.execute(note)
+            updateNotes()
         }
     }
 
@@ -38,10 +39,9 @@ class NotesViewModel  @Inject constructor (
     }
 
 
-    fun updateNotes(){
+   fun updateNotes(){
         viewModelScope.launch(Dispatchers.IO) {
-                notesLiveDataMutable.postValue(getAllNotes())
-
+            notesLiveDataMutable.postValue(getAllNotes())
         }
     }
 
