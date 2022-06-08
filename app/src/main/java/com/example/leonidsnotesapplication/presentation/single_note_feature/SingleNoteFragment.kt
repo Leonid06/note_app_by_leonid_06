@@ -1,7 +1,6 @@
 package com.example.leonidsnotesapplication.presentation.single_note_feature
 
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -15,7 +14,6 @@ import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -72,7 +70,7 @@ class SingleNoteFragment : Fragment() {
 
     }
 
-    fun createNote(title : String,  content : String,  date : String,  id : Int){
+    private fun createNote(title : String, content : String, date : String, id : Int){
         val note = Note(
             title,
             content,
@@ -84,7 +82,7 @@ class SingleNoteFragment : Fragment() {
         vm.addNote(note)
     }
 
-    fun createNote(title : String,  content : String,  date : String){
+    private fun createNote(title : String, content : String, date : String){
         val note = Note(
             title,
             content,
