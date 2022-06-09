@@ -4,7 +4,6 @@ package com.example.leonidsnotesapplication.presentation.notes_feature.util
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.TextView
@@ -22,6 +21,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
     }
 
     private val notes = ArrayList<Note>()
+    private var lastPosition = -1
 
     class ViewHolder(view : View ,  private val listener  : NoteClickListener) : RecyclerView.ViewHolder(view) , View.OnClickListener {
         private val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
@@ -57,9 +57,21 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
         return ViewHolder(view , listener)
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.bind(notes[position])
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(notes[position])
+
+        if(holder.adapterPosition > lastPosition){
+            val animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.slide_in)
+            holder.itemView.startAnimation(animation)
+            lastPosition = holder.adapterPosition
+        }
     }
+
+    override fun onViewDetachedFromWindow(holder: ViewHolder) {
+        val animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.slide_out)
+        holder.itemView.startAnimation(animation)
+    }
+
 
 
     fun setData(notes : ArrayList<Note>){
@@ -67,6 +79,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
         this.notes.addAll(notes)
         notifyDataSetChanged()
     }
+
     override fun getItemCount(): Int =  notes.size
 
 

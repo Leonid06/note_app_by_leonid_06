@@ -11,8 +11,9 @@
         android:id="@+id/notesRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="600dp"
-
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layoutAnimation="@anim/layout_animation"
+        app:layout_constraintTop_toTopOf="parent"
+       />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:backgroundTint="@color/notes_color_2"
