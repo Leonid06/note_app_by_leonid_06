@@ -4,7 +4,6 @@ package com.example.leonidsnotesapplication.presentation.notes_feature.util
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.TextView
@@ -22,16 +21,13 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
     }
 
     private val notes = ArrayList<Note>()
-
-    //for animation
-//    private var lastPosition = -1
-
-
+    private var lastPosition = -1
 
     class ViewHolder(view : View ,  private val listener  : NoteClickListener) : RecyclerView.ViewHolder(view) , View.OnClickListener {
-        val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
-        val datetimeView : TextView = view.findViewById(R.id.tvNoteDatetime)
-        val deleteButton: ImageButton = view.findViewById(R.id.ibDelete)
+        private val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
+        private val subtitleView : TextView = view.findViewById(R.id.tvNoteSubtitle)
+        private val datetimeView : TextView = view.findViewById(R.id.tvNoteDatetime)
+        private val deleteButton: ImageButton = view.findViewById(R.id.ibDelete)
         private lateinit var note: Note
 
 
@@ -46,6 +42,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
             this.note = note
             titleView.text = note.title
             datetimeView.text  = note.datetime
+            subtitleView.text = note.subtitle
         }
 
         override fun onClick(p0: View?) {
@@ -60,13 +57,19 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
         return ViewHolder(view , listener)
     }
 
-    override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        viewHolder.bind(notes[position])
-//        setAnimation(viewHolder.itemView, position)
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(notes[position])
+
+        if(holder.adapterPosition > lastPosition){
+            val animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.slide_in)
+            holder.itemView.startAnimation(animation)
+            lastPosition = holder.adapterPosition
+        }
     }
 
     override fun onViewDetachedFromWindow(holder: ViewHolder) {
-        super.onViewDetachedFromWindow(holder)
+        val animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.slide_out)
+        holder.itemView.startAnimation(animation)
     }
 
 
@@ -76,18 +79,9 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
         this.notes.addAll(notes)
         notifyDataSetChanged()
     }
+
     override fun getItemCount(): Int =  notes.size
 
-    //testing out animations for cardview
-//    private fun setAnimation(view: View , position: Int) {
-//        if(position > lastPosition){
-//            val animation: Animation =
-//                AnimationUtils.loadAnimation(view.context, android.R.anim.slide_in_left)
-//            view.startAnimation(animation)
-//            lastPosition = position
-//        }
-//
-//    }
 
 }
 

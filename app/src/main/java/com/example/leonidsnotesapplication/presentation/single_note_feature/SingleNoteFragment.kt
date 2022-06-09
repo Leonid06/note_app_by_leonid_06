@@ -1,7 +1,8 @@
 package com.example.leonidsnotesapplication.presentation.single_note_feature
 
+import android.content.Context
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,10 +13,11 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.domain.model.Note
+import com.example.leonidsnotesapplication.presentation.MainActivity
+import com.example.leonidsnotesapplication.presentation.extensions.showKeyboard
 import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -26,7 +28,7 @@ class SingleNoteFragment : Fragment() {
 
     private val vm  : NotesViewModel  by viewModels()
 
-    private var isEdit  : Boolean = false
+    private var isEdit = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,42 +41,50 @@ class SingleNoteFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val addNoteButton = view.findViewById<FloatingActionButton>(R.id.add_note_button)
-        val noteTitleEditText = view.findViewById<EditText>(R.id.etNoteTitle)
         val noteContentEditText = view.findViewById<EditText>(R.id.etNoteContent)
+
+        activity?.showKeyboard(noteContentEditText)
 
         if(arguments != null){
             isEdit = true
-
-            noteTitleEditText.setText(arguments?.getParcelable<Note>("note")!!.title)
             noteContentEditText.setText(arguments?.getParcelable<Note>("note")!!.content)
-
         }
         addNoteButton.setOnClickListener{
 
-
-            val date : String = getDate()
-            val title = noteTitleEditText.text.toString()
             val content = noteContentEditText.text.toString()
+            val title : String
+            val subtitle : String
+            val date = getDate()
+
+
+            if(content.contains("\n")){
+                title = content.split("\n")[0]
+                subtitle = content.split("\n")[1]
+            }else{
+                title = content
+                subtitle = "No additional information"
+            }
 
             if(isEdit){
 
                 val clickedNote : Note = arguments?.getParcelable("note")!!
 
-                createNote(title,  content, date, clickedNote.id)
+                createNote(title, subtitle,  content, date, clickedNote.id)
 
             }else{
-                 createNote(title, content, date)
+                 createNote(title, subtitle, content, date)
             }
-            vm.updateNotes()
+
             findNavController().navigateUp()
 
         }
 
     }
 
-    fun createNote(title : String,  content : String,  date : String,  id : Int){
+    private fun createNote(title : String,subtitle : String, content : String, date : String, id : Int){
         val note = Note(
             title,
+            subtitle,
             content,
             date,
             id
@@ -84,9 +94,10 @@ class SingleNoteFragment : Fragment() {
         vm.addNote(note)
     }
 
-    fun createNote(title : String,  content : String,  date : String){
+    private fun createNote(title : String, subtitle: String, content : String, date : String){
         val note = Note(
             title,
+            subtitle,
             content,
             date
         )
@@ -94,6 +105,7 @@ class SingleNoteFragment : Fragment() {
 
         vm.addNote(note)
     }
+
 
     companion object{
         fun getDate() : String {
@@ -103,5 +115,6 @@ class SingleNoteFragment : Fragment() {
                 .withZone(ZoneId.systemDefault())
             return localDateTime.format(dateFormatter)
         }
+
     }
 }

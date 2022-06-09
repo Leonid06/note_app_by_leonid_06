@@ -1,7 +1,10 @@
 package com.example.leonidsnotesapplication.presentation
 
+import android.content.Context
+import android.inputmethodservice.InputMethodService
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
@@ -12,6 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
     private lateinit var  navController : NavController
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -19,14 +23,12 @@ class MainActivity : AppCompatActivity() {
 
         navController = navHostFragment.navController
 
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
     }
 
     override fun onBackPressed() {
         navController.navigateUp()
     }
-
-
 }
+
+
 
