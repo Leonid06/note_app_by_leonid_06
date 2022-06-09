@@ -1,5 +1,6 @@
 package com.example.leonidsnotesapplication.presentation.single_note_feature
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -12,6 +13,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.domain.model.Note
+import com.example.leonidsnotesapplication.presentation.MainActivity
+import com.example.leonidsnotesapplication.presentation.extensions.showKeyboard
 import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -39,6 +42,8 @@ class SingleNoteFragment : Fragment() {
 
         val addNoteButton = view.findViewById<FloatingActionButton>(R.id.add_note_button)
         val noteContentEditText = view.findViewById<EditText>(R.id.etNoteContent)
+
+        activity?.showKeyboard(noteContentEditText)
 
         if(arguments != null){
             isEdit = true
@@ -101,6 +106,7 @@ class SingleNoteFragment : Fragment() {
         vm.addNote(note)
     }
 
+
     companion object{
         fun getDate() : String {
             val localDateTime = LocalDateTime.now()
@@ -109,5 +115,6 @@ class SingleNoteFragment : Fragment() {
                 .withZone(ZoneId.systemDefault())
             return localDateTime.format(dateFormatter)
         }
+
     }
 }
