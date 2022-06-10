@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.domain.model.Note
+import java.util.*
+import kotlin.collections.ArrayList
 
 
 class NoteCardAdapter( private val listener: NoteClickListener) :
@@ -76,7 +78,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
 
     fun setData(notes : ArrayList<Note>){
         this.notes.clear()
-        this.notes.addAll(notes)
+        this.notes.addAll(notes.reversed())
         notifyDataSetChanged()
     }
 
