@@ -7,10 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.domain.model.Note
-import kotlin.collections.ArrayList
 
 
 class NoteCardAdapter( private val listener: NoteClickListener) :
@@ -22,6 +22,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
     }
 
     private val notes = ArrayList<Note>()
+    private val notesListCallback =  NotesListCallback(this)
 
     class ViewHolder(view : View ,  private val listener  : NoteClickListener) : RecyclerView.ViewHolder(view) , View.OnClickListener {
         private val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
@@ -59,9 +60,6 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(notes[position])
-
-//        val animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.slide_in)
-//        holder.itemView.startAnimation(animation)
     }
 
 
@@ -69,9 +67,12 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
         notes.reverse()
         val diffUtil = NotesDiffUtil(this.notes, notes)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
+
         this.notes.clear()
         this.notes.addAll(notes)
-        diffResult.dispatchUpdatesTo(this)
+
+        diffResult.dispatchUpdatesTo(notesListCallback)
+
         notes.reverse()
     }
 
