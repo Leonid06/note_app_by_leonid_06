@@ -15,6 +15,7 @@ import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.DeleteDialogFragment
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteCardAdapter
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -56,6 +57,7 @@ class NotesFragment : Fragment()  ,
 
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(view.context)
+        recyclerView.itemAnimator = NotesItemAnimator()
     }
 
     override fun onClickedNote(note: Note) {
