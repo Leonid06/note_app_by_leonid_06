@@ -62,7 +62,7 @@ class SingleNoteFragment : Fragment() {
                 subtitle = content.split("\n")[1]
             }else{
                 title = content
-                subtitle = "No additional information"
+                subtitle = ""
             }
 
             if(isEdit){
