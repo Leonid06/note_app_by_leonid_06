@@ -4,13 +4,12 @@ package com.example.leonidsnotesapplication.presentation.notes_feature.util
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.AnimationUtils
 import android.widget.ImageButton
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.domain.model.Note
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -23,7 +22,6 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
     }
 
     private val notes = ArrayList<Note>()
-    private var lastPosition = -1
 
     class ViewHolder(view : View ,  private val listener  : NoteClickListener) : RecyclerView.ViewHolder(view) , View.OnClickListener {
         private val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
@@ -62,24 +60,19 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(notes[position])
 
-        if(holder.adapterPosition > lastPosition){
-            val animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.slide_in)
-            holder.itemView.startAnimation(animation)
-            lastPosition = holder.adapterPosition
-        }
+//        val animation = AnimationUtils.loadAnimation(holder.itemView.context, R.anim.slide_in)
+//        holder.itemView.startAnimation(animation)
     }
-
-    override fun onViewDetachedFromWindow(holder: ViewHolder) {
-        val animation = AnimationUtils.loadAnimation(holder.itemView.context,R.anim.slide_out)
-        holder.itemView.startAnimation(animation)
-    }
-
 
 
     fun setData(notes : ArrayList<Note>){
+        notes.reverse()
+        val diffUtil = NotesDiffUtil(this.notes, notes)
+        val diffResult = DiffUtil.calculateDiff(diffUtil)
         this.notes.clear()
-        this.notes.addAll(notes.reversed())
-        notifyDataSetChanged()
+        this.notes.addAll(notes)
+        diffResult.dispatchUpdatesTo(this)
+        notes.reverse()
     }
 
     override fun getItemCount(): Int =  notes.size
