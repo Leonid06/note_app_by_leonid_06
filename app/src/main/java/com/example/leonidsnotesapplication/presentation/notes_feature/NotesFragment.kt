@@ -77,6 +77,5 @@ class NotesFragment : Fragment()  ,
 
     override fun onClick(note: Note) {
         vm.deleteNote(note)
-        Toast.makeText(requireContext(), "Note deleted", Toast.LENGTH_SHORT).show()
     }
 }
