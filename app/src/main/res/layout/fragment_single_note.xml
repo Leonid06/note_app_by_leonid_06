@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.single_note_feature.SingleNoteFragment"
-    android:background="@color/default_background_color"
+    android:background="@color/note_background_color_3"
     android:fitsSystemWindows="true">
 
 
@@ -45,7 +45,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:backgroundTint="@color/notes_color_2"
+        android:backgroundTint="@color/button_color_1"
         android:id="@+id/add_note_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

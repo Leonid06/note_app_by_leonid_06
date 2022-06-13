@@ -18,6 +18,7 @@ import com.example.leonidsnotesapplication.presentation.extensions.showKeyboard
 import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -109,11 +110,11 @@ class SingleNoteFragment : Fragment() {
 
     companion object{
         fun getDate() : String {
-            val localDateTime = LocalDateTime.now()
+            val localDate = LocalDate.now()
             val dateFormatter : DateTimeFormatter = DateTimeFormatter
-                .ofLocalizedDateTime(FormatStyle.MEDIUM)
+                .ofLocalizedDate(FormatStyle.MEDIUM)
                 .withZone(ZoneId.systemDefault())
-            return localDateTime.format(dateFormatter)
+            return localDate.format(dateFormatter)
         }
 
     }
