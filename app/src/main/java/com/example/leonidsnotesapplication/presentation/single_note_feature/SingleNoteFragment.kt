@@ -90,7 +90,6 @@ class SingleNoteFragment : Fragment() {
             date,
             id
         )
-        Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
 
         vm.addNote(note)
     }
@@ -102,7 +101,6 @@ class SingleNoteFragment : Fragment() {
             content,
             date
         )
-        Toast.makeText(requireContext(), "Note added", Toast.LENGTH_SHORT).show()
 
         vm.addNote(note)
     }

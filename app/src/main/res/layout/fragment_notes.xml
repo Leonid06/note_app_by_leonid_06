@@ -7,12 +7,23 @@
     android:background="@color/note_background_color_3"
     tools:context=".presentation.notes_feature.NotesFragment">
 
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/notesSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRecyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="600dp"
-        app:layout_constraintTop_toTopOf="parent"
-       />
+        android:layout_width="408dp"
+        android:layout_height="560dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@id/notesSearchView"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:backgroundTint="@color/button_color_1"

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.viewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
@@ -23,9 +24,10 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NotesFragment : Fragment()  ,
     NoteCardAdapter.NoteClickListener ,
-    DeleteDialogFragment.OnNegativeButtonClickListener {
+    DeleteDialogFragment.OnNegativeButtonClickListener,
+    SearchView.OnQueryTextListener{
 
-    private lateinit var adapter : NoteCardAdapter
+    private val adapter : NoteCardAdapter by lazy { NoteCardAdapter(this) }
     private val vm : NotesViewModel by viewModels()
 
     override fun onCreateView(
@@ -40,10 +42,8 @@ class NotesFragment : Fragment()  ,
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.notesRecyclerView)
         val addNoteButton = view.findViewById<FloatingActionButton>(R.id.go_to_add_note_fragment_button)
+        val notesSearchView = view.findViewById<SearchView>(R.id.notesSearchView)
 
-        recyclerView.isNestedScrollingEnabled = false
-
-        adapter = NoteCardAdapter(this)
 
         vm.notesLiveData.observe(viewLifecycleOwner){
             adapter.setData(it)
@@ -56,8 +56,13 @@ class NotesFragment : Fragment()  ,
         }
 
         recyclerView.adapter = adapter
+        recyclerView.isNestedScrollingEnabled = false
         recyclerView.layoutManager = LinearLayoutManager(view.context)
         recyclerView.itemAnimator = NotesItemAnimator()
+
+        notesSearchView.isSubmitButtonEnabled  = true
+        notesSearchView.setOnQueryTextListener(this)
+
     }
 
     override fun onClickedNote(note: Note) {
@@ -77,6 +82,22 @@ class NotesFragment : Fragment()  ,
 
     override fun onClick(note: Note) {
         vm.deleteNote(note)
-        Toast.makeText(requireContext(), "Note deleted", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun searchDatabase(query: String?){
+        vm.searchNotes("%$query%")
+        vm.notesSearchLiveData.observe(this){
+            adapter.setData(it)
+        }
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        searchDatabase(query)
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        searchDatabase(query)
+        return true
     }
 }

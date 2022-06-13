@@ -11,6 +11,10 @@ class NoteRepositoryImpl(
         return ArrayList(dao.getAllNotes())
     }
 
+    override fun searchNotes(query: String?): ArrayList<Note> {
+        return ArrayList(dao.selectNotes(query))
+    }
+
     override suspend fun deleteNote(note: Note) {
        return dao.deleteNote(note)
     }
