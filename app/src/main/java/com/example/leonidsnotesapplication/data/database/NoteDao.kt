@@ -7,6 +7,10 @@ import dagger.Provides
 
 @Dao
 interface NoteDao {
+
+    @Query("SELECT * FROM note WHERE title LIKE :query OR subtitle LIKE :query")
+    fun selectNotes(query : String?) : List<Note>
+
     @Query("SELECT * FROM Note")
     fun getAllNotes() : List<Note>
 
