@@ -8,10 +8,10 @@ import dagger.Provides
 @Dao
 interface NoteDao {
 
-    @Query("SELECT * FROM note WHERE title LIKE :query OR subtitle LIKE :query")
+    @Query("SELECT * FROM note WHERE title LIKE :query OR subtitle LIKE :query ORDER BY isStarred")
     fun selectNotes(query : String?) : List<Note>
 
-    @Query("SELECT * FROM Note")
+    @Query("SELECT * FROM Note ORDER BY isStarred")
     fun getAllNotes() : List<Note>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

@@ -4,6 +4,7 @@ package com.example.leonidsnotesapplication.presentation.notes_feature.util
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
@@ -19,6 +20,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
     interface NoteClickListener{
         fun onClickedNote(note : Note)
         fun onDeleteButtonClick(note : Note)
+        fun onStarCheckBoxClick(note : Note)
     }
 
     private val notes = ArrayList<Note>()
@@ -29,6 +31,8 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
         private val subtitleView : TextView = view.findViewById(R.id.tvNoteSubtitle)
         private val datetimeView : TextView = view.findViewById(R.id.tvNoteDatetime)
         private val deleteButton: ImageButton = view.findViewById(R.id.ibDelete)
+        private val starCheckBox : CheckBox = view.findViewById(R.id.cbStar)
+
         private lateinit var note: Note
 
 
@@ -37,6 +41,10 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
             deleteButton.setOnClickListener {
                 listener.onDeleteButtonClick(note)
             }
+            starCheckBox.setOnClickListener {
+                note.isStarred = starCheckBox.isChecked
+                listener.onStarCheckBoxClick(note)
+            }
         }
 
         fun bind(note: Note) {
@@ -44,6 +52,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
             titleView.text = note.title
             datetimeView.text  = note.datetime
             subtitleView.text = note.subtitle
+            starCheckBox.isChecked = note.isStarred
         }
 
         override fun onClick(p0: View?) {

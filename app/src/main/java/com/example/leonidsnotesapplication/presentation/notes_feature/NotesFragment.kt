@@ -79,6 +79,10 @@ class NotesFragment : Fragment()  ,
             DeleteDialogFragment.TAG)
     }
 
+    override fun onStarCheckBoxClick(note: Note) {
+       vm.addNote(note)
+    }
+
     override fun onDeleteOptionClicked(note: Note) {
         vm.deleteNote(note)
     }

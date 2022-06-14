@@ -69,11 +69,13 @@ class SingleNoteFragment : Fragment() {
             if(isEdit){
 
                 val clickedNote : Note = arguments?.getParcelable("note")!!
+                val isStarred = clickedNote.isStarred
 
-                createNote(title, subtitle,  content, date, clickedNote.id)
+                createNote(title, subtitle,  content,isStarred, date, clickedNote.id)
 
             }else{
-                 createNote(title, subtitle, content, date)
+                val isStarred = false
+                createNote(title, subtitle, content,isStarred, date)
             }
 
             findNavController().navigateUp()
@@ -82,11 +84,12 @@ class SingleNoteFragment : Fragment() {
 
     }
 
-    private fun createNote(title : String,subtitle : String, content : String, date : String, id : Int){
+    private fun createNote(title : String,subtitle : String, content : String, isStarred : Boolean, date : String, id : Int){
         val note = Note(
             title,
             subtitle,
             content,
+            isStarred,
             date,
             id
         )
@@ -94,11 +97,12 @@ class SingleNoteFragment : Fragment() {
         vm.addNote(note)
     }
 
-    private fun createNote(title : String, subtitle: String, content : String, date : String){
+    private fun createNote(title : String, subtitle: String, content : String, isStarred: Boolean, date : String){
         val note = Note(
             title,
             subtitle,
             content,
+            isStarred,
             date
         )
 
