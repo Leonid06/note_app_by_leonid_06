@@ -81,7 +81,7 @@ class NotesFragment : Fragment()  ,
             DeleteDialogFragment.TAG)
     }
 
-    override fun onClick(note: Note) {
+    override fun onDeleteOptionClicked(note: Note) {
         vm.deleteNote(note)
     }
 

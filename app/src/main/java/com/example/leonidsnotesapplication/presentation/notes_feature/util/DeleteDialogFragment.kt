@@ -4,8 +4,6 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
-import androidx.fragment.app.FragmentTransaction
-import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.domain.model.Note
 
 class DeleteDialogFragment(
@@ -14,14 +12,14 @@ class DeleteDialogFragment(
         ): DialogFragment() {
 
     interface OnNegativeButtonClickListener {
-        fun onClick(note : Note)
+        fun onDeleteOptionClicked(note : Note)
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())
             .setMessage("Delete confirmation")
             .setPositiveButton("confirm"){
-                    _,_ -> listener.onClick(note)
+                    _,_ -> listener.onDeleteOptionClicked(note)
             }
             .setNegativeButton("cancel") { _,_ -> }
 
