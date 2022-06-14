@@ -7,6 +7,10 @@ import com.example.leonidsnotesapplication.R
 
 class NotesItemAnimator : DefaultItemAnimator() {
 
+    init {
+        supportsChangeAnimations = false
+    }
+
     override fun animateRemove(holder: RecyclerView.ViewHolder?): Boolean {
         val animation = AnimationUtils.loadAnimation(holder?.itemView?.context, R.anim.slide_out)
         holder?.itemView?.startAnimation(animation)
