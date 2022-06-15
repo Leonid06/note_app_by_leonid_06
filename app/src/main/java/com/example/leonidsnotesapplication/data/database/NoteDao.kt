@@ -16,10 +16,10 @@ interface NoteDao {
     @Query("SELECT * FROM Note ORDER BY isStarred")
     fun getAllNotes() : List<Note>
 
-    @Query("SELECT * FROM folder WHERE id = :id")
+    @Query("SELECT * FROM  Folder WHERE id = :id")
     fun getFolderWithNotes(id : Int) : List<FolderWithNotes>
 
-    @Query("SELECT * FROM folder")
+    @Query("SELECT * FROM Folder")
     fun getAllFolders() : List<Folder>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
