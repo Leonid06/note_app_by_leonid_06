@@ -23,4 +23,6 @@
     <color name="font_color_2">#856F61</color>
     <color name ="default_background_color">#F4F2F2</color>
     <color name="default_card_color">#FFFAF3</color>
+    <color name="card_color_2">#DDD8CE</color>
+    <color name="card_color_3">#94FFFAF2</color>
 </resources>

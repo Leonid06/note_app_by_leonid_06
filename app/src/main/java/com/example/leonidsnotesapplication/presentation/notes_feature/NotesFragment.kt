@@ -41,6 +41,7 @@ class NotesFragment : Fragment()  ,
 
         val recyclerView = view.findViewById<RecyclerView>(R.id.notesRecyclerView)
         val addNoteButton = view.findViewById<FloatingActionButton>(R.id.go_to_add_note_fragment_button)
+        val goToFoldersButton = view.findViewById<FloatingActionButton>(R.id.go_to_folders_fragment_button)
         val notesSearchView = view.findViewById<SearchView>(R.id.notesSearchView)
 
 
@@ -52,6 +53,10 @@ class NotesFragment : Fragment()  ,
 
         addNoteButton.setOnClickListener{
             findNavController().navigate(R.id.action_notesFragment_to_singleNoteFragment)
+        }
+
+        goToFoldersButton.setOnClickListener {
+            findNavController().navigate(R.id.action_notesFragment_to_foldersFragment)
         }
 
         recyclerView.adapter = adapter

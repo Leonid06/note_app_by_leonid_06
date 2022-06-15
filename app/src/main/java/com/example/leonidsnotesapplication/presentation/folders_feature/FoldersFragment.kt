@@ -14,11 +14,13 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FoldersFragment : Fragment() {
 
-   val vm : FoldersViewModel by viewModels()
+    val vm : FoldersViewModel by viewModels()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_folders, container, false)
+        val view =  inflater.inflate(R.layout.fragment_folders, container, false)
+
+        return view
     }
 }

@@ -20,7 +20,7 @@
             app:destination="@id/singleNoteFragment"
             app:popUpTo="@id/notesFragment" />
         <action
-            android:id="@+id/action_notesFragment_to_settingsFragment"
+            android:id="@+id/action_notesFragment_to_foldersFragment"
             app:destination="@id/settingsFragment" />
     </fragment>
     <fragment
