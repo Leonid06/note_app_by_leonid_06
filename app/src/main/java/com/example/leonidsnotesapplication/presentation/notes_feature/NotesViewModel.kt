@@ -5,12 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.leonidsnotesapplication.domain.model.Note
-import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
-import com.example.leonidsnotesapplication.domain.usecase.notes_feature.AddNoteUseCase
-import com.example.leonidsnotesapplication.domain.usecase.notes_feature.DeleteNoteUseCase
-import com.example.leonidsnotesapplication.domain.usecase.notes_feature.GetAllNotesUseCase
-import com.example.leonidsnotesapplication.domain.usecase.notes_feature.SearchNoteUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

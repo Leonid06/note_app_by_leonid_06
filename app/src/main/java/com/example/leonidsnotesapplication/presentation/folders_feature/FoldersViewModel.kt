@@ -6,8 +6,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
-import com.example.leonidsnotesapplication.domain.usecase.folders_feature.AddFolderUseCase
-import com.example.leonidsnotesapplication.domain.usecase.folders_feature.GetAllFoldersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
