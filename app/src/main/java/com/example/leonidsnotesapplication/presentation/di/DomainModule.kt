@@ -1,10 +1,13 @@
 package com.example.leonidsnotesapplication.presentation.di
 
+import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
-import com.example.leonidsnotesapplication.domain.usecase.AddNoteUseCase
-import com.example.leonidsnotesapplication.domain.usecase.DeleteNoteUseCase
-import com.example.leonidsnotesapplication.domain.usecase.GetAllNotesUseCase
-import com.example.leonidsnotesapplication.domain.usecase.SearchNoteUseCase
+import com.example.leonidsnotesapplication.domain.usecase.folders_feature.AddFolderUseCase
+import com.example.leonidsnotesapplication.domain.usecase.folders_feature.GetAllFoldersUseCase
+import com.example.leonidsnotesapplication.domain.usecase.notes_feature.AddNoteUseCase
+import com.example.leonidsnotesapplication.domain.usecase.notes_feature.DeleteNoteUseCase
+import com.example.leonidsnotesapplication.domain.usecase.notes_feature.GetAllNotesUseCase
+import com.example.leonidsnotesapplication.domain.usecase.notes_feature.SearchNoteUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -21,6 +24,11 @@ class DomainModule {
     }
 
     @Provides
+    fun provideAddFolderUseCase(foldersRepository: FoldersRepository) : AddFolderUseCase {
+        return AddFolderUseCase(foldersRepository)
+    }
+
+    @Provides
     fun provideDeleteNoteUseCase(noteRepository: NoteRepository): DeleteNoteUseCase {
         return DeleteNoteUseCase(noteRepository)
     }
@@ -31,8 +39,13 @@ class DomainModule {
     }
 
     @Provides
-    fun provideSearchNotesUseCase(noteRepository: NoteRepository) : SearchNoteUseCase{
+    fun provideSearchNotesUseCase(noteRepository: NoteRepository) : SearchNoteUseCase {
         return  SearchNoteUseCase(noteRepository)
+    }
+
+    @Provides
+    fun provideGetAllFoldersUseCase(foldersRepository: FoldersRepository) : GetAllFoldersUseCase {
+        return GetAllFoldersUseCase(foldersRepository)
     }
 
 }

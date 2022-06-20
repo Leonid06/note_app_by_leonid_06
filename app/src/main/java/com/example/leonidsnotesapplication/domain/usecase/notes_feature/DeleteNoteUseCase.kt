@@ -1,4 +1,4 @@
-package com.example.leonidsnotesapplication.domain.usecase
+package com.example.leonidsnotesapplication.domain.usecase.notes_feature
 
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository

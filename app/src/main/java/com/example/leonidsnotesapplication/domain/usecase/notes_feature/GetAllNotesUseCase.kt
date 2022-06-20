@@ -1,4 +1,4 @@
-package com.example.leonidsnotesapplication.domain.usecase
+package com.example.leonidsnotesapplication.domain.usecase.notes_feature
 
 import androidx.lifecycle.LiveData
 import com.example.leonidsnotesapplication.domain.model.Note

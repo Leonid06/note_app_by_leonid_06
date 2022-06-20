@@ -19,6 +19,9 @@ interface NoteDao {
     @Query("SELECT * FROM  Folder WHERE id = :id")
     fun getFolderWithNotes(id : Int) : List<FolderWithNotes>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFolder(folder : Folder)
+
     @Query("SELECT * FROM Folder")
     fun getAllFolders() : List<Folder>
 

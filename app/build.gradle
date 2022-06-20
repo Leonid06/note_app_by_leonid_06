@@ -36,6 +36,7 @@ android {
 
 dependencies {
     implementation 'com.google.dagger:hilt-android:2.42'
+    implementation 'org.chromium.net:cronet-embedded:76.3809.111'
     kapt 'com.google.dagger:hilt-compiler:2.42'
 
     implementation 'androidx.fragment:fragment-ktx:1.4.1'

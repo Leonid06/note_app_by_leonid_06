@@ -18,6 +18,8 @@
         <entry key="app/src/main/res/drawable/round_button_3.xml" value="0.181" />
         <entry key="app/src/main/res/drawable/star_button.xml" value="0.2225" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.3512161254882813" />
+        <entry key="app/src/main/res/layout/folder_card_view.xml" value="0.549127705891927" />
+        <entry key="app/src/main/res/layout/fragment_create_folder.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_folders.xml" value="0.35667521158854176" />
         <entry key="app/src/main/res/layout/fragment_notes.xml" value="0.3943695068359375" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.29583333333333334" />
