@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.leonidsnotesapplication.domain.model.Folder
+import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import com.example.leonidsnotesapplication.domain.usecase.folders_feature.AddFolderUseCase
 import com.example.leonidsnotesapplication.domain.usecase.folders_feature.GetAllFoldersUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,8 +15,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FoldersViewModel @Inject constructor(
-    private val getAllFoldersUseCase: GetAllFoldersUseCase,
-    private val addFolderUseCase: AddFolderUseCase
+    private val foldersRepository: FoldersRepository
 ) : ViewModel() {
 
     private val foldersMutableLiveData : MutableLiveData<ArrayList<Folder>> =
@@ -24,18 +24,18 @@ class FoldersViewModel @Inject constructor(
     val foldersLiveData : LiveData<ArrayList<Folder>> =  foldersMutableLiveData
 
     private fun getAllFolders() : ArrayList<Folder> {
-        return getAllFoldersUseCase.execute()
+        return foldersRepository.getAllFolders() as ArrayList<Folder>
     }
 
     fun addFolder(folder : Folder){
         viewModelScope.launch(Dispatchers.IO) {
-            addFolderUseCase.execute(folder)
+            foldersRepository.addFolder(folder)
         }
         updateAllFolders()
 
     }
 
-    fun updateAllFolders(){
+    private fun updateAllFolders(){
         viewModelScope.launch(Dispatchers.IO){
             foldersMutableLiveData.postValue(getAllFolders())
         }

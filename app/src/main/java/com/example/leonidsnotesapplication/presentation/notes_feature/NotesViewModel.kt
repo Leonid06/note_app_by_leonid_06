@@ -5,6 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.leonidsnotesapplication.domain.model.Note
+import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
+import com.example.leonidsnotesapplication.domain.repository.NoteRepository
 import com.example.leonidsnotesapplication.domain.usecase.notes_feature.AddNoteUseCase
 import com.example.leonidsnotesapplication.domain.usecase.notes_feature.DeleteNoteUseCase
 import com.example.leonidsnotesapplication.domain.usecase.notes_feature.GetAllNotesUseCase
@@ -16,10 +18,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotesViewModel  @Inject constructor (
-    private val addNoteUseCase: AddNoteUseCase,
-    private val deleteNoteUseCase: DeleteNoteUseCase,
-    private val getAllNotesUseCase: GetAllNotesUseCase,
-    private val searchNoteUseCase: SearchNoteUseCase
+    private val noteRepository: NoteRepository
 ) : ViewModel() {
 
     private val notesLiveDataMutable  = MutableLiveData<ArrayList<Note>>()
@@ -31,13 +30,13 @@ class NotesViewModel  @Inject constructor (
 
     fun searchNotes(query : String?){
         viewModelScope.launch(Dispatchers.IO) {
-            notesSearchLiveDataMutable.postValue(searchNoteUseCase.execute(query))
+            notesSearchLiveDataMutable.postValue(noteRepository.searchNotes(query))
         }
     }
 
     fun addNote(note : Note){
         viewModelScope.launch(Dispatchers.IO) {
-            addNoteUseCase.execute(note)
+            noteRepository.insertNote(note)
             updateNotes()
         }
     }
@@ -45,7 +44,7 @@ class NotesViewModel  @Inject constructor (
     fun deleteNote(note : Note){
 
         viewModelScope.launch(Dispatchers.IO) {
-            deleteNoteUseCase.execute(note)
+            noteRepository.deleteNote(note)
             updateNotes()
         }
     }
@@ -58,7 +57,7 @@ class NotesViewModel  @Inject constructor (
     }
 
     private fun  getAllNotes(): ArrayList<Note> {
-        return getAllNotesUseCase.execute()
+        return noteRepository.getAllNotes()
     }
 
 

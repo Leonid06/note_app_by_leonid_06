@@ -18,34 +18,34 @@ import dagger.hilt.android.components.ViewModelComponent
 @InstallIn(ViewModelComponent::class)
 class DomainModule {
 
-    @Provides
-    fun provideAddNoteUseCase(noteRepository: NoteRepository): AddNoteUseCase {
-        return AddNoteUseCase(noteRepository)
-    }
+//    @Provides
+//    fun provideAddNoteUseCase(noteRepository: NoteRepository): AddNoteUseCase {
+//        return AddNoteUseCase(noteRepository)
+//    }
 
-    @Provides
-    fun provideAddFolderUseCase(foldersRepository: FoldersRepository) : AddFolderUseCase {
-        return AddFolderUseCase(foldersRepository)
-    }
+//    @Provides
+//    fun provideAddFolderUseCase(foldersRepository: FoldersRepository) : AddFolderUseCase {
+//        return AddFolderUseCase(foldersRepository)
+//    }
 
-    @Provides
-    fun provideDeleteNoteUseCase(noteRepository: NoteRepository): DeleteNoteUseCase {
-        return DeleteNoteUseCase(noteRepository)
-    }
+//    @Provides
+//    fun provideDeleteNoteUseCase(noteRepository: NoteRepository): DeleteNoteUseCase {
+//        return DeleteNoteUseCase(noteRepository)
+//    }
+//
+//    @Provides
+//    fun provideGetAllNotesUseCase(noteRepository: NoteRepository): GetAllNotesUseCase {
+//        return GetAllNotesUseCase(noteRepository)
+//    }
+//
+//    @Provides
+//    fun provideSearchNotesUseCase(noteRepository: NoteRepository) : SearchNoteUseCase {
+//        return  SearchNoteUseCase(noteRepository)
+//    }
 
-    @Provides
-    fun provideGetAllNotesUseCase(noteRepository: NoteRepository): GetAllNotesUseCase {
-        return GetAllNotesUseCase(noteRepository)
-    }
-
-    @Provides
-    fun provideSearchNotesUseCase(noteRepository: NoteRepository) : SearchNoteUseCase {
-        return  SearchNoteUseCase(noteRepository)
-    }
-
-    @Provides
-    fun provideGetAllFoldersUseCase(foldersRepository: FoldersRepository) : GetAllFoldersUseCase {
-        return GetAllFoldersUseCase(foldersRepository)
-    }
+//    @Provides
+//    fun provideGetAllFoldersUseCase(foldersRepository: FoldersRepository) : GetAllFoldersUseCase {
+//        return GetAllFoldersUseCase(foldersRepository)
+//    }
 
 }
