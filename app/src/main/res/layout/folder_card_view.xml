@@ -4,12 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
-    app:cardCornerRadius="5dp"
+    app:cardCornerRadius="12dp"
+    android:layout_margin="6dp"
     >
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:background="@color/default_card_color"
         android:layout_width="match_parent"
-        android:layout_height="80dp">
+        android:layout_height="80dp"
+        android:background="@color/default_card_color">
 
         <TextView
             android:id="@+id/tvFolderTitle"

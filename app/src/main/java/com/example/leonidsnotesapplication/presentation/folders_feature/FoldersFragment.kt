@@ -35,13 +35,9 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
         val foldersRecyclerView = view.findViewById<RecyclerView>(R.id.foldersRecyclerView)
         val addFolderButton = view.findViewById<FloatingActionButton>(R.id.add_folder_button)
 
-        vm.addFolder(Folder("Folder 1"))
-        vm.addFolder(Folder("Folder 2"))
 
-//        lifecycleScope.launch(Dispatchers.Default){
-//            vm.foldersMutableLiveData.postValue(ArrayList(listOf(Folder("Folder1"), Folder("Folder2"))))
-//        }
-
+        vm.updateAllFolders()
+        
         addFolderButton.setOnClickListener {
             findNavController().navigate(R.id.action_foldersFragment_to_createFolderFragment)
         }

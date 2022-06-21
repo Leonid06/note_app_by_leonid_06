@@ -33,7 +33,7 @@ class FoldersViewModel @Inject constructor(
 
     }
 
-    private fun updateAllFolders(){
+    fun updateAllFolders(){
         viewModelScope.launch(Dispatchers.IO){
             foldersMutableLiveData.postValue(getAllFolders())
         }
