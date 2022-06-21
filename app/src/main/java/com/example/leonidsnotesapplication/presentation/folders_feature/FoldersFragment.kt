@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
@@ -37,7 +38,7 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
 
         vm.updateAllFolders()
-        
+
         addFolderButton.setOnClickListener {
             findNavController().navigate(R.id.action_foldersFragment_to_createFolderFragment)
         }
@@ -45,6 +46,7 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
         foldersRecyclerView.adapter = adapter
         foldersRecyclerView.isNestedScrollingEnabled = false
         foldersRecyclerView.layoutManager = LinearLayoutManager(view.context)
+        foldersRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
 
         vm.foldersLiveData.observe(viewLifecycleOwner){
             adapter.setData(it)

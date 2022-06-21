@@ -4,6 +4,8 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="app/src/main/res/drawable/default_round_button.xml" value="0.181" />
+        <entry key="app/src/main/res/drawable/folder_card_view_style.xml" value="0.6522443237304688" />
+        <entry key="app/src/main/res/drawable/folders_recycler_view_style.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_add.xml" value="0.15" />
         <entry key="app/src/main/res/drawable/ic_add_folder.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_check.xml" value="0.1685" />
