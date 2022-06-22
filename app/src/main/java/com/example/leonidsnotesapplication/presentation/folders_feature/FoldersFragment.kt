@@ -25,19 +25,22 @@ import kotlinx.coroutines.launch
 class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
     private val vm : FoldersViewModel by viewModels()
+
     private val adapter : FoldersAdapter by lazy { FoldersAdapter(this) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val view =  inflater.inflate(R.layout.fragment_folders, container, false)
+        return inflater.inflate(R.layout.fragment_folders, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+
+        super.onViewCreated(view, savedInstanceState)
 
         val foldersRecyclerView = view.findViewById<RecyclerView>(R.id.foldersRecyclerView)
         val addFolderButton = view.findViewById<FloatingActionButton>(R.id.add_folder_button)
-
-
-        vm.updateAllFolders()
 
         addFolderButton.setOnClickListener {
             findNavController().navigate(R.id.action_foldersFragment_to_folderAddDialog)
@@ -51,8 +54,6 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
         vm.foldersLiveData.observe(viewLifecycleOwner){
             adapter.setData(it)
         }
-
-        return view
     }
 
     override fun onClickedFolder(folder : Folder) {
@@ -61,4 +62,5 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
         findNavController().navigate(R.id.action_foldersFragment_to_folderAddDialog, bundle)
     }
+
 }

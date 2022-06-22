@@ -73,6 +73,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
 
     fun setData(notes : ArrayList<Note>){
         notes.reverse()
+
         val diffUtil = NotesDiffUtil(this.notes, notes)
         val diffResult = DiffUtil.calculateDiff(diffUtil)
 
@@ -84,7 +85,7 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
         notes.reverse()
     }
 
-    override fun getItemCount(): Int =  notes.size
+    override fun getItemCount() =  notes.size
 
 
 }

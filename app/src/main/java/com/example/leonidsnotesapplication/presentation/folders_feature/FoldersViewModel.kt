@@ -14,7 +14,12 @@ import javax.inject.Inject
 @HiltViewModel
 class FoldersViewModel @Inject constructor(
     private val foldersRepository: FoldersRepository
-) : ViewModel() {
+) : ViewModel(){
+
+
+    init {
+        updateAllFolders()
+    }
 
     private val foldersMutableLiveData : MutableLiveData<ArrayList<Folder>> =
         MutableLiveData<ArrayList<Folder>>()
@@ -28,12 +33,11 @@ class FoldersViewModel @Inject constructor(
     fun addFolder(folder : Folder){
         viewModelScope.launch(Dispatchers.IO) {
             foldersRepository.addFolder(folder)
+            updateAllFolders()
         }
-        updateAllFolders()
-
     }
 
-    fun updateAllFolders(){
+    private fun updateAllFolders(){
         viewModelScope.launch(Dispatchers.IO){
             foldersMutableLiveData.postValue(getAllFolders())
         }

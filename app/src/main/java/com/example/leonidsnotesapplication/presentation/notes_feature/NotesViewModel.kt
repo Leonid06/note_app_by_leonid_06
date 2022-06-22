@@ -16,6 +16,10 @@ class NotesViewModel  @Inject constructor (
     private val noteRepository: NoteRepository
 ) : ViewModel() {
 
+    init {
+        updateNotes()
+    }
+
     private val notesLiveDataMutable  = MutableLiveData<ArrayList<Note>>()
     val notesLiveData : LiveData<ArrayList<Note>> = notesLiveDataMutable
 
@@ -45,7 +49,7 @@ class NotesViewModel  @Inject constructor (
     }
 
 
-   fun updateNotes(){
+   private fun updateNotes(){
         viewModelScope.launch(Dispatchers.IO) {
             notesLiveDataMutable.postValue(getAllNotes())
         }

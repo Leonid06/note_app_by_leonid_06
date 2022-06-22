@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.domain.model.Note
-import com.example.leonidsnotesapplication.presentation.notes_feature.util.DeleteDialogFragment
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteCardAdapter
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -45,18 +44,16 @@ class NotesFragment : Fragment()  ,
         val notesSearchView = view.findViewById<SearchView>(R.id.notesSearchView)
 
 
-        vm.notesLiveData.observe(viewLifecycleOwner){
-            adapter.setData(it)
-        }
-
-        vm.updateNotes()
-
         addNoteButton.setOnClickListener{
             findNavController().navigate(R.id.action_notesFragment_to_singleNoteFragment)
         }
 
         goToFoldersButton.setOnClickListener {
             findNavController().navigate(R.id.action_notesFragment_to_foldersFragment)
+        }
+
+        vm.notesLiveData.observe(viewLifecycleOwner){
+            adapter.setData(it)
         }
 
         recyclerView.adapter = adapter
