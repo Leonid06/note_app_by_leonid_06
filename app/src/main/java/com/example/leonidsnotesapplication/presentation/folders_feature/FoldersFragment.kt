@@ -40,7 +40,7 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
         vm.updateAllFolders()
 
         addFolderButton.setOnClickListener {
-            findNavController().navigate(R.id.action_foldersFragment_to_createFolderFragment)
+            findNavController().navigate(R.id.action_foldersFragment_to_folderAddDialog)
         }
 
         foldersRecyclerView.adapter = adapter
@@ -59,6 +59,6 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
         val bundle = Bundle()
         bundle.putParcelable("folder", folder)
 
-        findNavController().navigate(R.id.action_foldersFragment_to_createFolderFragment, bundle)
+        findNavController().navigate(R.id.action_foldersFragment_to_folderAddDialog, bundle)
     }
 }

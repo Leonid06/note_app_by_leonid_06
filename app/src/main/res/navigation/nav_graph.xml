@@ -34,11 +34,11 @@
         android:label="fragment_settings"
         tools:layout="@layout/fragment_folders" >
         <action
-            android:id="@+id/action_foldersFragment_to_createFolderFragment"
-            app:destination="@id/createFolderFragment" />
+            android:id="@+id/action_foldersFragment_to_folderAddDialog"
+            app:destination="@id/folderAddDialog" />
     </fragment>
-    <fragment
-        android:id="@+id/createFolderFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.folders_feature.CreateFolderFragment"
-        android:label="CreateFolderFragment" />
+    <dialog
+        android:id="@+id/folderAddDialog"
+        android:name="com.example.leonidsnotesapplication.presentation.folders_feature.FolderAddDialog"
+        android:label="FolderAddDialog" />
 </navigation>

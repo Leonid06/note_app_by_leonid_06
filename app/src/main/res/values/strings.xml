@@ -5,4 +5,7 @@
     <string name="title_hint">Title</string>
     <string name="content_hint">Content</string>
     <string name="content_hint_1">...</string>
+    <string name="enter_title">Enter title</string>
+    <string name="create">create</string>
+    <string name="cancel">cancel</string>
 </resources>
