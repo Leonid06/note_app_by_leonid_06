@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
+import com.example.leonidsnotesapplication.databinding.NoteCardViewBinding
 import com.example.leonidsnotesapplication.domain.model.Note
 
 
@@ -25,33 +26,28 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
     private val notes = ArrayList<Note>()
     private val notesListCallback =  NotesListCallback(this)
 
-    class ViewHolder(view : View ,  private val listener  : NoteClickListener) : RecyclerView.ViewHolder(view) , View.OnClickListener {
-        private val titleView: TextView = view.findViewById(R.id.tvNoteTitle)
-        private val subtitleView : TextView = view.findViewById(R.id.tvNoteSubtitle)
-        private val datetimeView : TextView = view.findViewById(R.id.tvNoteDatetime)
-        private val deleteButton: ImageButton = view.findViewById(R.id.ibDelete)
-        private val starCheckBox : CheckBox = view.findViewById(R.id.cbStar)
+    class ViewHolder(private val binding: NoteCardViewBinding ,  private val listener  : NoteClickListener) : RecyclerView.ViewHolder(binding.root) , View.OnClickListener {
 
         private lateinit var note: Note
 
 
         init {
-            view.setOnClickListener(this)
-            deleteButton.setOnClickListener {
+            binding.root.setOnClickListener(this)
+            binding.ibDelete.setOnClickListener {
                 listener.onDeleteButtonClick(note)
             }
-            starCheckBox.setOnClickListener {
-                note.isStarred = starCheckBox.isChecked
+            binding.cbStar.setOnClickListener {
+                note.isStarred = binding.cbStar.isChecked
                 listener.onStarCheckBoxClick(note)
             }
         }
 
         fun bind(note: Note) {
             this.note = note
-            titleView.text = note.title
-            datetimeView.text  = note.datetime
-            subtitleView.text = note.subtitle
-            starCheckBox.isChecked = note.isStarred
+            binding.tvNoteTitle.text = note.title
+            binding.tvNoteDatetime.text  = note.datetime
+            binding.tvNoteSubtitle.text = note.subtitle
+            binding.cbStar.isChecked = note.isStarred
         }
 
         override fun onClick(p0: View?) {
@@ -60,10 +56,9 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.note_card_view, parent,  false)
+        val binding = NoteCardViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return ViewHolder(view , listener)
+        return ViewHolder(binding , listener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

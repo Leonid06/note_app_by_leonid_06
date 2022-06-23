@@ -22,10 +22,10 @@ class FoldersDiffUtil(
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        if(oldList.size == newList.size){
-            return false
+        return if(oldList.size == newList.size){
+            false
         }else{
-            return when {
+            when {
                 oldList[oldItemPosition].id != newList[newItemPosition].id -> {
                     false
                 }
