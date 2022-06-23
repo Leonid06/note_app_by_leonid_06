@@ -16,6 +16,7 @@ import com.example.leonidsnotesapplication.databinding.FragmentNotesBinding
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteCardAdapter
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
+import com.example.leonidsnotesapplication.presentation.single_note_feature.SingleNoteFragment
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter
@@ -46,8 +47,12 @@ class NotesFragment : Fragment()  ,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+
+
         binding.goToAddNoteFragmentButton.setOnClickListener{
-            findNavController().navigate(R.id.action_notesFragment_to_singleNoteFragment)
+            val note = Note("","","",false, SingleNoteFragment.getDate())
+            val action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note)
+            Navigation.findNavController(requireView()).navigate(action)
         }
 
         binding.goToFoldersFragmentButton.setOnClickListener {
@@ -61,7 +66,6 @@ class NotesFragment : Fragment()  ,
         binding.notesRecyclerView.adapter = adapter
         binding.notesRecyclerView.isNestedScrollingEnabled = false
         binding.notesRecyclerView.layoutManager = LinearLayoutManager(view.context)
-//        binding.notesRecyclerView.itemAnimator = SlideInLeftAnimator()
 
         binding.notesSearchView.isSubmitButtonEnabled  = true
         binding.notesSearchView.setOnQueryTextListener(this)
@@ -69,12 +73,8 @@ class NotesFragment : Fragment()  ,
     }
 
     override fun onClickedNote(note: Note) {
-        val  bundle = Bundle()
-
-        bundle.putParcelable("note" , note)
-        Navigation.findNavController(requireView()).navigate(
-            R.id.action_notesFragment_to_singleNoteFragment ,
-            bundle)
+        val  action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note)
+        Navigation.findNavController(requireView()).navigate(action)
     }
 
     override fun onDeleteButtonClick(note : Note) {
