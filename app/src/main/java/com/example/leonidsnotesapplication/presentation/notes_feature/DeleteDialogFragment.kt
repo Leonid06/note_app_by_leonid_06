@@ -22,7 +22,6 @@ class DeleteDialogFragment(
                     _,_ -> listener.onDeleteOptionClicked(note)
             }
             .setNegativeButton("cancel") { _,_ -> }
-
             .create()
     
     companion object {

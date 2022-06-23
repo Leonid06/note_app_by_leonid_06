@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.leonidsnotesapplication.R
+import com.example.leonidsnotesapplication.databinding.FragmentSingleNoteBinding
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.MainActivity
 import com.example.leonidsnotesapplication.presentation.extensions.showKeyboard
@@ -29,30 +30,32 @@ class SingleNoteFragment : Fragment() {
 
     private val vm  : NotesViewModel  by viewModels()
 
+    private var _binding : FragmentSingleNoteBinding? = null
+
+    private val binding  get()= _binding!!
+
     private var isEdit = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_single_note, container, false)
+    ): View {
+        _binding = FragmentSingleNoteBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val addNoteButton = view.findViewById<FloatingActionButton>(R.id.add_note_button)
-        val noteContentEditText = view.findViewById<EditText>(R.id.etNoteContent)
-
-        activity?.showKeyboard(noteContentEditText)
+        activity?.showKeyboard(binding.etNoteContent)
 
         if(arguments != null){
             isEdit = true
-            noteContentEditText.setText(arguments?.getParcelable<Note>("note")!!.content)
+            binding.etNoteContent.setText(arguments?.getParcelable<Note>("note")!!.content)
         }
-        addNoteButton.setOnClickListener{
+        binding.addNoteButton.setOnClickListener{
 
-            val content = noteContentEditText.text.toString()
+            val content = binding.etNoteContent.text.toString()
             val title : String
             val subtitle : String
             val date = getDate()

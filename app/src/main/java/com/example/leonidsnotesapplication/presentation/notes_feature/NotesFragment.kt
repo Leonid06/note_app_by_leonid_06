@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
+import com.example.leonidsnotesapplication.databinding.FragmentNotesBinding
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteCardAdapter
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
@@ -25,30 +26,28 @@ class NotesFragment : Fragment()  ,
     DeleteDialogFragment.OnNegativeButtonClickListener,
     SearchView.OnQueryTextListener{
 
+    private var _binding : FragmentNotesBinding? = null
+    private val binding get() = _binding!!
+
     private val adapter : NoteCardAdapter by lazy { NoteCardAdapter(this) }
     private val vm : NotesViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_notes, container, false)
+    ): View {
+        _binding = FragmentNotesBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.notesRecyclerView)
-        val addNoteButton = view.findViewById<FloatingActionButton>(R.id.go_to_add_note_fragment_button)
-        val goToFoldersButton = view.findViewById<FloatingActionButton>(R.id.go_to_folders_fragment_button)
-        val notesSearchView = view.findViewById<SearchView>(R.id.notesSearchView)
-
-
-        addNoteButton.setOnClickListener{
+        binding.goToAddNoteFragmentButton.setOnClickListener{
             findNavController().navigate(R.id.action_notesFragment_to_singleNoteFragment)
         }
 
-        goToFoldersButton.setOnClickListener {
+        binding.goToFoldersFragmentButton.setOnClickListener {
             findNavController().navigate(R.id.action_notesFragment_to_foldersFragment)
         }
 
@@ -56,13 +55,13 @@ class NotesFragment : Fragment()  ,
             adapter.setData(it)
         }
 
-        recyclerView.adapter = adapter
-        recyclerView.isNestedScrollingEnabled = false
-        recyclerView.layoutManager = LinearLayoutManager(view.context)
-        recyclerView.itemAnimator = NotesItemAnimator()
+        binding.notesRecyclerView.adapter = adapter
+        binding.notesRecyclerView.isNestedScrollingEnabled = false
+        binding.notesRecyclerView.layoutManager = LinearLayoutManager(view.context)
+        binding.notesRecyclerView.itemAnimator = NotesItemAnimator()
 
-        notesSearchView.isSubmitButtonEnabled  = true
-        notesSearchView.setOnQueryTextListener(this)
+        binding.notesSearchView.isSubmitButtonEnabled  = true
+        binding.notesSearchView.setOnQueryTextListener(this)
 
     }
 

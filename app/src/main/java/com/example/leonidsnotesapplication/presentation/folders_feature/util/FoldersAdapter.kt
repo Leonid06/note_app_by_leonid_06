@@ -7,6 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
+import com.example.leonidsnotesapplication.databinding.FolderCardViewBinding
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesDiffUtil
 
@@ -19,7 +20,8 @@ class FoldersAdapter(private val listener :FolderClickListener) : RecyclerView.A
     }
     class ViewHolder(view : View,  private val listener : FolderClickListener) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
-        private val titleView  = view.findViewById<TextView>(R.id.tvFolderTitle)
+        private val binding = FolderCardViewBinding.bind(view)
+
         private lateinit var folder : Folder
 
         override fun onClick(p0: View?) {
@@ -28,7 +30,7 @@ class FoldersAdapter(private val listener :FolderClickListener) : RecyclerView.A
 
         fun bind(folder : Folder){
             this.folder = folder
-            titleView.text = folder.title
+            binding.tvFolderTitle.text = folder.title
         }
     }
 
