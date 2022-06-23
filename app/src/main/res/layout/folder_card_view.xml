@@ -9,8 +9,18 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:background="@null">
+        android:layout_height="75dp"
+        android:background="@drawable/folder_card_view_style">
+
+        <ImageView
+            android:id="@+id/ivFolder"
+            android:layout_width="45dp"
+            android:layout_height="37dp"
+            android:layout_marginStart="20dp"
+            android:src="@drawable/ic_folders_2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/tvFolderTitle"
@@ -19,10 +29,10 @@
             android:layout_margin="10dp"
             android:textAlignment="textStart"
             android:textColor="@color/font_color_1"
-            android:textSize="15sp"
+            android:textSize="17sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintStart_toEndOf="@id/ivFolder"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />
 

@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -62,16 +63,25 @@ class SingleNoteFragment : Fragment() {
             val clickedNote : Note = args.note
             val isStarred = clickedNote.isStarred
 
-            createNote(title, subtitle,  content,isStarred, date, clickedNote.id)
+            val note = createNote(title, subtitle,  content,isStarred, date, clickedNote.id)
 
-            findNavController().navigateUp()
-
+            if(content.isNotEmpty()){
+                vm.addNote(note)
+                findNavController().navigateUp()
+            }
         }
 
     }
 
-    private fun createNote(title : String,subtitle : String, content : String, isStarred : Boolean, date : String, id : Int){
-        val note = Note(
+    private fun createNote(
+        title: String,
+        subtitle: String,
+        content: String,
+        isStarred: Boolean,
+        date: String,
+        id: Int
+    ): Note {
+        return Note(
             title,
             subtitle,
             content,
@@ -79,8 +89,6 @@ class SingleNoteFragment : Fragment() {
             date,
             id
         )
-
-        vm.addNote(note)
     }
 
     companion object{

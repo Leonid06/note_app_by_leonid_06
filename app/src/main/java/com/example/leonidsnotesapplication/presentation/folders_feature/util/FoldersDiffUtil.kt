@@ -18,25 +18,11 @@ class FoldersDiffUtil(
 
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+        return oldList[oldItemPosition].id == newList[newItemPosition].id
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return if(oldList.size == newList.size){
-            false
-        }else{
-            when {
-                oldList[oldItemPosition].id != newList[newItemPosition].id -> {
-                    false
-                }
-                oldList[oldItemPosition].title != newList[newItemPosition].title -> {
-                    false
-                }
-
-                else -> true
-            }
-        }
-
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 
 }

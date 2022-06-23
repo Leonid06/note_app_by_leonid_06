@@ -49,21 +49,20 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
         binding.addFolderButton.setOnClickListener {
             FolderAddDialog().show(childFragmentManager, null)
+//            vm.addFolder(Folder("folder 1"))
 //            findNavController().navigate(R.id.action_foldersFragment_to_folderAddDialog)
         }
 
         binding.foldersRecyclerView.adapter = adapter
         binding.foldersRecyclerView.isNestedScrollingEnabled = false
         binding.foldersRecyclerView.layoutManager = LinearLayoutManager(view.context)
-        binding.foldersRecyclerView.addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
-
         vm.foldersLiveData.observe(viewLifecycleOwner){
             adapter.setData(it)
         }
     }
 
     override fun onClickedFolder(folder : Folder) {
-        val bundle = Bundle()
-        bundle.putParcelable("folder", folder)
+        val action = FoldersFragmentDirections.actionFoldersFragmentToNotesFragment(folder)
+        findNavController().navigate(action)
     }
 }
