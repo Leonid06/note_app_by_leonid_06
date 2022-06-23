@@ -17,9 +17,10 @@ class NotesItemAnimator : DefaultItemAnimator() {
         return super.animateRemove(holder)
     }
 
-    override fun onAddStarting(holder: RecyclerView.ViewHolder?) {
+    override fun animateAdd(holder: RecyclerView.ViewHolder?): Boolean {
         val animation = AnimationUtils.loadAnimation(holder?.itemView?.context, R.anim.slide_in)
         holder?.itemView?.startAnimation(animation)
+        return  super.animateAdd(holder)
     }
 
 

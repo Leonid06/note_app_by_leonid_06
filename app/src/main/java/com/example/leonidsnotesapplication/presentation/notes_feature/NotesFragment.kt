@@ -18,6 +18,9 @@ import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteC
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.recyclerview.adapters.SlideInRightAnimationAdapter
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator
 
 
 @AndroidEntryPoint
@@ -58,7 +61,7 @@ class NotesFragment : Fragment()  ,
         binding.notesRecyclerView.adapter = adapter
         binding.notesRecyclerView.isNestedScrollingEnabled = false
         binding.notesRecyclerView.layoutManager = LinearLayoutManager(view.context)
-        binding.notesRecyclerView.itemAnimator = NotesItemAnimator()
+//        binding.notesRecyclerView.itemAnimator = SlideInLeftAnimator()
 
         binding.notesSearchView.isSubmitButtonEnabled  = true
         binding.notesSearchView.setOnQueryTextListener(this)
