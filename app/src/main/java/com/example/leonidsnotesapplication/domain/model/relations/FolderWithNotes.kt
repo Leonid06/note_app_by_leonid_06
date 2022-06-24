@@ -9,7 +9,7 @@ data class FolderWithNotes(
     @Embedded val folder : Folder,
     @Relation(
         parentColumn = "id",
-        entityColumn = "id"
+        entityColumn = "folderId"
     )
     val notes : List<Note>
 )

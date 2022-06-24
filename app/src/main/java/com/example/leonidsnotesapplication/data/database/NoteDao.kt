@@ -10,8 +10,14 @@ import dagger.Provides
 @Dao
 interface NoteDao {
 
-    @Query("SELECT * FROM note WHERE title LIKE :query OR subtitle LIKE :query ORDER BY isStarred")
-    fun selectNotes(query : String?) : List<Note>
+    @Query("SELECT * FROM Folder WHERE id = :id")
+    fun getFolderWithNotesByFolderId(id : Int) : FolderWithNotes
+
+    @Query("SELECT * FROM note WHERE content LIKE :query ORDER BY isStarred")
+    fun searchAllNotes(query : String?) : List<Note>
+
+    @Query("SELECT * FROM note WHERE folderId = :id AND content LIKE :query" )
+    fun searchNotesByFolderId(query : String?, id : Int) : List<Note>
 
     @Query("SELECT * FROM Note ORDER BY isStarred")
     fun getAllNotes() : List<Note>

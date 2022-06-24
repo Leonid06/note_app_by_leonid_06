@@ -1,11 +1,13 @@
 package com.example.leonidsnotesapplication.presentation.single_note_feature
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -14,6 +16,7 @@ import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.extensions.showKeyboard
 import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -22,7 +25,7 @@ import java.time.format.FormatStyle
 @AndroidEntryPoint
 class SingleNoteFragment : Fragment() {
 
-    private val vm  : NotesViewModel  by viewModels()
+    private val vm : NotesViewModel by activityViewModels()
 
     private val args : SingleNoteFragmentArgs by navArgs()
 
@@ -43,12 +46,15 @@ class SingleNoteFragment : Fragment() {
 
         activity?.showKeyboard(binding.etNoteContent)
 
+        Log.d("Debugging",vm.toString())
+
         binding.etNoteContent.setText(args.note.content)
         binding.addNoteButton.setOnClickListener{
 
             val content = binding.etNoteContent.text.toString()
             val title : String
             val subtitle : String
+            val folderId = vm.currentFolderLiveData.value!!.id
             val date = getDate()
 
 
@@ -63,7 +69,7 @@ class SingleNoteFragment : Fragment() {
             val clickedNote : Note = args.note
             val isStarred = clickedNote.isStarred
 
-            val note = createNote(title, subtitle,  content,isStarred, date, clickedNote.id)
+            val note = createNote(title, subtitle,  content,isStarred, date, clickedNote.id, folderId = folderId)
 
             if(content.isNotEmpty()){
                 vm.addNote(note)
@@ -79,7 +85,8 @@ class SingleNoteFragment : Fragment() {
         content: String,
         isStarred: Boolean,
         date: String,
-        id: Int
+        id: Int,
+        folderId : Int
     ): Note {
         return Note(
             title,
@@ -87,7 +94,8 @@ class SingleNoteFragment : Fragment() {
             content,
             isStarred,
             date,
-            id
+            id,
+            folderId
         )
     }
 

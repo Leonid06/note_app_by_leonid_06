@@ -24,6 +24,10 @@ class FoldersAdapter(private val listener :FolderClickListener) : RecyclerView.A
 
         private lateinit var folder : Folder
 
+        init {
+            binding.root.setOnClickListener(this)
+        }
+
         override fun onClick(p0: View?) {
             listener.onClickedFolder(folder)
         }

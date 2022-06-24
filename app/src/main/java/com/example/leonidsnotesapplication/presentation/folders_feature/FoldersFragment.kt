@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
@@ -29,7 +30,7 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
     private val binding get() = _binding!!
 
-    private val vm : FoldersViewModel by viewModels()
+    private val vm : FoldersViewModel by activityViewModels()
 
     private val adapter : FoldersAdapter by lazy { FoldersAdapter(this) }
 
@@ -49,8 +50,6 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
         binding.addFolderButton.setOnClickListener {
             FolderAddDialog().show(childFragmentManager, null)
-//            vm.addFolder(Folder("folder 1"))
-//            findNavController().navigate(R.id.action_foldersFragment_to_folderAddDialog)
         }
 
         binding.foldersRecyclerView.adapter = adapter

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/notesFragment">
+    app:startDestination="@id/foldersFragment">
 
     <fragment
         android:id="@+id/notesFragment"
@@ -21,7 +21,7 @@
             android:id="@+id/action_notesFragment_to_foldersFragment"
             app:destination="@id/foldersFragment" />
         <argument
-            android:name="folder "
+            android:name="folder"
             app:argType="com.example.leonidsnotesapplication.domain.model.Folder" />
     </fragment>
     <fragment

@@ -6,18 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.viewModels
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentNotesBinding
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteCardAdapter
-import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
 import com.example.leonidsnotesapplication.presentation.single_note_feature.SingleNoteFragment
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -32,7 +30,11 @@ class NotesFragment : Fragment()  ,
     private val binding get() = _binding!!
 
     private val adapter : NoteCardAdapter by lazy { NoteCardAdapter(this) }
-    private val vm : NotesViewModel by viewModels()
+
+    private val vm : NotesViewModel by activityViewModels()
+
+    private val args : NotesFragmentArgs by navArgs()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,12 +47,12 @@ class NotesFragment : Fragment()  ,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        vm.setFolder(args.folder)
 
         binding.goToAddNoteFragmentButton.setOnClickListener{
-            val note = Note("","","",false, SingleNoteFragment.getDate())
+            val note = Note("","","",false, SingleNoteFragment.getDate(), folderId = vm.currentFolderLiveData.value!!.id)
             val action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note)
-            Navigation.findNavController(requireView()).navigate(action)
+            findNavController().navigate(action)
         }
 
         binding.goToFoldersFragmentButton.setOnClickListener {
@@ -60,6 +62,8 @@ class NotesFragment : Fragment()  ,
         vm.notesLiveData.observe(viewLifecycleOwner){
             adapter.setData(it)
         }
+
+        binding.tvFolderTitle.text = args.folder.title
 
         binding.notesRecyclerView.adapter = adapter
         binding.notesRecyclerView.isNestedScrollingEnabled = false

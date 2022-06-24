@@ -1,6 +1,7 @@
 package com.example.leonidsnotesapplication.data.repository
 
 import com.example.leonidsnotesapplication.data.database.NoteDao
+import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
 
@@ -11,8 +12,16 @@ class NoteRepositoryImpl(
         return ArrayList(dao.getAllNotes())
     }
 
-    override fun searchNotes(query: String?): ArrayList<Note> {
-        return ArrayList(dao.selectNotes(query))
+    override fun searchAllNotes(query: String?): ArrayList<Note> {
+        return ArrayList(dao.searchAllNotes(query))
+    }
+
+    override fun searchNotesByFolder(query: String?, folder: Folder): ArrayList<Note> {
+        return ArrayList(dao.searchNotesByFolderId(query, folder.id))
+    }
+
+    override fun getNotesByFolder(folder: Folder): ArrayList<Note> {
+        return  dao.getFolderWithNotesByFolderId(folder.id).notes as ArrayList<Note>
     }
 
     override suspend fun deleteNote(note: Note) {
