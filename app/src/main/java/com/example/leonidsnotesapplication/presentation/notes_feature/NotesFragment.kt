@@ -71,7 +71,7 @@ class NotesFragment : Fragment()  ,
         binding.notesRecyclerView.itemAnimator= null
 
         binding.notesSearchView.isSubmitButtonEnabled  = true
-        binding.notesSearchView.setOnQueryTextListener(this)
+        binding.notesSearchView.setOnQueryTextListener(this as SearchView.OnQueryTextListener)
 
     }
 
@@ -81,7 +81,7 @@ class NotesFragment : Fragment()  ,
     }
 
     override fun onDeleteButtonClick(note : Note) {
-        DeleteDialogFragment(note, this).show(
+        DeleteDialogFragment(note, this as DeleteDialogFragment.OnNegativeButtonClickListener).show(
             childFragmentManager,
             DeleteDialogFragment.TAG)
     }

@@ -34,7 +34,7 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
     private val vm : FoldersViewModel by activityViewModels()
 
-    private val adapter : FoldersAdapter by lazy { FoldersAdapter(this) }
+    private val adapter : FoldersAdapter by lazy { FoldersAdapter(this as FoldersAdapter.FolderClickListener) }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
