@@ -6,23 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentFoldersBinding
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.presentation.folders_feature.util.FoldersAdapter
-import com.example.leonidsnotesapplication.presentation.folders_feature.util.SwipeCallback
-import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.leonidsnotesapplication.presentation.folders_feature.callbacks.SwipeCallback
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 @AndroidEntryPoint

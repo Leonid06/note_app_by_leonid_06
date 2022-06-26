@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FolderCardViewBinding
 import com.example.leonidsnotesapplication.domain.model.Folder
+import com.example.leonidsnotesapplication.presentation.folders_feature.callbacks.SwipeCallback
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesDiffUtil
 
 class FoldersAdapter(private val listener :FolderClickListener) : RecyclerView.Adapter<FoldersAdapter.ViewHolder>() {

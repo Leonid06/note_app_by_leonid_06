@@ -1,4 +1,4 @@
-package com.example.leonidsnotesapplication.presentation.folders_feature.util
+package com.example.leonidsnotesapplication.presentation.folders_feature.callbacks
 
 import android.content.Context
 import android.graphics.Canvas
@@ -8,7 +8,7 @@ import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteCardAdapter
 import it.xabaras.android.recyclerview.swipedecorator.RecyclerViewSwipeDecorator
 
-abstract class SwipeCallback()
+abstract class SwipeCallback
     : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT) {
 
     override fun getMovementFlags(
