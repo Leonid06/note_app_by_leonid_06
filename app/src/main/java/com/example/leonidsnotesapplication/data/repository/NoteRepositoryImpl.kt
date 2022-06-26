@@ -9,15 +9,15 @@ class NoteRepositoryImpl(
     private val dao : NoteDao
 ) : NoteRepository {
     override fun getAllNotes(): ArrayList<Note> {
-        return ArrayList(dao.getAllNotes())
+        return dao.getAllNotes() as ArrayList<Note>
     }
 
     override fun searchAllNotes(query: String?): ArrayList<Note> {
-        return ArrayList(dao.searchAllNotes(query))
+        return dao.searchAllNotes(query) as ArrayList<Note>
     }
 
     override fun searchNotesByFolder(query: String?, folder: Folder): ArrayList<Note> {
-        return ArrayList(dao.searchNotesByFolderId(query, folder.id))
+        return dao.searchNotesByFolderId(query, folder.id) as ArrayList<Note>
     }
 
     override fun getNotesByFolder(folder: Folder): ArrayList<Note> {
@@ -25,11 +25,13 @@ class NoteRepositoryImpl(
     }
 
     override suspend fun deleteNote(note: Note) {
-       return dao.deleteNote(note)
+        dao.updateOnDeleteNote(note.folderId)
+        dao.deleteNote(note)
     }
 
     override suspend fun insertNote(note: Note) {
-        return dao.insertNote(note)
+        dao.updateOnInsertNote(note.folderId)
+        dao.insertNote(note)
     }
 
 }

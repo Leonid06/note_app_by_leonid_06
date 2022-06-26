@@ -34,6 +34,12 @@ interface NoteDao {
     @Query("SELECT * FROM Folder")
     fun getAllFolders() : List<Folder>
 
+    @Query("UPDATE folder SET noteCount = noteCount + 1 WHERE id = :id")
+    fun updateOnInsertNote(id : Int)
+
+    @Query("UPDATE folder SET noteCount = noteCount - 1 WHERE id = :id")
+    fun updateOnDeleteNote(id : Int)
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertNote(note : Note)
 

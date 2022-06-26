@@ -21,10 +21,10 @@ class FoldersViewModel @Inject constructor(
         updateAllFolders()
     }
 
-    private val foldersMutableLiveData : MutableLiveData<ArrayList<Folder>> =
+    private val _foldersLiveData : MutableLiveData<ArrayList<Folder>> =
         MutableLiveData<ArrayList<Folder>>()
 
-    val foldersLiveData : LiveData<ArrayList<Folder>> =  foldersMutableLiveData
+    val foldersLiveData : LiveData<ArrayList<Folder>> =  _foldersLiveData
 
     private fun getAllFolders() : ArrayList<Folder> {
         return foldersRepository.getAllFolders() as ArrayList<Folder>
@@ -46,7 +46,7 @@ class FoldersViewModel @Inject constructor(
 
     private fun updateAllFolders(){
         viewModelScope.launch(Dispatchers.IO){
-            foldersMutableLiveData.postValue(getAllFolders())
+            _foldersLiveData.postValue(getAllFolders())
         }
     }
 

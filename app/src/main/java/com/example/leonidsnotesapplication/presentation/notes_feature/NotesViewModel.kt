@@ -18,25 +18,25 @@ class NotesViewModel  @Inject constructor (
 ) : ViewModel() {
 
 
-    private val notesLiveDataMutable  = MutableLiveData<ArrayList<Note>>()
-    val notesLiveData : LiveData<ArrayList<Note>> = notesLiveDataMutable
+    private val _notesLiveData  = MutableLiveData<ArrayList<Note>>()
+    val notesLiveData : LiveData<ArrayList<Note>> = _notesLiveData
 
-    private val notesSearchLiveDataMutable  = MutableLiveData<ArrayList<Note>>()
-    val notesSearchLiveData : LiveData<ArrayList<Note>> = notesSearchLiveDataMutable
+    private val _notesSearchLiveData  = MutableLiveData<ArrayList<Note>>()
+    val notesSearchLiveData : LiveData<ArrayList<Note>> = _notesSearchLiveData
 
-    private val currentFolderLiveDataMutable = MutableLiveData<Folder>()
-    val currentFolderLiveData : LiveData<Folder> = currentFolderLiveDataMutable
+    private val _currentFolderLiveData = MutableLiveData<Folder>()
+    val currentFolderLiveData : LiveData<Folder> = _currentFolderLiveData
 
     fun setFolder(folder : Folder){
         viewModelScope.launch(Dispatchers.IO) {
-            currentFolderLiveDataMutable.postValue(folder)
+            _currentFolderLiveData.postValue(folder)
             updateNotes(folder)
         }
     }
 
     fun searchNotes(query : String?){
         viewModelScope.launch(Dispatchers.IO) {
-            notesSearchLiveDataMutable.postValue(noteRepository.searchNotesByFolder(query,currentFolderLiveData.value!!))
+            _notesSearchLiveData.postValue(noteRepository.searchNotesByFolder(query,currentFolderLiveData.value!!))
         }
     }
 
@@ -58,7 +58,7 @@ class NotesViewModel  @Inject constructor (
 
     private fun updateNotes(folder: Folder) {
         viewModelScope.launch(Dispatchers.IO){
-            notesLiveDataMutable.postValue(getNotesByFolder(folder))
+            _notesLiveData.postValue(getNotesByFolder(folder))
         }
     }
 

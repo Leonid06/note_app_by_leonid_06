@@ -36,6 +36,17 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Title" />
 
+        <TextView
+            android:id="@+id/tvNoteCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/font_color_2"
+            tools:text="14"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginEnd="50dp"
+            app:layout_constraintTop_toTopOf="parent" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </RelativeLayout>

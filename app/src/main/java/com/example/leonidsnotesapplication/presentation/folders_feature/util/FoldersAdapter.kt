@@ -43,6 +43,7 @@ class FoldersAdapter(private val listener :FolderClickListener) : RecyclerView.A
         fun bind(folder : Folder){
             this.folder = folder
             binding.tvFolderTitle.text = folder.title
+            binding.tvNoteCount.text = folder.noteCount.toString()
         }
     }
 
