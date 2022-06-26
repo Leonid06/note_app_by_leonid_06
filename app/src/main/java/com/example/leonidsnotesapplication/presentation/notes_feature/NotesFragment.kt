@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -22,14 +23,16 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class NotesFragment : Fragment()  ,
-    NoteCardAdapter.NoteClickListener ,
+    NoteCardAdapter.NoteTouchListener,
     DeleteDialogFragment.OnNegativeButtonClickListener,
     SearchView.OnQueryTextListener{
 
     private var _binding : FragmentNotesBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter : NoteCardAdapter by lazy { NoteCardAdapter(this) }
+    private val adapter : NoteCardAdapter by lazy {
+        NoteCardAdapter(this as NoteCardAdapter.NoteTouchListener)
+    }
 
     private val vm : NotesViewModel by activityViewModels()
 
@@ -75,9 +78,9 @@ class NotesFragment : Fragment()  ,
 
     }
 
-    override fun onClickedNote(note: Note) {
+    override fun onNoteClicked(note: Note) {
         val  action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note)
-        Navigation.findNavController(requireView()).navigate(action)
+        findNavController().navigate(action)
     }
 
     override fun onDeleteButtonClick(note : Note) {
@@ -108,6 +111,12 @@ class NotesFragment : Fragment()  ,
 
     override fun onQueryTextChange(query: String?): Boolean {
         searchDatabase(query)
+        return true
+    }
+
+    override fun onNoteSwipedLeft(note: Note): Boolean {
+//        vm.deleteNote(note)
+        Toast.makeText(context, "Note swiped left", Toast.LENGTH_LONG)
         return true
     }
 }

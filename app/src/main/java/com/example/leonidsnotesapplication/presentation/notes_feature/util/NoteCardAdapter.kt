@@ -2,23 +2,25 @@ package com.example.leonidsnotesapplication.presentation.notes_feature.util
 
 
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CheckBox
-import android.widget.ImageButton
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.NoteCardViewBinding
 import com.example.leonidsnotesapplication.domain.model.Note
+import com.example.leonidsnotesapplication.presentation.notes_feature.callbacks.NotesListCallback
+import com.example.leonidsnotesapplication.presentation.notes_feature.callbacks.OnTouchListener
 
 
-class NoteCardAdapter( private val listener: NoteClickListener) :
+class NoteCardAdapter(
+    private val onTouchListener : NoteTouchListener) :
     RecyclerView.Adapter<NoteCardAdapter.ViewHolder>() {
 
-    interface NoteClickListener{
-        fun onClickedNote(note : Note)
+
+    interface NoteTouchListener {
+        fun onNoteSwipedLeft(note : Note) : Boolean
+        fun onNoteClicked(note : Note)
         fun onDeleteButtonClick(note : Note)
         fun onStarCheckBoxClick(note : Note)
     }
@@ -26,19 +28,31 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
     private val notes = ArrayList<Note>()
     private val notesListCallback =  NotesListCallback(this)
 
-    class ViewHolder(private val binding: NoteCardViewBinding ,  private val listener  : NoteClickListener) : RecyclerView.ViewHolder(binding.root) , View.OnClickListener {
+    class ViewHolder(private val binding: NoteCardViewBinding ,
+                     private val onTouchListener: NoteTouchListener
+                     ) : RecyclerView.ViewHolder(binding.root) {
 
         private lateinit var note: Note
 
 
         init {
-            binding.root.setOnClickListener(this)
+            binding.root.setOnTouchListener(object : OnTouchListener(binding.root.context){
+                override fun onSwipeLeft(): Boolean {
+                    onTouchListener.onNoteSwipedLeft(note)
+                    return true
+                }
+
+                override fun onClick(): Boolean {
+                    onTouchListener.onNoteClicked(note)
+                    return true
+                }
+            })
             binding.ibDelete.setOnClickListener {
-                listener.onDeleteButtonClick(note)
+                onTouchListener.onDeleteButtonClick(note)
             }
             binding.cbStar.setOnClickListener {
                 note.isStarred = binding.cbStar.isChecked
-                listener.onStarCheckBoxClick(note)
+                onTouchListener.onStarCheckBoxClick(note)
             }
         }
 
@@ -49,16 +63,12 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
             binding.tvNoteSubtitle.text = note.subtitle
             binding.cbStar.isChecked = note.isStarred
         }
-
-        override fun onClick(p0: View?) {
-            listener.onClickedNote(note)
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = NoteCardViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        return ViewHolder(binding , listener)
+        return ViewHolder(binding ,onTouchListener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -81,7 +91,6 @@ class NoteCardAdapter( private val listener: NoteClickListener) :
     }
 
     override fun getItemCount() =  notes.size
-
 
 }
 

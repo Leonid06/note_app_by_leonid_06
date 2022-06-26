@@ -1,6 +1,7 @@
-package com.example.leonidsnotesapplication.presentation.notes_feature.util
+package com.example.leonidsnotesapplication.presentation.notes_feature.callbacks
 
 import androidx.recyclerview.widget.ListUpdateCallback
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteCardAdapter
 
 class NotesListCallback(private val adapter: NoteCardAdapter) : ListUpdateCallback {
 
