@@ -1,9 +1,7 @@
-package com.example.leonidsnotesapplication.presentation.notes_feature.util
+package com.example.leonidsnotesapplication.presentation.notes_feature
 
 
 import android.view.LayoutInflater
-import android.view.MotionEvent
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -11,10 +9,12 @@ import com.example.leonidsnotesapplication.databinding.NoteCardViewBinding
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.notes_feature.callbacks.NotesListCallback
 import com.example.leonidsnotesapplication.presentation.notes_feature.callbacks.OnTouchListener
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesDiffUtil
 
 
 class NoteCardAdapter(
-    private val onTouchListener : NoteTouchListener) :
+    private val onTouchListener : NoteTouchListener
+) :
     RecyclerView.Adapter<NoteCardAdapter.ViewHolder>() {
 
 

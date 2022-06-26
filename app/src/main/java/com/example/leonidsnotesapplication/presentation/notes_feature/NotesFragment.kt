@@ -8,14 +8,12 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentNotesBinding
 import com.example.leonidsnotesapplication.domain.model.Note
-import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteCardAdapter
 import com.example.leonidsnotesapplication.presentation.single_note_feature.SingleNoteFragment
 import dagger.hilt.android.AndroidEntryPoint
 

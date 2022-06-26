@@ -1,18 +1,18 @@
-package com.example.leonidsnotesapplication.presentation.folders_feature.util
+package com.example.leonidsnotesapplication.presentation.folders_feature
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FolderCardViewBinding
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.presentation.folders_feature.callbacks.SwipeCallback
-import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesDiffUtil
+import com.example.leonidsnotesapplication.presentation.folders_feature.util.FoldersDiffUtil
 
-class FoldersAdapter(private val listener :FolderClickListener) : RecyclerView.Adapter<FoldersAdapter.ViewHolder>() {
+class FoldersAdapter(private val listener : FolderClickListener) : RecyclerView.Adapter<FoldersAdapter.ViewHolder>() {
 
     private val folders = ArrayList<Folder>()
 
@@ -26,9 +26,9 @@ class FoldersAdapter(private val listener :FolderClickListener) : RecyclerView.A
         setUpOnSwiped()
     }
 
-    class ViewHolder(view : View,  private val listener : FolderClickListener) : RecyclerView.ViewHolder(view), View.OnClickListener {
-
-        private val binding = FolderCardViewBinding.bind(view)
+    class ViewHolder(private val binding: FolderCardViewBinding,  private val listener : FolderClickListener) :
+        RecyclerView.ViewHolder(binding.root),
+        View.OnClickListener {
 
         private lateinit var folder : Folder
 
@@ -41,17 +41,16 @@ class FoldersAdapter(private val listener :FolderClickListener) : RecyclerView.A
         }
 
         fun bind(folder : Folder){
-            this.folder = folder
-            binding.tvFolderTitle.text = folder.title
-            binding.tvNoteCount.text = folder.noteCount.toString()
+            binding.folder = folder
+            binding.executePendingBindings()
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.folder_card_view, parent, false)
-
-        return ViewHolder(view, listener)
+        val inflater = LayoutInflater.from(parent.context)
+        val binding : FolderCardViewBinding =
+            DataBindingUtil.inflate(inflater, R.layout.folder_card_view, parent, false)
+        return ViewHolder(binding, listener)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

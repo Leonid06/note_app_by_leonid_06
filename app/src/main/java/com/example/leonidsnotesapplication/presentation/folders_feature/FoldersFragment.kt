@@ -5,13 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentFoldersBinding
 import com.example.leonidsnotesapplication.domain.model.Folder
-import com.example.leonidsnotesapplication.presentation.folders_feature.util.FoldersAdapter
 import com.example.leonidsnotesapplication.presentation.folders_feature.callbacks.SwipeCallback
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -19,9 +20,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
-    private var _binding : FragmentFoldersBinding? = null
-
-    private val binding get() = _binding!!
+    private lateinit var binding : FragmentFoldersBinding
 
     private val vm : FoldersViewModel by activityViewModels()
 
@@ -31,7 +30,13 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentFoldersBinding.inflate(inflater)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_folders, container, false)
+
+        binding.apply {
+            viewModel = vm
+            lifecycleOwner = this@FoldersFragment
+            adapter = adapter
+        }
 
         return binding.root
     }
@@ -45,7 +50,6 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
             FolderAddDialog().show(childFragmentManager, null)
         }
 
-        binding.foldersRecyclerView.adapter = adapter
         binding.foldersRecyclerView.isNestedScrollingEnabled = false
         binding.foldersRecyclerView.layoutManager = LinearLayoutManager(view.context)
         vm.foldersLiveData.observe(viewLifecycleOwner){
