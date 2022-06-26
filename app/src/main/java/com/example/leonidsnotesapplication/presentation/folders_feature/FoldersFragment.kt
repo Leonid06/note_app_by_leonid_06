@@ -10,12 +10,14 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentFoldersBinding
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.presentation.folders_feature.util.FoldersAdapter
+import com.example.leonidsnotesapplication.presentation.folders_feature.util.SwipeCallback
 import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewModel
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
@@ -58,10 +60,20 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
         vm.foldersLiveData.observe(viewLifecycleOwner){
             adapter.setData(it)
         }
+
     }
 
     override fun onClickedFolder(folder : Folder) {
         val action = FoldersFragmentDirections.actionFoldersFragmentToNotesFragment(folder)
         findNavController().navigate(action)
+    }
+
+    override fun setUpOnItemSwiped(swipe: SwipeCallback) {
+        val itemTouchHelper = ItemTouchHelper(swipe)
+        itemTouchHelper.attachToRecyclerView(binding.foldersRecyclerView)
+    }
+
+    override fun onDeleteSwiped(folder: Folder) {
+        vm.deleteFolder(folder)
     }
 }

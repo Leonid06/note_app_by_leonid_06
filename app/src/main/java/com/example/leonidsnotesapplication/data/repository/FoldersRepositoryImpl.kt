@@ -14,4 +14,8 @@ class FoldersRepositoryImpl(
     override suspend fun addFolder(folder: Folder) {
         dao.insertFolder(folder)
     }
+
+    override suspend fun deleteFolder(folder: Folder) {
+        dao.deleteFolder(folder)
+    }
 }

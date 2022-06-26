@@ -10,6 +10,9 @@ import dagger.Provides
 @Dao
 interface NoteDao {
 
+    @Delete
+    fun deleteFolder(folder: Folder)
+
     @Query("SELECT * FROM Folder WHERE id = :id")
     fun getFolderWithNotesByFolderId(id : Int) : FolderWithNotes
 

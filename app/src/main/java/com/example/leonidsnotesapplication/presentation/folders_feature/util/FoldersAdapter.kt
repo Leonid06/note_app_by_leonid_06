@@ -17,7 +17,14 @@ class FoldersAdapter(private val listener :FolderClickListener) : RecyclerView.A
 
     interface FolderClickListener {
         fun onClickedFolder(folder : Folder)
+        fun setUpOnItemSwiped(swipe: SwipeCallback)
+        fun onDeleteSwiped(folder : Folder)
     }
+
+    init {
+        setUpOnSwiped()
+    }
+
     class ViewHolder(view : View,  private val listener : FolderClickListener) : RecyclerView.ViewHolder(view), View.OnClickListener {
 
         private val binding = FolderCardViewBinding.bind(view)
@@ -47,6 +54,15 @@ class FoldersAdapter(private val listener :FolderClickListener) : RecyclerView.A
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.bind(folders[position])
+    }
+
+    private fun setUpOnSwiped() {
+        val swipe = object : SwipeCallback(){
+            override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
+                listener.onDeleteSwiped(folders[viewHolder.bindingAdapterPosition])
+            }
+        }
+        listener.setUpOnItemSwiped(swipe)
     }
 
     fun setData(folders : ArrayList<Folder>){
