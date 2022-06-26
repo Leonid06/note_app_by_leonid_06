@@ -10,7 +10,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:background="@drawable/folder_card_view_style">
+        android:background="@drawable/folder_card_view_style_2">
 
         <ImageView
             android:id="@+id/ivFolder"

@@ -32,7 +32,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notesRecyclerView"
-        android:layout_width="408dp"
+        android:layout_width="match_parent"
         android:requiresFadingEdge="vertical"
         android:fadingEdge="vertical"
         android:fadingEdgeLength="30dp"
