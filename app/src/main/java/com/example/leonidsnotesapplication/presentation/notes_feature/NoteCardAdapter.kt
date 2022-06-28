@@ -32,36 +32,31 @@ class NoteCardAdapter(
                      private val onTouchListener: NoteTouchListener
                      ) : RecyclerView.ViewHolder(binding.root) {
 
-        private lateinit var note: Note
-
 
         init {
             binding.root.setOnTouchListener(object : OnTouchListener(binding.root.context){
                 override fun onSwipeLeft(): Boolean {
-                    onTouchListener.onNoteSwipedLeft(note)
+                    onTouchListener.onNoteSwipedLeft(binding.note!!)
                     return true
                 }
 
                 override fun onClick(): Boolean {
-                    onTouchListener.onNoteClicked(note)
+                    onTouchListener.onNoteClicked(binding.note!!)
                     return true
                 }
             })
             binding.ibDelete.setOnClickListener {
-                onTouchListener.onDeleteButtonClick(note)
+                onTouchListener.onDeleteButtonClick(binding.note!!)
             }
             binding.cbStar.setOnClickListener {
-                note.isStarred = binding.cbStar.isChecked
-                onTouchListener.onStarCheckBoxClick(note)
+                binding.note!!.isStarred = binding.cbStar.isChecked
+                onTouchListener.onStarCheckBoxClick(binding.note!!)
             }
         }
 
         fun bind(note: Note) {
-            this.note = note
-            binding.tvNoteTitle.text = note.title
-            binding.tvNoteDatetime.text  = note.datetime
-            binding.tvNoteSubtitle.text = note.subtitle
-            binding.cbStar.isChecked = note.isStarred
+            binding.note = note
+            binding.executePendingBindings()
         }
     }
 

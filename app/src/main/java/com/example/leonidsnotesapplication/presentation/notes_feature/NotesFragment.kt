@@ -63,16 +63,20 @@ class NotesFragment : Fragment()  ,
         vm.notesLiveData.observe(viewLifecycleOwner){
             adapter.setData(it)
         }
+        binding.apply {
+            viewModel = vm
+            lifecycleOwner = viewLifecycleOwner
+            notesRecyclerView.isNestedScrollingEnabled = false
+            notesRecyclerView.layoutManager = LinearLayoutManager(view.context)
+            notesRecyclerView.itemAnimator= null
+        }
 
-        binding.tvFolderTitle.text = args.folder.title
-
-        binding.notesRecyclerView.adapter = adapter
-        binding.notesRecyclerView.isNestedScrollingEnabled = false
-        binding.notesRecyclerView.layoutManager = LinearLayoutManager(view.context)
-        binding.notesRecyclerView.itemAnimator= null
+        binding.adapter = adapter
 
         binding.notesSearchView.isSubmitButtonEnabled  = true
         binding.notesSearchView.setOnQueryTextListener(this as SearchView.OnQueryTextListener)
+
+
 
     }
 

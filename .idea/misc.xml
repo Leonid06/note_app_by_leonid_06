@@ -36,8 +36,8 @@
         <entry key="app/src/main/res/layout/fragment_folders.xml" value="0.35667521158854176" />
         <entry key="app/src/main/res/layout/fragment_notes.xml" value="0.3943695068359375" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.29583333333333334" />
-        <entry key="app/src/main/res/layout/fragment_single_note.xml" value="0.21462249755859375" />
-        <entry key="app/src/main/res/layout/note_card_view.xml" value="0.37822265625000007" />
+        <entry key="app/src/main/res/layout/fragment_single_note.xml" value="0.1939655172413793" />
+        <entry key="app/src/main/res/layout/note_card_view.xml" value="0.375" />
       </map>
     </option>
   </component>

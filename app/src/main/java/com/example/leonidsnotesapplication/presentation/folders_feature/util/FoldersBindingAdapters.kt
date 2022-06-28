@@ -6,8 +6,8 @@ import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.presentation.folders_feature.FoldersAdapter
 
 
-@BindingAdapter("setAdapter")
-fun setAdapter(
+@BindingAdapter("setFolderAdapter")
+fun setFolderAdapter(
     recyclerView: RecyclerView,
     adapter : FoldersAdapter
 ) {
@@ -16,8 +16,8 @@ fun setAdapter(
     }
 }
 
-@BindingAdapter("submitList")
-fun submitList(
+@BindingAdapter("submitFolderList")
+fun submitFolderList(
     recyclerView: RecyclerView,
     data : ArrayList<Folder>?,
 ){
