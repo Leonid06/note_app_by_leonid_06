@@ -21,7 +21,7 @@ class NoteRepositoryImpl(
     }
 
     override fun getNotesByFolder(folder: Folder): ArrayList<Note> {
-        return  dao.getFolderWithNotesByFolderId(folder.id).notes as ArrayList<Note>
+        return  dao.getNotesByFolderId(folder.id) as ArrayList<Note>
     }
 
     override suspend fun deleteNote(note: Note) {

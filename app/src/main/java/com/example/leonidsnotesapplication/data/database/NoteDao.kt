@@ -13,13 +13,19 @@ interface NoteDao {
     @Delete
     fun deleteFolder(folder: Folder)
 
+    @Query("UPDATE Folder SET title = :title WHERE id = :id")
+    fun updateFolderTitle(id : Int, title : String)
+
     @Query("SELECT * FROM Folder WHERE id = :id")
     fun getFolderWithNotesByFolderId(id : Int) : FolderWithNotes
+
+    @Query("SELECT * FROM Note WHERE folderId = :id ORDER BY isStarred")
+    fun getNotesByFolderId(id : Int) : List<Note>
 
     @Query("SELECT * FROM note WHERE content LIKE :query ORDER BY isStarred")
     fun searchAllNotes(query : String?) : List<Note>
 
-    @Query("SELECT * FROM note WHERE folderId = :id AND content LIKE :query" )
+    @Query("SELECT * FROM note WHERE folderId = :id AND content LIKE :query ORDER BY isStarred" )
     fun searchNotesByFolderId(query : String?, id : Int) : List<Note>
 
     @Query("SELECT * FROM Note ORDER BY isStarred")

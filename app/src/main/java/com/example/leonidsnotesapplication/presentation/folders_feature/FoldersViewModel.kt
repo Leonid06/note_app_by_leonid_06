@@ -30,6 +30,13 @@ class FoldersViewModel @Inject constructor(
         return foldersRepository.getAllFolders() as ArrayList<Folder>
     }
 
+    fun updateFolderTitle(folder : Folder, title : String){
+        viewModelScope.launch(Dispatchers.IO){
+            foldersRepository.updateFolderTitle(folder, title)
+            updateAllFolders()
+        }
+    }
+
     fun deleteFolder(folder : Folder){
         viewModelScope.launch(Dispatchers.IO) {
             foldersRepository.deleteFolder(folder)

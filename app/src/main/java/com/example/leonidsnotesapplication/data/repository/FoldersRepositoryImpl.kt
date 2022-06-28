@@ -11,6 +11,10 @@ class FoldersRepositoryImpl(
         return dao.getAllFolders()
     }
 
+    override suspend fun updateFolderTitle(folder: Folder, title: String) {
+        dao.updateFolderTitle(folder.id, title)
+    }
+
     override suspend fun addFolder(folder: Folder) {
         dao.insertFolder(folder)
     }

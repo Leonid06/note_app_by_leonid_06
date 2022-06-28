@@ -14,6 +14,7 @@ import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentFoldersBinding
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.presentation.folders_feature.callbacks.SwipeCallback
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -52,6 +53,7 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
             FolderAddDialog().show(childFragmentManager, null)
         }
 
+        binding.foldersRecyclerView.itemAnimator = NotesItemAnimator()
         binding.foldersRecyclerView.isNestedScrollingEnabled = false
         binding.foldersRecyclerView.layoutManager = LinearLayoutManager(view.context)
 

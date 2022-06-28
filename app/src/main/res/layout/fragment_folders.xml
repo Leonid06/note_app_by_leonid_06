@@ -30,6 +30,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
+            tools:listitem="@layout/folder_card_view"
             android:id="@+id/foldersRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="550dp"

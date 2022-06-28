@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentNotesBinding
 import com.example.leonidsnotesapplication.domain.model.Note
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
 import com.example.leonidsnotesapplication.presentation.single_note_feature.SingleNoteFragment
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -68,7 +69,7 @@ class NotesFragment : Fragment()  ,
             lifecycleOwner = viewLifecycleOwner
             notesRecyclerView.isNestedScrollingEnabled = false
             notesRecyclerView.layoutManager = LinearLayoutManager(view.context)
-            notesRecyclerView.itemAnimator= null
+            notesRecyclerView.itemAnimator= NotesItemAnimator()
         }
 
         binding.adapter = adapter
@@ -118,7 +119,7 @@ class NotesFragment : Fragment()  ,
 
     override fun onNoteSwipedLeft(note: Note): Boolean {
 //        vm.deleteNote(note)
-        Toast.makeText(context, "Note swiped left", Toast.LENGTH_LONG)
-        return true
+//        Toast.makeText(context, "Note swiped left", Toast.LENGTH_LONG)
+          return true
     }
 }
