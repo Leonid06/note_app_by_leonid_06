@@ -52,7 +52,7 @@ class NotesFragment : Fragment()  ,
 
         binding.goToAddNoteFragmentButton.setOnClickListener{
             val note = Note("","","",false, SingleNoteFragment.getDate(), folderId = vm.currentFolderLiveData.value!!.id)
-            val action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note)
+            val action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note, true)
             findNavController().navigate(action)
         }
 
@@ -77,7 +77,7 @@ class NotesFragment : Fragment()  ,
     }
 
     override fun onNoteClicked(note: Note) {
-        val  action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note)
+        val  action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note, false)
         findNavController().navigate(action)
     }
 
@@ -88,7 +88,7 @@ class NotesFragment : Fragment()  ,
     }
 
     override fun onStarCheckBoxClick(note: Note) {
-       vm.addNote(note)
+       vm.addNote(note, false)
     }
 
     override fun onDeleteOptionClicked(note: Note) {

@@ -29,9 +29,12 @@ class NoteRepositoryImpl(
         dao.deleteNote(note)
     }
 
-    override suspend fun insertNote(note: Note) {
-        dao.updateOnInsertNote(note.folderId)
+
+    override suspend fun insertNote(note: Note , isNew : Boolean) {
         dao.insertNote(note)
+        if(isNew){
+            dao.updateOnInsertNote(note.folderId)
+        }
     }
 
 }

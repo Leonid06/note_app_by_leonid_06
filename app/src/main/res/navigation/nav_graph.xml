@@ -32,6 +32,9 @@
         <argument
             android:name="note"
             app:argType="com.example.leonidsnotesapplication.domain.model.Note" />
+        <argument
+            android:name="is_new"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/foldersFragment"

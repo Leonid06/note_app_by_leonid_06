@@ -40,9 +40,9 @@ class NotesViewModel  @Inject constructor (
         }
     }
 
-    fun addNote(note : Note){
+    fun addNote(note : Note, isNew : Boolean){
         viewModelScope.launch(Dispatchers.IO) {
-            noteRepository.insertNote(note)
+            noteRepository.insertNote(note, isNew)
             currentFolderLiveData.value?.let { updateNotes(it) }
         }
     }

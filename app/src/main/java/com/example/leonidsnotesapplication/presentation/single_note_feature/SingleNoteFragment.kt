@@ -72,7 +72,7 @@ class SingleNoteFragment : Fragment() {
             val note = createNote(title, subtitle,  content,isStarred, date, clickedNote.id, folderId = folderId)
 
             if(content.isNotEmpty()){
-                vm.addNote(note)
+                vm.addNote(note, args.isNew)
                 findNavController().navigateUp()
             }
         }

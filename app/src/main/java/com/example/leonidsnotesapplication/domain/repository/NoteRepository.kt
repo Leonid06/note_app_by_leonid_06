@@ -16,5 +16,5 @@ interface NoteRepository {
 
     suspend fun deleteNote(note : Note)
 
-    suspend fun insertNote(note : Note)
+    suspend fun insertNote(note : Note, isNew : Boolean)
 }
