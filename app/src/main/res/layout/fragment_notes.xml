@@ -28,12 +28,14 @@
             app:layout_constraintStart_toStartOf="parent"/>
 
 
-        <TextView
+        <EditText
             android:id="@+id/tvFolderTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:maxLength="19"
+            android:layout_width="300dp"
+            android:layout_height="50dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:background="@null"
             tools:text="@string/test_folder_title"
             android:text="@{viewModel.currentFolderLiveData.title}"
             android:textColor="@color/button_color_2"

@@ -64,6 +64,10 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
         findNavController().navigate(action)
     }
 
+    override fun onTitleTextChanged(title: String, folder: Folder) {
+        vm.updateFolderTitle(folder, title)
+    }
+
     override fun setUpOnItemSwiped(swipe: SwipeCallback) {
         val itemTouchHelper = ItemTouchHelper(swipe)
         itemTouchHelper.attachToRecyclerView(binding.foldersRecyclerView)

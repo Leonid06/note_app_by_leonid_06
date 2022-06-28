@@ -1,5 +1,6 @@
 package com.example.leonidsnotesapplication.presentation.folders_feature
 
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FolderCardViewBinding
 import com.example.leonidsnotesapplication.domain.model.Folder
+import com.example.leonidsnotesapplication.presentation.folders_feature.callbacks.OnFolderTouchListener
 import com.example.leonidsnotesapplication.presentation.folders_feature.callbacks.SwipeCallback
 import com.example.leonidsnotesapplication.presentation.folders_feature.util.FoldersDiffUtil
 
@@ -19,6 +21,7 @@ class FoldersAdapter(private val listener : FolderClickListener) : RecyclerView.
 
     interface FolderClickListener {
         fun onClickedFolder(folder : Folder)
+        fun onTitleTextChanged(title : String, folder: Folder)
         fun setUpOnItemSwiped(swipe: SwipeCallback)
         fun onDeleteSwiped(folder : Folder)
     }
@@ -28,15 +31,14 @@ class FoldersAdapter(private val listener : FolderClickListener) : RecyclerView.
     }
 
     class ViewHolder(private val binding: FolderCardViewBinding,  private val listener : FolderClickListener) :
-        RecyclerView.ViewHolder(binding.root),
-        View.OnClickListener {
+        RecyclerView.ViewHolder(binding.root){
 
         init {
-            binding.root.setOnClickListener(this)
-        }
-
-        override fun onClick(p0: View?) {
-            listener.onClickedFolder(binding.folder!!)
+            binding.apply {
+                root.setOnClickListener{
+                    listener.onClickedFolder(folder!!)
+                }
+            }
         }
 
         fun bind(folder : Folder){

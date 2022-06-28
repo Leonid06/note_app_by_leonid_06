@@ -8,9 +8,6 @@
         <variable
             name="folder"
             type="com.example.leonidsnotesapplication.domain.model.Folder" />
-        <variable
-            name="listener"
-            type="com.example.leonidsnotesapplication.presentation.folders_feature.FoldersAdapter.FolderClickListener" />
     </data>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -33,14 +30,14 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
 
-            <EditText
-                android:enabled="false"
+            <TextView
                 android:id="@+id/tvFolderTitle"
-                android:layout_width="200dp"
+                android:layout_width="220dp"
                 android:layout_height="20dp"
                 android:layout_margin="10dp"
                 android:layout_marginStart="20dp"
                 android:background="@null"
+                android:enabled="false"
                 android:textAlignment="textStart"
                 android:textColor="@color/font_color_1"
                 android:textSize="17sp"
@@ -51,21 +48,12 @@
                 app:text="@{folder.title.toString()}"
                 tools:text="Title" />
 
-            <ImageButton
-                android:id="@+id/titleModeToggleButton"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="20dp"
-                android:background="@drawable/ic_edit"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/tvFolderTitle"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvNoteCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="50dp"
+                android:layout_marginEnd="48dp"
                 android:text="@{String.valueOf(folder.noteCount)}"
                 android:textColor="@color/font_color_2"
                 app:layout_constraintBottom_toBottomOf="parent"

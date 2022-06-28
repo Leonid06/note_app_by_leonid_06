@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
+import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotesViewModel  @Inject constructor (
-    private val noteRepository: NoteRepository
+    private val noteRepository: NoteRepository,
+    private val foldersRepository : FoldersRepository
 ) : ViewModel() {
 
 
@@ -59,6 +61,12 @@ class NotesViewModel  @Inject constructor (
     private fun updateNotes(folder: Folder) {
         viewModelScope.launch(Dispatchers.IO){
             _notesLiveData.postValue(getNotesByFolder(folder))
+        }
+    }
+
+    fun updateFolderTitle(title : String){
+        viewModelScope.launch(Dispatchers.IO){
+            foldersRepository.updateFolderTitle(currentFolderLiveData.value!!, title)
         }
     }
 

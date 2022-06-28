@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -51,6 +52,9 @@ class NotesFragment : Fragment()  ,
 
         vm.setFolder(args.folder)
 
+        binding.tvFolderTitle.doOnTextChanged { text, _, _, _ ->
+            vm.updateFolderTitle(text.toString())
+        }
         binding.goToAddNoteFragmentButton.setOnClickListener{
             val note = Note("","","",false, SingleNoteFragment.getDate(), folderId = vm.currentFolderLiveData.value!!.id)
             val action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note, true)
