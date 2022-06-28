@@ -5,9 +5,9 @@
     <string name="title_hint">Title</string>
     <string name="content_hint">Content</string>
     <string name="content_hint_1">...</string>
-    <string name="enter_title">Enter title</string>
-    <string name="create">create</string>
-    <string name="cancel">cancel</string>
+    <string name="enter_title">Введите название</string>
+    <string name="create">создать</string>
+    <string name="cancel">отмена</string>
     <string name="folders_title">Мои папки</string>
     <string name="test_folder_title">Название папки</string>
 </resources>

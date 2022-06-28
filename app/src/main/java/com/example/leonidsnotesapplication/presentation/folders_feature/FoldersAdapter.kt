@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FolderCardViewBinding
 import com.example.leonidsnotesapplication.domain.model.Folder
-import com.example.leonidsnotesapplication.presentation.folders_feature.callbacks.OnFolderTouchListener
 import com.example.leonidsnotesapplication.presentation.folders_feature.callbacks.SwipeCallback
 import com.example.leonidsnotesapplication.presentation.folders_feature.util.FoldersDiffUtil
 

@@ -16,13 +16,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="50dp"
             android:background="@drawable/folder_card_view_style_2">
 
             <ImageView
                 android:id="@+id/ivFolder"
-                android:layout_width="45dp"
-                android:layout_height="37dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_folders_2"
                 app:layout_constraintBottom_toBottomOf="parent"

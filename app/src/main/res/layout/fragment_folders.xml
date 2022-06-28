@@ -23,7 +23,7 @@
             android:layout_marginStart="28dp"
             android:text="@string/folders_title"
             android:textColor="@color/button_color_2"
-            android:textSize="30sp"
+            android:textSize="26sp"
             android:textStyle="bold"
             android:layout_marginTop="20dp"
             app:layout_constraintStart_toStartOf="parent"
