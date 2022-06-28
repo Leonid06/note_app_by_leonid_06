@@ -24,19 +24,13 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
     private val vm : FoldersViewModel by activityViewModels()
 
-    private val adapter : FoldersAdapter by lazy { FoldersAdapter(this as FoldersAdapter.FolderClickListener) }
+    private val adapter by lazy {FoldersAdapter(this as FoldersAdapter.FolderClickListener)  }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_folders, container, false)
-
-        binding.apply {
-            viewModel = vm
-            lifecycleOwner = this@FoldersFragment
-            adapter = adapter
-        }
+        binding = FragmentFoldersBinding.inflate(inflater)
 
         return binding.root
     }
@@ -45,6 +39,14 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
         super.onViewCreated(view, savedInstanceState)
 
+        vm.updateAllFolders()
+
+
+        binding.apply {
+            viewModel = vm
+            lifecycleOwner = viewLifecycleOwner
+        }
+        binding.adapter = adapter
 
         binding.addFolderButton.setOnClickListener {
             FolderAddDialog().show(childFragmentManager, null)
@@ -52,9 +54,6 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
         binding.foldersRecyclerView.isNestedScrollingEnabled = false
         binding.foldersRecyclerView.layoutManager = LinearLayoutManager(view.context)
-        vm.foldersLiveData.observe(viewLifecycleOwner){
-            adapter.setData(it)
-        }
 
     }
 

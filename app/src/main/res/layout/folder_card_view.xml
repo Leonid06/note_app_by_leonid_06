@@ -41,7 +41,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivFolder"
                 app:layout_constraintTop_toTopOf="parent"
-                app:text = "@{folder.title}"
+                app:text = "@{folder.title.toString()}"
                 tools:text="Title" />
 
             <TextView
@@ -49,7 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/font_color_2"
-                android:text="@{folder.noteCount}"
+                android:text="@{String.valueOf(folder.noteCount)}"
                 tools:text="14"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

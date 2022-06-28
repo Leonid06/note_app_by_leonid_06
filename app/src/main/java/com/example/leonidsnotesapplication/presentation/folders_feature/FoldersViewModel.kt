@@ -44,7 +44,7 @@ class FoldersViewModel @Inject constructor(
         }
     }
 
-    private fun updateAllFolders(){
+    fun updateAllFolders(){
         viewModelScope.launch(Dispatchers.IO){
             _foldersLiveData.postValue(getAllFolders())
         }

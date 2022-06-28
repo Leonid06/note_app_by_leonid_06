@@ -3,6 +3,7 @@ package com.example.leonidsnotesapplication.presentation.folders_feature
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doOnTextChanged
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -30,14 +31,12 @@ class FoldersAdapter(private val listener : FolderClickListener) : RecyclerView.
         RecyclerView.ViewHolder(binding.root),
         View.OnClickListener {
 
-        private lateinit var folder : Folder
-
         init {
             binding.root.setOnClickListener(this)
         }
 
         override fun onClick(p0: View?) {
-            listener.onClickedFolder(folder)
+            listener.onClickedFolder(binding.folder!!)
         }
 
         fun bind(folder : Folder){
@@ -49,7 +48,8 @@ class FoldersAdapter(private val listener : FolderClickListener) : RecyclerView.
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding : FolderCardViewBinding =
-            DataBindingUtil.inflate(inflater, R.layout.folder_card_view, parent, false)
+            FolderCardViewBinding.inflate(inflater)
+
         return ViewHolder(binding, listener)
     }
 
