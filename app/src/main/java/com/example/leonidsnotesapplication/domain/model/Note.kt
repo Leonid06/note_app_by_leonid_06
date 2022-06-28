@@ -14,5 +14,6 @@ data class Note(
     @ColumnInfo(name = "content") val content : String?,
     @ColumnInfo(name = "isStarred") var isStarred : Boolean,
     @ColumnInfo(name = "datetime") val datetime : String?,
-    @PrimaryKey(autoGenerate = true) var id : Int = 0
+    @PrimaryKey(autoGenerate = true) var id : Int = 0,
+    @ColumnInfo(name = "folderId")  val folderId : Int
     ) : Parcelable

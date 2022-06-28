@@ -5,82 +5,99 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.fragment.app.viewModels
-import androidx.navigation.Navigation
+import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.R
+import com.example.leonidsnotesapplication.databinding.FragmentNotesBinding
 import com.example.leonidsnotesapplication.domain.model.Note
-import com.example.leonidsnotesapplication.presentation.notes_feature.util.DeleteDialogFragment
-import com.example.leonidsnotesapplication.presentation.notes_feature.util.NoteCardAdapter
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
-import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.example.leonidsnotesapplication.presentation.single_note_feature.SingleNoteFragment
 import dagger.hilt.android.AndroidEntryPoint
+
 
 
 @AndroidEntryPoint
 class NotesFragment : Fragment()  ,
-    NoteCardAdapter.NoteClickListener ,
+    NoteCardAdapter.NoteTouchListener,
     DeleteDialogFragment.OnNegativeButtonClickListener,
     SearchView.OnQueryTextListener{
 
-    private val adapter : NoteCardAdapter by lazy { NoteCardAdapter(this) }
-    private val vm : NotesViewModel by viewModels()
+    private var _binding : FragmentNotesBinding? = null
+    private val binding get() = _binding!!
+
+    private val adapter : NoteCardAdapter by lazy {
+        NoteCardAdapter(this as NoteCardAdapter.NoteTouchListener)
+    }
+
+    private val vm : NotesViewModel by activityViewModels()
+
+    private val args : NotesFragmentArgs by navArgs()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_notes, container, false)
+    ): View {
+        _binding = FragmentNotesBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val recyclerView = view.findViewById<RecyclerView>(R.id.notesRecyclerView)
-        val addNoteButton = view.findViewById<FloatingActionButton>(R.id.go_to_add_note_fragment_button)
-        val notesSearchView = view.findViewById<SearchView>(R.id.notesSearchView)
+        vm.setFolder(args.folder)
 
+        binding.tvFolderTitle.doOnTextChanged { text, _, _, _ ->
+            vm.updateFolderTitle(text.toString())
+        }
+        binding.goToAddNoteFragmentButton.setOnClickListener{
+            val note = Note("","","",false, SingleNoteFragment.getDate(), folderId = vm.currentFolderLiveData.value!!.id)
+            val action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note, true)
+            findNavController().navigate(action)
+        }
+
+        binding.goToFoldersFragmentButton.setOnClickListener {
+            findNavController().navigate(R.id.action_notesFragment_to_foldersFragment)
+        }
 
         vm.notesLiveData.observe(viewLifecycleOwner){
             adapter.setData(it)
         }
-
-        vm.updateNotes()
-
-        addNoteButton.setOnClickListener{
-            findNavController().navigate(R.id.action_notesFragment_to_singleNoteFragment)
+        binding.apply {
+            viewModel = vm
+            lifecycleOwner = viewLifecycleOwner
+            notesRecyclerView.isNestedScrollingEnabled = false
+            notesRecyclerView.layoutManager = LinearLayoutManager(view.context)
+            notesRecyclerView.itemAnimator= NotesItemAnimator()
         }
 
-        recyclerView.adapter = adapter
-        recyclerView.isNestedScrollingEnabled = false
-        recyclerView.layoutManager = LinearLayoutManager(view.context)
-        recyclerView.itemAnimator = NotesItemAnimator()
+        binding.adapter = adapter
 
-        notesSearchView.isSubmitButtonEnabled  = true
-        notesSearchView.setOnQueryTextListener(this)
+        binding.notesSearchView.isSubmitButtonEnabled  = true
+        binding.notesSearchView.setOnQueryTextListener(this as SearchView.OnQueryTextListener)
+
+
 
     }
 
-    override fun onClickedNote(note: Note) {
-        val  bundle = Bundle()
-
-        bundle.putParcelable("note" , note)
-        Navigation.findNavController(requireView()).navigate(
-            R.id.action_notesFragment_to_singleNoteFragment ,
-            bundle)
+    override fun onNoteClicked(note: Note) {
+        val  action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note, false)
+        findNavController().navigate(action)
     }
 
     override fun onDeleteButtonClick(note : Note) {
-        DeleteDialogFragment(note, this).show(
+        DeleteDialogFragment(note, this as DeleteDialogFragment.OnNegativeButtonClickListener).show(
             childFragmentManager,
             DeleteDialogFragment.TAG)
     }
 
     override fun onStarCheckBoxClick(note: Note) {
-       vm.addNote(note)
+       vm.addNote(note, false)
     }
 
     override fun onDeleteOptionClicked(note: Note) {
@@ -102,5 +119,11 @@ class NotesFragment : Fragment()  ,
     override fun onQueryTextChange(query: String?): Boolean {
         searchDatabase(query)
         return true
+    }
+
+    override fun onNoteSwipedLeft(note: Note): Boolean {
+//        vm.deleteNote(note)
+//        Toast.makeText(context, "Note swiped left", Toast.LENGTH_LONG)
+          return true
     }
 }

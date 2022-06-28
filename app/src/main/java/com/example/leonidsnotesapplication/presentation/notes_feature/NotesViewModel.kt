@@ -4,11 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
-import com.example.leonidsnotesapplication.domain.usecase.AddNoteUseCase
-import com.example.leonidsnotesapplication.domain.usecase.DeleteNoteUseCase
-import com.example.leonidsnotesapplication.domain.usecase.GetAllNotesUseCase
-import com.example.leonidsnotesapplication.domain.usecase.SearchNoteUseCase
+import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
+import com.example.leonidsnotesapplication.domain.repository.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -16,49 +15,67 @@ import javax.inject.Inject
 
 @HiltViewModel
 class NotesViewModel  @Inject constructor (
-    private val addNoteUseCase: AddNoteUseCase,
-    private val deleteNoteUseCase: DeleteNoteUseCase,
-    private val getAllNotesUseCase: GetAllNotesUseCase,
-    private val searchNoteUseCase: SearchNoteUseCase
+    private val noteRepository: NoteRepository,
+    private val foldersRepository : FoldersRepository
 ) : ViewModel() {
 
-    private val notesLiveDataMutable  = MutableLiveData<ArrayList<Note>>()
-    val notesLiveData : LiveData<ArrayList<Note>> = notesLiveDataMutable
 
-    private val notesSearchLiveDataMutable  = MutableLiveData<ArrayList<Note>>()
-    val notesSearchLiveData : LiveData<ArrayList<Note>> = notesSearchLiveDataMutable
+    private val _notesLiveData  = MutableLiveData<ArrayList<Note>>()
+    val notesLiveData : LiveData<ArrayList<Note>> = _notesLiveData
 
+    private val _notesSearchLiveData  = MutableLiveData<ArrayList<Note>>()
+    val notesSearchLiveData : LiveData<ArrayList<Note>> = _notesSearchLiveData
 
-    fun searchNotes(query : String?){
+    private val _currentFolderLiveData = MutableLiveData<Folder>()
+    val currentFolderLiveData : LiveData<Folder> = _currentFolderLiveData
+
+    fun setFolder(folder : Folder){
         viewModelScope.launch(Dispatchers.IO) {
-            notesSearchLiveDataMutable.postValue(searchNoteUseCase.execute(query))
+            _currentFolderLiveData.postValue(folder)
+            updateNotes(folder)
         }
     }
 
-    fun addNote(note : Note){
+    fun searchNotes(query : String?){
         viewModelScope.launch(Dispatchers.IO) {
-            addNoteUseCase.execute(note)
-            updateNotes()
+            _notesSearchLiveData.postValue(noteRepository.searchNotesByFolder(query,currentFolderLiveData.value!!))
+        }
+    }
+
+    fun addNote(note : Note, isNew : Boolean){
+        viewModelScope.launch(Dispatchers.IO) {
+            noteRepository.insertNote(note, isNew)
+            currentFolderLiveData.value?.let { updateNotes(it) }
         }
     }
 
     fun deleteNote(note : Note){
 
         viewModelScope.launch(Dispatchers.IO) {
-            deleteNoteUseCase.execute(note)
-            updateNotes()
+            noteRepository.deleteNote(note)
+            currentFolderLiveData.value?.let { updateNotes(it) }
         }
     }
 
 
-   fun updateNotes(){
-        viewModelScope.launch(Dispatchers.IO) {
-            notesLiveDataMutable.postValue(getAllNotes())
+    private fun updateNotes(folder: Folder) {
+        viewModelScope.launch(Dispatchers.IO){
+            _notesLiveData.postValue(getNotesByFolder(folder))
         }
     }
 
-    private fun  getAllNotes(): ArrayList<Note> {
-        return getAllNotesUseCase.execute()
+    fun updateFolderTitle(title : String){
+        viewModelScope.launch(Dispatchers.IO){
+            foldersRepository.updateFolderTitle(currentFolderLiveData.value!!, title)
+        }
+    }
+
+//    private fun  getAllNotes(): ArrayList<Note> {
+//        return noteRepository.getAllNotes()
+//    }
+
+    private fun getNotesByFolder(folder : Folder) : ArrayList<Note> {
+        return noteRepository.getNotesByFolder(folder)
     }
 
 

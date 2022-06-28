@@ -1,25 +1,23 @@
 package com.example.leonidsnotesapplication.presentation.single_note_feature
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.EditText
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.example.leonidsnotesapplication.R
+import androidx.navigation.fragment.navArgs
+import com.example.leonidsnotesapplication.databinding.FragmentSingleNoteBinding
 import com.example.leonidsnotesapplication.domain.model.Note
-import com.example.leonidsnotesapplication.presentation.MainActivity
 import com.example.leonidsnotesapplication.presentation.extensions.showKeyboard
 import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
-import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
@@ -27,34 +25,36 @@ import java.time.format.FormatStyle
 @AndroidEntryPoint
 class SingleNoteFragment : Fragment() {
 
-    private val vm  : NotesViewModel  by viewModels()
+    private val vm : NotesViewModel by activityViewModels()
 
-    private var isEdit = false
+    private val args : SingleNoteFragmentArgs by navArgs()
+
+    private var _binding : FragmentSingleNoteBinding? = null
+
+    private val binding  get()= _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_single_note, container, false)
+    ): View {
+        _binding = FragmentSingleNoteBinding.inflate(inflater)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val addNoteButton = view.findViewById<FloatingActionButton>(R.id.add_note_button)
-        val noteContentEditText = view.findViewById<EditText>(R.id.etNoteContent)
+        activity?.showKeyboard(binding.etNoteContent)
 
-        activity?.showKeyboard(noteContentEditText)
+        Log.d("Debugging",vm.toString())
 
-        if(arguments != null){
-            isEdit = true
-            noteContentEditText.setText(arguments?.getParcelable<Note>("note")!!.content)
-        }
-        addNoteButton.setOnClickListener{
+        binding.etNoteContent.setText(args.note.content)
+        binding.addNoteButton.setOnClickListener{
 
-            val content = noteContentEditText.text.toString()
+            val content = binding.etNoteContent.text.toString()
             val title : String
             val subtitle : String
+            val folderId = vm.currentFolderLiveData.value!!.id
             val date = getDate()
 
 
@@ -66,49 +66,38 @@ class SingleNoteFragment : Fragment() {
                 subtitle = ""
             }
 
-            if(isEdit){
+            val clickedNote : Note = args.note
+            val isStarred = clickedNote.isStarred
 
-                val clickedNote : Note = arguments?.getParcelable("note")!!
-                val isStarred = clickedNote.isStarred
+            val note = createNote(title, subtitle,  content,isStarred, date, clickedNote.id, folderId = folderId)
 
-                createNote(title, subtitle,  content,isStarred, date, clickedNote.id)
-
-            }else{
-                val isStarred = false
-                createNote(title, subtitle, content,isStarred, date)
+            if(content.isNotEmpty()){
+                vm.addNote(note, args.isNew)
+                findNavController().navigateUp()
             }
-
-            findNavController().navigateUp()
-
         }
 
     }
 
-    private fun createNote(title : String,subtitle : String, content : String, isStarred : Boolean, date : String, id : Int){
-        val note = Note(
+    private fun createNote(
+        title: String,
+        subtitle: String,
+        content: String,
+        isStarred: Boolean,
+        date: String,
+        id: Int,
+        folderId : Int
+    ): Note {
+        return Note(
             title,
             subtitle,
             content,
             isStarred,
             date,
-            id
+            id,
+            folderId
         )
-
-        vm.addNote(note)
     }
-
-    private fun createNote(title : String, subtitle: String, content : String, isStarred: Boolean, date : String){
-        val note = Note(
-            title,
-            subtitle,
-            content,
-            isStarred,
-            date
-        )
-
-        vm.addNote(note)
-    }
-
 
     companion object{
         fun getDate() : String {

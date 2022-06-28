@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <data>
+        <variable
+            name="folder"
+            type="com.example.leonidsnotesapplication.domain.model.Folder" />
+    </data>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:padding="2dp"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="75dp"
+            android:background="@drawable/folder_card_view_style_2">
+
+            <ImageView
+                android:id="@+id/ivFolder"
+                android:layout_width="45dp"
+                android:layout_height="37dp"
+                android:layout_marginStart="20dp"
+                android:src="@drawable/ic_folders_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tvFolderTitle"
+                android:layout_width="220dp"
+                android:layout_height="20dp"
+                android:layout_margin="10dp"
+                android:layout_marginStart="20dp"
+                android:background="@null"
+                android:enabled="false"
+                android:textAlignment="textStart"
+                android:textColor="@color/font_color_1"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/ivFolder"
+                app:layout_constraintTop_toTopOf="parent"
+                app:text="@{folder.title.toString()}"
+                tools:text="Title" />
+
+
+            <TextView
+                android:id="@+id/tvNoteCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="48dp"
+                android:text="@{String.valueOf(folder.noteCount)}"
+                android:textColor="@color/font_color_2"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="14" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </RelativeLayout>
+</layout>

@@ -6,43 +6,19 @@ class NotesDiffUtil(
     private val oldList : List<Note>,
     private val newList : List<Note>
     ) : DiffUtil.Callback() {
-    override fun getOldListSize(): Int {
-        return oldList.size
-    }
 
-    override fun getNewListSize(): Int {
-        return newList.size
-    }
-
+    override fun getOldListSize() = oldList.size
+    override fun getNewListSize() = newList.size
 
     override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        return oldList[oldItemPosition] == newList[newItemPosition]
+        val oldUser = oldList[oldItemPosition]
+        val newUser = newList[newItemPosition]
+
+        return oldUser.id == newUser.id
     }
 
     override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-        if(oldList.size == newList.size){
-            return false
-        }else{
-            return when {
-                oldList[oldItemPosition].id != newList[newItemPosition].id -> {
-                    false
-                }
-                oldList[oldItemPosition].content != newList[newItemPosition].content -> {
-                    false
-                }
-                oldList[oldItemPosition].title != newList[newItemPosition].title -> {
-                    false
-                }
-                oldList[oldItemPosition].subtitle != newList[newItemPosition].subtitle -> {
-                    false
-                }
-                oldList[oldItemPosition].datetime != newList[newItemPosition].datetime -> {
-                    false
-                }
-                else -> true
-            }
-        }
-
+        return oldList[oldItemPosition] == newList[newItemPosition]
     }
 
 }

@@ -1,4 +1,4 @@
-package com.example.leonidsnotesapplication.presentation.notes_feature.util
+package com.example.leonidsnotesapplication.presentation.notes_feature
 
 import android.app.AlertDialog
 import android.app.Dialog
@@ -22,7 +22,6 @@ class DeleteDialogFragment(
                     _,_ -> listener.onDeleteOptionClicked(note)
             }
             .setNegativeButton("cancel") { _,_ -> }
-
             .create()
     
     companion object {
