@@ -40,9 +40,9 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.dagger:hilt-android:2.42'
+    implementation 'com.google.dagger:hilt-android:2.38'
     implementation 'org.chromium.net:cronet-embedded:102.5005.125'
-    kapt 'com.google.dagger:hilt-compiler:2.42'
+    kapt 'com.google.dagger:hilt-compiler:2.38'
 
     implementation 'androidx.fragment:fragment-ktx:1.4.1'
     implementation "androidx.room:room-runtime:2.4.2"

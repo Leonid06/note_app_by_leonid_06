@@ -12,7 +12,9 @@ import com.example.leonidsnotesapplication.databinding.FragmentHomeBinding
 import com.example.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
 import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.HomeViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
 
     private var _binding : FragmentHomeBinding? = null
