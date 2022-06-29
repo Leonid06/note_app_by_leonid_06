@@ -1,4 +1,4 @@
-package com.example.leonidsnotesapplication.presentation.notes_feature
+package com.example.leonidsnotesapplication.presentation.notes_feature.adapters
 
 
 import android.view.LayoutInflater

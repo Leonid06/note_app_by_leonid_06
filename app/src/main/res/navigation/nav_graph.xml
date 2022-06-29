@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/notesFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.NotesFragment"
+        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.NotesFragment"
         android:label="fragment_notes"
         tools:layout="@layout/fragment_notes"
         >
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/singleNoteFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.single_note_feature.SingleNoteFragment"
+        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.SingleNoteFragment"
         android:label="fragment_single_note"
         tools:layout="@layout/fragment_single_note" >
         <argument
@@ -38,7 +38,7 @@
     </fragment>
     <fragment
         android:id="@+id/foldersFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.folders_feature.FoldersFragment"
+        android:name="com.example.leonidsnotesapplication.presentation.folders_feature.fragments.FoldersFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_folders" >
         <action
@@ -50,6 +50,6 @@
     </fragment>
     <dialog
         android:id="@+id/folderAddDialog"
-        android:name="com.example.leonidsnotesapplication.presentation.folders_feature.FolderAddDialog"
+        android:name="com.example.leonidsnotesapplication.presentation.folders_feature.fragments.FolderAddDialogFragment"
         android:label="FolderAddDialog" />
 </navigation>

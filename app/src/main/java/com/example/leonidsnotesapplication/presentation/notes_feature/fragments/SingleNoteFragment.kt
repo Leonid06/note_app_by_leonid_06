@@ -1,4 +1,4 @@
-package com.example.leonidsnotesapplication.presentation.single_note_feature
+package com.example.leonidsnotesapplication.presentation.notes_feature.fragments
 
 import android.os.Bundle
 import android.util.Log
@@ -6,17 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.leonidsnotesapplication.databinding.FragmentSingleNoteBinding
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.extensions.showKeyboard
-import com.example.leonidsnotesapplication.presentation.notes_feature.NotesViewModel
+import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter

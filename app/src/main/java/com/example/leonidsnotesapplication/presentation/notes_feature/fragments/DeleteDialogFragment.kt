@@ -1,4 +1,4 @@
-package com.example.leonidsnotesapplication.presentation.notes_feature
+package com.example.leonidsnotesapplication.presentation.notes_feature.fragments
 
 import android.app.AlertDialog
 import android.app.Dialog

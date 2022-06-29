@@ -1,11 +1,10 @@
-package com.example.leonidsnotesapplication.presentation.notes_feature
+package com.example.leonidsnotesapplication.presentation.notes_feature.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
@@ -15,8 +14,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentNotesBinding
 import com.example.leonidsnotesapplication.domain.model.Note
+import com.example.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter
+import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
-import com.example.leonidsnotesapplication.presentation.single_note_feature.SingleNoteFragment
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -93,7 +93,8 @@ class NotesFragment : Fragment()  ,
     override fun onDeleteButtonClick(note : Note) {
         DeleteDialogFragment(note, this as DeleteDialogFragment.OnNegativeButtonClickListener).show(
             childFragmentManager,
-            DeleteDialogFragment.TAG)
+            DeleteDialogFragment.TAG
+        )
     }
 
     override fun onStarCheckBoxClick(note: Note) {

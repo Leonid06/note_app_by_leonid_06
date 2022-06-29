@@ -1,4 +1,4 @@
-package com.example.leonidsnotesapplication.presentation.notes_feature
+package com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

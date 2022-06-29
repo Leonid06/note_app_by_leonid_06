@@ -5,7 +5,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.single_note_feature.SingleNoteFragment"
+        tools:context=".presentation.notes_feature.fragments.SingleNoteFragment"
         android:background="@color/note_background_color_3"
         android:fitsSystemWindows="true">
 
