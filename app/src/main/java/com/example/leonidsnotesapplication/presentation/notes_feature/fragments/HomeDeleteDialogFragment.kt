@@ -5,15 +5,12 @@ import android.app.Dialog
 import android.os.Bundle
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
-import androidx.navigation.NavArgs
 import androidx.navigation.fragment.navArgs
-import com.example.leonidsnotesapplication.domain.model.Note
-import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel
+import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.HomeViewModel
 
-class DeleteDialogFragment : DialogFragment() {
-
-    private val vm : NotesViewModel by activityViewModels()
-    private val args : DeleteDialogFragmentArgs by navArgs()
+class HomeDeleteDialogFragment : DialogFragment() {
+    private val vm : HomeViewModel by activityViewModels()
+    private val args : HomeDeleteDialogFragmentArgs by navArgs()
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog =
         AlertDialog.Builder(requireContext())

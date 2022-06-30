@@ -50,14 +50,17 @@ class NotesFragment : Fragment()  ,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vm.setFolder(args.folder)
+        vm.updateCurrentFolder(args.folder)
 
         binding.tvFolderTitle.doOnTextChanged { text, _, _, _ ->
             vm.updateFolderTitle(text.toString())
         }
         binding.goToAddNoteFragmentButton.setOnClickListener{
             val note = Note("","","",false, activity?.getDate(), folderId = vm.currentFolderLiveData.value!!.id)
-            val action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note, true)
+            val action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note,
+                isNew = true,
+                isDefaultFolder = false
+            )
             findNavController().navigate(action)
         }
 
@@ -65,9 +68,6 @@ class NotesFragment : Fragment()  ,
             findNavController().navigate(R.id.action_notesFragment_to_foldersFragment)
         }
 
-        vm.notesLiveData.observe(viewLifecycleOwner){
-            adapter.setData(it)
-        }
         binding.apply {
             viewModel = vm
             lifecycleOwner = viewLifecycleOwner
@@ -86,12 +86,12 @@ class NotesFragment : Fragment()  ,
     }
 
     override fun onNoteClicked(note: Note) {
-        val  action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note, false)
+        val  action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note, false, false)
         findNavController().navigate(action)
     }
 
     override fun onDeleteButtonClick(note : Note) {
-        val action = NotesFragmentDirections.actionNotesFragmentToDeleteDialogFragment(note)
+        val action = NotesFragmentDirections.actionNotesFragmentToNoteDeleteDialogFragment(note)
         findNavController().navigate(action)
     }
 

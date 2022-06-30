@@ -58,6 +58,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:foregroundGravity="left"
+            android:layout_margin="16dp"
+            android:id="@+id/home_button"
+            android:backgroundTint="@color/button_color_1"
+            android:src="@drawable/ic_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
 

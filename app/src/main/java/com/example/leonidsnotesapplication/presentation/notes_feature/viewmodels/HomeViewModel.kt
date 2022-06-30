@@ -36,9 +36,17 @@ class HomeViewModel @Inject constructor (
         }
     }
 
+    fun deleteNote(note : Note){
+        viewModelScope.launch(Dispatchers.IO){
+            noteRepository.deleteNote(note)
+            updateNotes()
+        }
+    }
+
     fun addNote(note : Note){
         viewModelScope.launch(Dispatchers.IO) {
             noteRepository.insertNote(note, false)
+            updateNotes()
         }
     }
 }

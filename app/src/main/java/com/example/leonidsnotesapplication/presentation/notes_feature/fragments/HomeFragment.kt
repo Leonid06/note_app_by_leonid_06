@@ -58,7 +58,8 @@ SearchView.OnQueryTextListener{
         binding.addNoteButton.setOnClickListener{
             val action = HomeFragmentDirections.actionHomeFragmentToSingleNoteFragment(Note(
                 "","","",false, activity?.getDate(), folderId = -1
-            ), true)
+            ), isNew = true, isDefaultFolder = true
+            )
 
             findNavController().navigate(action)
         }
@@ -73,12 +74,15 @@ SearchView.OnQueryTextListener{
     }
 
     override fun onNoteClicked(note: Note) {
-        val action = HomeFragmentDirections.actionHomeFragmentToSingleNoteFragment(note, true)
+        val action = HomeFragmentDirections.actionHomeFragmentToSingleNoteFragment(note,
+            isNew = true,
+            isDefaultFolder = true
+        )
         findNavController().navigate(action)
     }
 
     override fun onDeleteButtonClick(note: Note) {
-        val action = HomeFragmentDirections.actionHomeFragmentToDeleteDialogFragment(note)
+        val action = HomeFragmentDirections.actionHomeFragmentToHomeDeleteDialogFragment(note)
         findNavController().navigate(action)
     }
 

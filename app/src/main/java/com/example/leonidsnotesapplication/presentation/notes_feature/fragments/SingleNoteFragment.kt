@@ -49,9 +49,12 @@ class SingleNoteFragment : Fragment() {
             val content = binding.etNoteContent.text.toString()
             val title : String
             val subtitle : String
-            val folderId = vm.currentFolderLiveData.value!!.id
-            val date = activity?.getDate()!!
 
+            val folderId : Int = if(!args.isDefaultFolder){
+                vm.currentFolderLiveData.value!!.id
+            }else{
+                -1
+            }
 
             if(content.contains("\n")){
                 title = content.split("\n")[0]
@@ -64,7 +67,7 @@ class SingleNoteFragment : Fragment() {
             val clickedNote : Note = args.note
             val isStarred = clickedNote.isStarred
 
-            val note = createNote(title, subtitle,  content,isStarred, date, clickedNote.id, folderId = folderId)
+            val note = createNote(title, subtitle,  content,isStarred, clickedNote.datetime!!, clickedNote.id, folderId = folderId)
 
             if(content.isNotEmpty()){
                 vm.addNote(note, args.isNew)

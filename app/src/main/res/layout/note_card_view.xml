@@ -76,6 +76,7 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
+                android:checked="@{note.isStarred}"
                 android:button="@drawable/star_button"
                 app:layout_constraintStart_toEndOf="@id/tvNoteTitle"
                 app:layout_constraintTop_toTopOf="parent" />

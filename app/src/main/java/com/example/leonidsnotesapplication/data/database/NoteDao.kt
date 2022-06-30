@@ -11,6 +11,9 @@ interface NoteDao {
     @Delete
     fun deleteFolder(folder: Folder)
 
+    @Query("SELECT * FROM folder WHERE id = :id")
+    fun getFolderById(id : Int) : Folder
+
     @Query("UPDATE Folder SET title = :title WHERE id = :id")
     fun updateFolderTitle(id : Int, title : String)
 

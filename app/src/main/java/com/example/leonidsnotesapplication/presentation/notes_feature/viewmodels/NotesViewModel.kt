@@ -19,7 +19,6 @@ class NotesViewModel  @Inject constructor (
     private val foldersRepository : FoldersRepository
 ) : ViewModel() {
 
-
     private val _notesLiveData  = MutableLiveData<ArrayList<Note>>()
     val notesLiveData : LiveData<ArrayList<Note>> = _notesLiveData
 
@@ -29,7 +28,7 @@ class NotesViewModel  @Inject constructor (
     private val _currentFolderLiveData = MutableLiveData<Folder>()
     val currentFolderLiveData : LiveData<Folder> = _currentFolderLiveData
 
-    fun setFolder(folder : Folder){
+    fun updateCurrentFolder(folder : Folder){
         viewModelScope.launch(Dispatchers.IO) {
             _currentFolderLiveData.postValue(folder)
             updateNotes(folder)
@@ -63,16 +62,12 @@ class NotesViewModel  @Inject constructor (
             _notesLiveData.postValue(getNotesByFolder(folder))
         }
     }
-
     fun updateFolderTitle(title : String){
         viewModelScope.launch(Dispatchers.IO){
             foldersRepository.updateFolderTitle(currentFolderLiveData.value!!, title)
         }
     }
 
-//    private fun  getAllNotes(): ArrayList<Note> {
-//        return noteRepository.getAllNotes()
-//    }
 
     private fun getNotesByFolder(folder : Folder) : ArrayList<Note> {
         return noteRepository.getNotesByFolder(folder)

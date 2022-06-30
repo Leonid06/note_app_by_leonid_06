@@ -43,7 +43,6 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
         vm.updateAllFolders()
 
-
         binding.apply {
             viewModel = vm
             lifecycleOwner = viewLifecycleOwner
@@ -52,6 +51,10 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
 
         binding.addFolderButton.setOnClickListener {
             FolderAddDialogFragment().show(childFragmentManager, null)
+        }
+
+        binding.homeButton.setOnClickListener {
+            findNavController().navigate(FoldersFragmentDirections.actionFoldersFragmentToHomeFragment())
         }
 
         binding.foldersRecyclerView.itemAnimator = NotesItemAnimator()
