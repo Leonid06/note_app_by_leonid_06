@@ -50,7 +50,7 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
         binding.adapter = adapter
 
         binding.addFolderButton.setOnClickListener {
-            FolderAddDialogFragment().show(childFragmentManager, null)
+            findNavController().navigate(FoldersFragmentDirections.actionFoldersFragmentToFolderAddDialog())
         }
 
         binding.homeButton.setOnClickListener {
