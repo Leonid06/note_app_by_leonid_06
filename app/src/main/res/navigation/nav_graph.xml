@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/foldersFragment">
+    app:startDestination="@id/homeFragment">
 
     <fragment
         android:id="@+id/notesFragment"
@@ -23,6 +23,9 @@
         <argument
             android:name="folder"
             app:argType="com.example.leonidsnotesapplication.domain.model.Folder" />
+        <action
+            android:id="@+id/action_notesFragment_to_deleteDialogFragment"
+            app:destination="@id/deleteDialogFragment" />
     </fragment>
     <fragment
         android:id="@+id/singleNoteFragment"
@@ -52,4 +55,26 @@
         android:id="@+id/folderAddDialog"
         android:name="com.example.leonidsnotesapplication.presentation.folders_feature.fragments.FolderAddDialogFragment"
         android:label="FolderAddDialog" />
+    <fragment
+        android:id="@+id/homeFragment"
+        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.HomeFragment"
+        android:label="HomeFragment" >
+        <action
+            android:id="@+id/action_homeFragment_to_singleNoteFragment"
+            app:destination="@id/singleNoteFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_foldersFragment"
+            app:destination="@id/foldersFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_deleteDialogFragment"
+            app:destination="@id/deleteDialogFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/deleteDialogFragment"
+        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.DeleteDialogFragment"
+        android:label="DeleteDialogFragment" >
+        <argument
+            android:name="note"
+            app:argType="com.example.leonidsnotesapplication.domain.model.Note" />
+    </dialog>
 </navigation>

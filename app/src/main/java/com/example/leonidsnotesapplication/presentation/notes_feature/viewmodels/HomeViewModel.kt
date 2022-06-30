@@ -25,4 +25,20 @@ class HomeViewModel @Inject constructor (
             _notesLiveData.postValue(noteRepository.getAllNotes())
         }
     }
+
+    fun searchNotes(query : String){
+        viewModelScope.launch(Dispatchers.IO){
+            if(query == ""){
+                _notesLiveData.postValue(noteRepository.getAllNotes())
+            }else{
+                _notesLiveData.postValue(noteRepository.searchAllNotes(query))
+            }
+        }
+    }
+
+    fun addNote(note : Note){
+        viewModelScope.launch(Dispatchers.IO) {
+            noteRepository.insertNote(note, false)
+        }
+    }
 }

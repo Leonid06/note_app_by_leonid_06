@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentNotesBinding
 import com.example.leonidsnotesapplication.domain.model.Note
+import com.example.leonidsnotesapplication.presentation.extensions.getDate
 import com.example.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter
 import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
@@ -24,7 +25,6 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NotesFragment : Fragment()  ,
     NoteCardAdapter.NoteTouchListener,
-    DeleteDialogFragment.OnNegativeButtonClickListener,
     SearchView.OnQueryTextListener{
 
     private var _binding : FragmentNotesBinding? = null
@@ -56,7 +56,7 @@ class NotesFragment : Fragment()  ,
             vm.updateFolderTitle(text.toString())
         }
         binding.goToAddNoteFragmentButton.setOnClickListener{
-            val note = Note("","","",false, SingleNoteFragment.getDate(), folderId = vm.currentFolderLiveData.value!!.id)
+            val note = Note("","","",false, activity?.getDate(), folderId = vm.currentFolderLiveData.value!!.id)
             val action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note, true)
             findNavController().navigate(action)
         }
@@ -91,18 +91,12 @@ class NotesFragment : Fragment()  ,
     }
 
     override fun onDeleteButtonClick(note : Note) {
-        DeleteDialogFragment(note, this as DeleteDialogFragment.OnNegativeButtonClickListener).show(
-            childFragmentManager,
-            DeleteDialogFragment.TAG
-        )
+        val action = NotesFragmentDirections.actionNotesFragmentToDeleteDialogFragment(note)
+        findNavController().navigate(action)
     }
 
     override fun onStarCheckBoxClick(note: Note) {
        vm.addNote(note, false)
-    }
-
-    override fun onDeleteOptionClicked(note: Note) {
-        vm.deleteNote(note)
     }
 
     private fun searchDatabase(query: String?){

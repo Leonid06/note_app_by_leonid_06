@@ -11,13 +11,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.leonidsnotesapplication.databinding.FragmentSingleNoteBinding
 import com.example.leonidsnotesapplication.domain.model.Note
+import com.example.leonidsnotesapplication.presentation.extensions.getDate
 import com.example.leonidsnotesapplication.presentation.extensions.showKeyboard
 import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.time.LocalDate
-import java.time.ZoneId
-import java.time.format.DateTimeFormatter
-import java.time.format.FormatStyle
+
 
 @AndroidEntryPoint
 class SingleNoteFragment : Fragment() {
@@ -52,7 +50,7 @@ class SingleNoteFragment : Fragment() {
             val title : String
             val subtitle : String
             val folderId = vm.currentFolderLiveData.value!!.id
-            val date = getDate()
+            val date = activity?.getDate()!!
 
 
             if(content.contains("\n")){
@@ -94,16 +92,5 @@ class SingleNoteFragment : Fragment() {
             id,
             folderId
         )
-    }
-
-    companion object{
-        fun getDate() : String {
-            val localDate = LocalDate.now()
-            val dateFormatter : DateTimeFormatter = DateTimeFormatter
-                .ofLocalizedDate(FormatStyle.MEDIUM)
-                .withZone(ZoneId.systemDefault())
-            return localDate.format(dateFormatter)
-        }
-
     }
 }

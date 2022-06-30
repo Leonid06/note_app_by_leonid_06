@@ -6,6 +6,10 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import java.time.LocalDate
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.time.format.FormatStyle
 
 fun Activity.showKeyboard(view : View){
     (this.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
@@ -14,4 +18,12 @@ fun Activity.showKeyboard(view : View){
             view.requestFocus()
             showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
         }
+}
+
+fun Activity.getDate() : String {
+    val localDate = LocalDate.now()
+    val dateFormatter : DateTimeFormatter = DateTimeFormatter
+        .ofLocalizedDate(FormatStyle.MEDIUM)
+        .withZone(ZoneId.systemDefault())
+    return localDate.format(dateFormatter)
 }
