@@ -1,10 +1,13 @@
 package com.example.leonidsnotesapplication.domain.repository
 
+import androidx.lifecycle.LiveData
 import com.example.leonidsnotesapplication.domain.model.Folder
 
 interface FoldersRepository {
 
-    fun getAllFolders() : List<Folder>
+    fun getAllFolders() : LiveData<List<Folder>>
+
+    fun getFolderTitleById(id : Int) : String
 
     suspend fun updateFolderTitle(folder : Folder, title : String)
 

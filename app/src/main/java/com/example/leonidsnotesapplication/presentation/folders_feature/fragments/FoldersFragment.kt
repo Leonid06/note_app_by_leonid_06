@@ -12,8 +12,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leonidsnotesapplication.databinding.FragmentFoldersBinding
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.presentation.folders_feature.FoldersAdapter
-import com.example.leonidsnotesapplication.presentation.folders_feature.FoldersViewModel
+import com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels.FoldersViewModel
 import com.example.leonidsnotesapplication.presentation.folders_feature.callbacks.SwipeCallback
+import com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels.FolderSharedViewModel
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -25,6 +26,8 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
     private val binding  get() = _binding!!
 
     private val vm : FoldersViewModel by activityViewModels()
+
+    private val folderSharedViewModel : FolderSharedViewModel by activityViewModels()
 
     private val adapter by lazy { FoldersAdapter(this as FoldersAdapter.FolderClickListener)  }
 
@@ -40,8 +43,6 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?){
 
         super.onViewCreated(view, savedInstanceState)
-
-        vm.updateAllFolders()
 
         binding.apply {
             viewModel = vm
@@ -64,7 +65,8 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
     }
 
     override fun onClickedFolder(folder : Folder) {
-        val action = FoldersFragmentDirections.actionFoldersFragmentToNotesFragment(folder)
+        folderSharedViewModel.selectFolder(folder)
+        val action = FoldersFragmentDirections.actionFoldersFragmentToNotesFragment()
         findNavController().navigate(action)
     }
 

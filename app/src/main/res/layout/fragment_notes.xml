@@ -8,6 +8,9 @@
             type="com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel"
             />
         <variable
+            name="sharedFolderViewModel"
+            type="com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels.FolderSharedViewModel" />
+        <variable
             name="adapter"
             type="com.example.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter"
             />
@@ -37,7 +40,7 @@
             android:layout_marginTop="16dp"
             android:background="@null"
             tools:text="@string/test_folder_title"
-            android:text="@{viewModel.currentFolderLiveData.title}"
+            android:text="@{sharedFolderViewModel.selectedFolder.title}"
             android:textColor="@color/button_color_2"
             android:textSize="25sp"
             android:textStyle="bold"

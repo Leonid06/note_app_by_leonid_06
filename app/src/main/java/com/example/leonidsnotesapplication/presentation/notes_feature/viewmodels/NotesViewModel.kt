@@ -8,6 +8,7 @@ import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -19,32 +20,24 @@ class NotesViewModel  @Inject constructor (
     private val foldersRepository : FoldersRepository
 ) : ViewModel() {
 
-    private val _notesLiveData  = MutableLiveData<ArrayList<Note>>()
-    val notesLiveData : LiveData<ArrayList<Note>> = _notesLiveData
+    private var _notesLiveData  = noteRepository.getAllNotes()
+    val notesLiveData get() =  _notesLiveData
 
-    private val _notesSearchLiveData  = MutableLiveData<ArrayList<Note>>()
-    val notesSearchLiveData : LiveData<ArrayList<Note>> = _notesSearchLiveData
 
-    private val _currentFolderLiveData = MutableLiveData<Folder>()
-    val currentFolderLiveData : LiveData<Folder> = _currentFolderLiveData
 
-    fun updateCurrentFolder(folder : Folder){
+    fun searchNotes(query : String?, folder: Folder){
         viewModelScope.launch(Dispatchers.IO) {
-            _currentFolderLiveData.postValue(folder)
-            updateNotes(folder)
+           _notesLiveData = noteRepository.searchNotesByFolder(query,folder)
         }
     }
 
-    fun searchNotes(query : String?){
-        viewModelScope.launch(Dispatchers.IO) {
-            _notesSearchLiveData.postValue(noteRepository.searchNotesByFolder(query,currentFolderLiveData.value!!))
-        }
+    fun updateNotesByFolder(folder : Folder){
+        _notesLiveData = getNotesByFolder(folder)
     }
 
     fun addNote(note : Note, isNew : Boolean){
         viewModelScope.launch(Dispatchers.IO) {
             noteRepository.insertNote(note, isNew)
-            currentFolderLiveData.value?.let { updateNotes(it) }
         }
     }
 
@@ -52,24 +45,17 @@ class NotesViewModel  @Inject constructor (
 
         viewModelScope.launch(Dispatchers.IO) {
             noteRepository.deleteNote(note)
-            currentFolderLiveData.value?.let { updateNotes(it) }
         }
     }
 
-
-    private fun updateNotes(folder: Folder) {
+    fun updateFolderTitle(title : String, folder : Folder){
         viewModelScope.launch(Dispatchers.IO){
-            _notesLiveData.postValue(getNotesByFolder(folder))
-        }
-    }
-    fun updateFolderTitle(title : String){
-        viewModelScope.launch(Dispatchers.IO){
-            foldersRepository.updateFolderTitle(currentFolderLiveData.value!!, title)
+            foldersRepository.updateFolderTitle(folder, title)
         }
     }
 
 
-    private fun getNotesByFolder(folder : Folder) : ArrayList<Note> {
+    private fun getNotesByFolder(folder : Folder) : LiveData<List<Note>> {
         return noteRepository.getNotesByFolder(folder)
     }
 

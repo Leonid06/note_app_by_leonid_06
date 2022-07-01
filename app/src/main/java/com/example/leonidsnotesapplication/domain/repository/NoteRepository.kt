@@ -6,13 +6,19 @@ import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 
 interface NoteRepository {
-    fun getAllNotes() : ArrayList<Note>
+    fun getAllNotes() : LiveData<List<Note>>
 
-    fun searchAllNotes(query: String?) : ArrayList<Note>
+    suspend fun updateNoteChecked(id : Int, isChecked : Boolean)
 
-    fun searchNotesByFolder(query : String?, folder : Folder) : ArrayList<Note>
+    suspend fun deleteNoteById(id : Int)
 
-    fun getNotesByFolder(folder : Folder) : ArrayList<Note>
+    fun getNoteById(id : Int) : Note
+
+    fun searchAllNotes(query: String?) : LiveData<List<Note>>
+
+    fun searchNotesByFolder(query : String?, folder : Folder) : LiveData<List<Note>>
+
+    fun getNotesByFolder(folder : Folder) : LiveData<List<Note>>
 
     suspend fun deleteNote(note : Note)
 

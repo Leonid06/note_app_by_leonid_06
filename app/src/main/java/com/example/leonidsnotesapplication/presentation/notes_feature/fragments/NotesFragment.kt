@@ -15,9 +15,11 @@ import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentNotesBinding
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.extensions.getDate
+import com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels.FolderSharedViewModel
 import com.example.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter
 import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
+import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NoteSharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
@@ -36,7 +38,9 @@ class NotesFragment : Fragment()  ,
 
     private val vm : NotesViewModel by activityViewModels()
 
-    private val args : NotesFragmentArgs by navArgs()
+    private val sharedNoteViewModel: NoteSharedViewModel by activityViewModels()
+
+    private val sharedFolderViewModel :FolderSharedViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -50,18 +54,22 @@ class NotesFragment : Fragment()  ,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vm.updateCurrentFolder(args.folder)
+        vm.updateNotesByFolder(sharedFolderViewModel.selectedFolder.value!!)
+
+        sharedFolderViewModel.toggleDefaultMode(false)
 
         binding.tvFolderTitle.doOnTextChanged { text, _, _, _ ->
-            vm.updateFolderTitle(text.toString())
+            vm.updateFolderTitle(text.toString(), sharedFolderViewModel.selectedFolder.value!!)
         }
         binding.goToAddNoteFragmentButton.setOnClickListener{
-            val note = Note("","","",false, activity?.getDate(), folderId = vm.currentFolderLiveData.value!!.id)
-            val action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note,
-                isNew = true,
-                isDefaultFolder = false
-            )
-            findNavController().navigate(action)
+            val note = Note("","","",false, activity?.getDate(),
+                folderId = sharedFolderViewModel.selectedFolder.value!!.id)
+
+            vm.addNote(note, true)
+
+            sharedNoteViewModel.selectNote(note)
+
+            findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(true))
         }
 
         binding.goToFoldersFragmentButton.setOnClickListener {
@@ -76,6 +84,8 @@ class NotesFragment : Fragment()  ,
             notesRecyclerView.itemAnimator= NotesItemAnimator()
         }
 
+        binding.sharedFolderViewModel = sharedFolderViewModel
+
         binding.adapter = adapter
 
         binding.notesSearchView.isSubmitButtonEnabled  = true
@@ -86,12 +96,14 @@ class NotesFragment : Fragment()  ,
     }
 
     override fun onNoteClicked(note: Note) {
-        val  action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(note, false, false)
+        sharedNoteViewModel.selectNote(note)
+        val  action = NotesFragmentDirections.actionNotesFragmentToSingleNoteFragment(false)
         findNavController().navigate(action)
     }
 
     override fun onDeleteButtonClick(note : Note) {
-        val action = NotesFragmentDirections.actionNotesFragmentToNoteDeleteDialogFragment(note)
+        sharedNoteViewModel.selectDeleteNote(note)
+        val action = NotesFragmentDirections.actionNotesFragmentToNoteDeleteDialogFragment()
         findNavController().navigate(action)
     }
 
@@ -99,26 +111,18 @@ class NotesFragment : Fragment()  ,
        vm.addNote(note, false)
     }
 
-    private fun searchDatabase(query: String?){
-        vm.searchNotes("%$query%")
-        vm.notesSearchLiveData.observe(this){
-            adapter.setData(it)
-        }
-    }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        searchDatabase(query)
+        sharedFolderViewModel.selectedFolder.value?.let { vm.searchNotes("%$query%", it) }
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        searchDatabase(query)
+        sharedFolderViewModel.selectedFolder.value?.let { vm.searchNotes("%$query%", it) }
         return true
     }
 
     override fun onNoteSwipedLeft(note: Note): Boolean {
-//        vm.deleteNote(note)
-//        Toast.makeText(context, "Note swiped left", Toast.LENGTH_LONG)
           return true
     }
 }

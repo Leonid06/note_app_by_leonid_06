@@ -20,9 +20,6 @@
         <action
             android:id="@+id/action_notesFragment_to_foldersFragment"
             app:destination="@id/foldersFragment" />
-        <argument
-            android:name="folder"
-            app:argType="com.example.leonidsnotesapplication.domain.model.Folder" />
         <action
             android:id="@+id/action_notesFragment_to_noteDeleteDialogFragment"
             app:destination="@id/NoteDeleteDialogFragment" />
@@ -33,13 +30,7 @@
         android:label="fragment_single_note"
         tools:layout="@layout/fragment_single_note" >
         <argument
-            android:name="note"
-            app:argType="com.example.leonidsnotesapplication.domain.model.Note" />
-        <argument
-            android:name="is_new"
-            app:argType="boolean" />
-        <argument
-            android:name="is_default_folder"
+            android:name="isNew"
             app:argType="boolean" />
     </fragment>
     <fragment
@@ -78,17 +69,9 @@
     <dialog
         android:id="@+id/NoteDeleteDialogFragment"
         android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.NotesDeleteDialogFragment"
-        android:label="noteDeleteDialogFragment">
-        <argument
-            android:name="note"
-            app:argType="com.example.leonidsnotesapplication.domain.model.Note" />
-    </dialog>
+        android:label="noteDeleteDialogFragment"/>
     <dialog
         android:id="@+id/homeDeleteDialogFragment"
         android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.HomeDeleteDialogFragment"
-        android:label="HomeDeleteDialogFragment" >
-        <argument
-            android:name="note"
-            app:argType="com.example.leonidsnotesapplication.domain.model.Note" />
-    </dialog>
+        android:label="HomeDeleteDialogFragment" />
 </navigation>

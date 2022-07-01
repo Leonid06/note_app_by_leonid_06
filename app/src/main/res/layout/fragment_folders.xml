@@ -3,7 +3,8 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.leonidsnotesapplication.presentation.folders_feature.FoldersViewModel" />
+            type="com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels.FoldersViewModel" />
+
         <variable
             name="adapter"
             type="com.example.leonidsnotesapplication.presentation.folders_feature.FoldersAdapter" />

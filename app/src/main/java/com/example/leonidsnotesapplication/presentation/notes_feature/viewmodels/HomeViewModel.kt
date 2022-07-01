@@ -4,49 +4,67 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.leonidsnotesapplication.domain.model.NoteViewData
 import com.example.leonidsnotesapplication.domain.model.Note
+import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor (
-    private val noteRepository : NoteRepository
+    private val noteRepository : NoteRepository,
+    private val folderRepository : FoldersRepository
 ) : ViewModel() {
 
 
-    private val _notesLiveData : MutableLiveData<ArrayList<Note>> = MutableLiveData<ArrayList<Note>>()
-    val notesLiveData : LiveData<ArrayList<Note>> = _notesLiveData
-
-    fun updateNotes(){
-        viewModelScope.launch(Dispatchers.IO) {
-            _notesLiveData.postValue(noteRepository.getAllNotes())
-        }
-    }
+    private var _notesLiveData : LiveData<List<Note>> = noteRepository.getAllNotes()
+    val notesLiveData  get()= _notesLiveData
 
     fun searchNotes(query : String){
         viewModelScope.launch(Dispatchers.IO){
-            if(query == ""){
-                _notesLiveData.postValue(noteRepository.getAllNotes())
-            }else{
-                _notesLiveData.postValue(noteRepository.searchAllNotes(query))
-            }
+            _notesLiveData = noteRepository.searchAllNotes(query)
         }
     }
 
     fun deleteNote(note : Note){
         viewModelScope.launch(Dispatchers.IO){
             noteRepository.deleteNote(note)
-            updateNotes()
         }
     }
 
-    fun addNote(note : Note){
-        viewModelScope.launch(Dispatchers.IO) {
-            noteRepository.insertNote(note, false)
-            updateNotes()
+    fun updateNoteChecked(note : Note){
+        viewModelScope.launch(Dispatchers.IO){
+            noteRepository.updateNoteChecked(note.id, note.isStarred)
         }
     }
+
+
+//    fun convertDataToNote(data : NoteViewData) : Note{
+//        val job = viewModelScope.launch(Dispatchers.IO){
+//            noteRepository.getNoteById(data.id)
+//            updateNotes()
+//        }
+//
+//        return
+//    }
+
+//    private fun reformatToViewData(notes : ArrayList<Note>) : ArrayList<NoteViewData>{
+//        val viewData = arrayListOf<NoteViewData>()
+//        notes.forEach { note ->
+//            val item : NoteViewData = if(note.folderId == -1){
+//                NoteViewData(
+//                    note.id,note.title!!, note.subtitle!!,note.isStarred,"", true
+//                )
+//            }else{
+//                NoteViewData(note.id, note.title!!, note.subtitle!!, note.isStarred, "", false)
+//            }
+//
+//            viewData.add(item)
+//        }
+//        return  viewData
+//    }
 }

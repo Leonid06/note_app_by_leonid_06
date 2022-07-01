@@ -1,4 +1,4 @@
-package com.example.leonidsnotesapplication.presentation.folders_feature
+package com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,43 +17,27 @@ class FoldersViewModel @Inject constructor(
 ) : ViewModel(){
 
 
-    init {
-        updateAllFolders()
-    }
 
-    private val _foldersLiveData : MutableLiveData<ArrayList<Folder>> =
-        MutableLiveData<ArrayList<Folder>>()
+    private var _foldersLiveData : LiveData<List<Folder>> = foldersRepository.getAllFolders()
 
-    val foldersLiveData : LiveData<ArrayList<Folder>> =  _foldersLiveData
+    val foldersLiveData get() =  _foldersLiveData
 
-    private fun getAllFolders() : ArrayList<Folder> {
-        return foldersRepository.getAllFolders() as ArrayList<Folder>
-    }
 
     fun updateFolderTitle(folder : Folder, title : String){
         viewModelScope.launch(Dispatchers.IO){
             foldersRepository.updateFolderTitle(folder, title)
-            updateAllFolders()
         }
     }
 
     fun deleteFolder(folder : Folder){
         viewModelScope.launch(Dispatchers.IO) {
             foldersRepository.deleteFolder(folder)
-            updateAllFolders()
         }
     }
 
     fun addFolder(folder : Folder){
         viewModelScope.launch(Dispatchers.IO) {
             foldersRepository.addFolder(folder)
-            updateAllFolders()
-        }
-    }
-
-    fun updateAllFolders(){
-        viewModelScope.launch(Dispatchers.IO){
-            _foldersLiveData.postValue(getAllFolders())
         }
     }
 

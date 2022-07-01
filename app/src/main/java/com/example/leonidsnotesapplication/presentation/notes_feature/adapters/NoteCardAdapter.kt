@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.databinding.NoteCardViewBinding
 import com.example.leonidsnotesapplication.domain.model.Note
-import com.example.leonidsnotesapplication.presentation.notes_feature.callbacks.NotesListCallback
+import com.example.leonidsnotesapplication.presentation.notes_feature.callbacks.AdapterCallback
 import com.example.leonidsnotesapplication.presentation.notes_feature.callbacks.OnTouchListener
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesDiffUtil
 
@@ -26,7 +26,7 @@ class NoteCardAdapter(
     }
 
     private val notes = ArrayList<Note>()
-    private val notesListCallback =  NotesListCallback(this)
+    private val notesListCallback =  AdapterCallback(this)
 
     class ViewHolder(private val binding: NoteCardViewBinding ,
                      private val onTouchListener: NoteTouchListener

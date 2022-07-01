@@ -7,26 +7,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.leonidsnotesapplication.databinding.FragmentSingleNoteBinding
+import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
-import com.example.leonidsnotesapplication.presentation.extensions.getDate
 import com.example.leonidsnotesapplication.presentation.extensions.showKeyboard
+import com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels.FolderSharedViewModel
+import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NoteSharedViewModel
 import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel
+import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.SingleNoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
 class SingleNoteFragment : Fragment() {
 
-    private val vm : NotesViewModel by activityViewModels()
+    private val vm : SingleNoteViewModel by viewModels()
 
-    private val args : SingleNoteFragmentArgs by navArgs()
+    private val noteSharedViewModel : NoteSharedViewModel  by activityViewModels()
+
+    private val folderSharedViewModel : FolderSharedViewModel by activityViewModels()
 
     private var _binding : FragmentSingleNoteBinding? = null
 
     private val binding  get()= _binding!!
+
+    private val args by navArgs<SingleNoteFragmentArgs>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,21 +47,21 @@ class SingleNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val selectedNote = noteSharedViewModel.selectedNote.value!!
+
         activity?.showKeyboard(binding.etNoteContent)
 
-        Log.d("Debugging",vm.toString())
-
-        binding.etNoteContent.setText(args.note.content)
+        binding.etNoteContent.setText(selectedNote.content)
         binding.addNoteButton.setOnClickListener{
 
             val content = binding.etNoteContent.text.toString()
+            val isStarred = selectedNote.isStarred
             val title : String
             val subtitle : String
-
-            val folderId : Int = if(!args.isDefaultFolder){
-                vm.currentFolderLiveData.value!!.id
-            }else{
+            val folderId : Int = if(folderSharedViewModel.defaultMode.value!!){
                 -1
+            }else{
+                folderSharedViewModel.selectedFolder.value?.id!!
             }
 
             if(content.contains("\n")){
@@ -64,10 +72,7 @@ class SingleNoteFragment : Fragment() {
                 subtitle = ""
             }
 
-            val clickedNote : Note = args.note
-            val isStarred = clickedNote.isStarred
-
-            val note = createNote(title, subtitle,  content,isStarred, clickedNote.datetime!!, clickedNote.id, folderId = folderId)
+            val note = createNote(title, subtitle,  content,isStarred, selectedNote.datetime!!, selectedNote.id, folderId = folderId)
 
             if(content.isNotEmpty()){
                 vm.addNote(note, args.isNew)
