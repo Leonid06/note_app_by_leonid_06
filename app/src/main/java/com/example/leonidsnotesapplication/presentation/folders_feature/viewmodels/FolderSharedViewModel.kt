@@ -12,18 +12,10 @@ class FolderSharedViewModel @Inject constructor(
 
 ): ViewModel() {
 
-    private val _selectedFolder : MutableLiveData<Folder> = MutableLiveData<Folder>()
-    val selectedFolder : LiveData<Folder> get() = _selectedFolder
+    private val _selectedFolder: MutableLiveData<Folder> = MutableLiveData<Folder>()
+    val selectedFolder: LiveData<Folder> get() = _selectedFolder
 
-    private val _defaultMode : MutableLiveData<Boolean> = MutableLiveData<Boolean>()
-
-    val defaultMode : LiveData<Boolean> get() = _defaultMode
-
-    fun selectFolder(folder : Folder){
+    fun selectFolder(folder: Folder) {
         _selectedFolder.value = folder
-    }
-
-    fun toggleDefaultMode(state: Boolean){
-        _defaultMode.value = state
     }
 }

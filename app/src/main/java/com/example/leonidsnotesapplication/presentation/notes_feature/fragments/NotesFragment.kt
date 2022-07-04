@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.widget.SearchView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,7 +37,7 @@ class NotesFragment : Fragment()  ,
         NoteCardAdapter(this as NoteCardAdapter.NoteTouchListener)
     }
 
-    private val vm : NotesViewModel by activityViewModels()
+    private val vm : NotesViewModel by viewModels()
 
     private val sharedNoteViewModel: NoteSharedViewModel by activityViewModels()
 
@@ -56,16 +57,12 @@ class NotesFragment : Fragment()  ,
 
         vm.updateNotesByFolder(sharedFolderViewModel.selectedFolder.value!!)
 
-        sharedFolderViewModel.toggleDefaultMode(false)
-
         binding.tvFolderTitle.doOnTextChanged { text, _, _, _ ->
             vm.updateFolderTitle(text.toString(), sharedFolderViewModel.selectedFolder.value!!)
         }
         binding.goToAddNoteFragmentButton.setOnClickListener{
             val note = Note("","","",false, activity?.getDate(),
                 folderId = sharedFolderViewModel.selectedFolder.value!!.id)
-
-            vm.addNote(note, true)
 
             sharedNoteViewModel.selectNote(note)
 

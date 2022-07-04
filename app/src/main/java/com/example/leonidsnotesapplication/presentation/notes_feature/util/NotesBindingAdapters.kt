@@ -9,7 +9,6 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.model.NoteViewData
-import com.example.leonidsnotesapplication.presentation.notes_feature.adapters.HomeNoteAdapter
 import com.example.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter
 
 
@@ -20,17 +19,17 @@ fun setNoteAdapter(recyclerView: RecyclerView, adapter: NoteCardAdapter){
     }
 }
 
-@BindingAdapter("setHomeAdapter")
-fun setNoteAdapter(recyclerView: RecyclerView, adapter: HomeNoteAdapter){
-    adapter.let {
-        recyclerView.adapter = it
-    }
-}
-@BindingAdapter("submitNoteViewData")
-fun submitNoteViewData(recyclerView: RecyclerView, data : ArrayList<NoteViewData>?){
-    val adapter =  recyclerView.adapter as HomeNoteAdapter
-    adapter.setData((data ?: arrayListOf()))
-}
+//@BindingAdapter("setHomeAdapter")
+//fun setNoteAdapter(recyclerView: RecyclerView, adapter: HomeNoteAdapter){
+//    adapter.let {
+//        recyclerView.adapter = it
+//    }
+//}
+//@BindingAdapter("submitNoteViewData")
+//fun submitNoteViewData(recyclerView: RecyclerView, data : ArrayList<NoteViewData>?){
+//    val adapter =  recyclerView.adapter as HomeNoteAdapter
+//    adapter.setData((data ?: arrayListOf()))
+//}
 @BindingAdapter("submitNoteList")
 fun submitNoteList(recyclerView: RecyclerView, data : List<Note>?){
     val adapter = recyclerView.adapter as NoteCardAdapter

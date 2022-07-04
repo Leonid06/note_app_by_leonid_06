@@ -16,13 +16,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor (
-    private val noteRepository : NoteRepository,
-    private val folderRepository : FoldersRepository
+    private val noteRepository : NoteRepository
 ) : ViewModel() {
 
 
     private var _notesLiveData : LiveData<List<Note>> = noteRepository.getAllNotes()
     val notesLiveData  get()= _notesLiveData
+
 
     fun searchNotes(query : String){
         viewModelScope.launch(Dispatchers.IO){

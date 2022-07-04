@@ -1,6 +1,7 @@
 package com.example.leonidsnotesapplication.presentation.di
 
 import android.app.Application
+import androidx.room.AutoMigration
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.leonidsnotesapplication.data.database.DatabaseCallback
@@ -47,7 +48,6 @@ class DataModule {
             "notes",
 
         ).fallbackToDestructiveMigration()
-            .addCallback(DatabaseCallback())
             .build()
     }
 }

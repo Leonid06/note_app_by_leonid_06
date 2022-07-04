@@ -28,8 +28,6 @@ class SingleNoteFragment : Fragment() {
 
     private val noteSharedViewModel : NoteSharedViewModel  by activityViewModels()
 
-    private val folderSharedViewModel : FolderSharedViewModel by activityViewModels()
-
     private var _binding : FragmentSingleNoteBinding? = null
 
     private val binding  get()= _binding!!
@@ -58,11 +56,7 @@ class SingleNoteFragment : Fragment() {
             val isStarred = selectedNote.isStarred
             val title : String
             val subtitle : String
-            val folderId : Int = if(folderSharedViewModel.defaultMode.value!!){
-                -1
-            }else{
-                folderSharedViewModel.selectedFolder.value?.id!!
-            }
+
 
             if(content.contains("\n")){
                 title = content.split("\n")[0]
@@ -72,7 +66,7 @@ class SingleNoteFragment : Fragment() {
                 subtitle = ""
             }
 
-            val note = createNote(title, subtitle,  content,isStarred, selectedNote.datetime!!, selectedNote.id, folderId = folderId)
+            val note = createNote(title, subtitle,  content,isStarred, selectedNote.datetime!!, selectedNote.id, folderId = selectedNote.folderId)
 
             if(content.isNotEmpty()){
                 vm.addNote(note, args.isNew)

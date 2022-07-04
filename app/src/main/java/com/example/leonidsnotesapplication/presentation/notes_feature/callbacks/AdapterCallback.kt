@@ -2,10 +2,9 @@ package com.example.leonidsnotesapplication.presentation.notes_feature.callbacks
 
 import androidx.recyclerview.widget.ListUpdateCallback
 import androidx.recyclerview.widget.RecyclerView
-import com.example.leonidsnotesapplication.presentation.notes_feature.adapters.HomeNoteAdapter
 import com.example.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter
 
-class AdapterCallback<T : RecyclerView.Adapter<*>>(private val adapter: T) : ListUpdateCallback {
+class AdapterCallback(private val adapter: NoteCardAdapter) : ListUpdateCallback {
 
     override fun onInserted(position: Int, count: Int) {
         adapter.notifyItemRangeInserted(position, count)

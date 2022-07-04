@@ -2,6 +2,7 @@ package com.example.leonidsnotesapplication.presentation.notes_feature.fragments
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -35,8 +36,6 @@ SearchView.OnQueryTextListener{
 
     private val vm : HomeViewModel by viewModels()
 
-    private val folderSharedViewModel : FolderSharedViewModel by activityViewModels()
-
     private val noteSharedViewModel : NoteSharedViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -50,7 +49,6 @@ SearchView.OnQueryTextListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        folderSharedViewModel.toggleDefaultMode(true)
         binding.vm = vm
         binding.adapter = adapter
 
@@ -68,7 +66,9 @@ SearchView.OnQueryTextListener{
                 "","","",false, activity?.getDate(), folderId = -1
             )
             noteSharedViewModel.selectNote(note)
-            val action = HomeFragmentDirections.actionHomeFragmentToSingleNoteFragment(true)
+            val action = HomeFragmentDirections.actionHomeFragmentToSingleNoteFragment(
+                isNew = true
+            )
 
             findNavController().navigate(action)
         }

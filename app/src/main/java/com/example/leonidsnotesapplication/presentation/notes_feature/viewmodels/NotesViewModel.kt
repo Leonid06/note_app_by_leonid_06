@@ -20,7 +20,7 @@ class NotesViewModel  @Inject constructor (
     private val foldersRepository : FoldersRepository
 ) : ViewModel() {
 
-    private var _notesLiveData  = noteRepository.getAllNotes()
+    private var _notesLiveData : LiveData<List<Note>> = noteRepository.getAllNotes()
     val notesLiveData get() =  _notesLiveData
 
 
