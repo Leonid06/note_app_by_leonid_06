@@ -4,11 +4,12 @@ import androidx.lifecycle.LiveData
 import com.example.leonidsnotesapplication.data.database.NoteDao
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
+import kotlinx.coroutines.flow.Flow
 
 class FoldersRepositoryImpl(
     private val dao : NoteDao
 ) : FoldersRepository {
-    override fun getAllFolders(): LiveData<List<Folder>> {
+    override fun getAllFolders(): Flow<List<Folder>> {
         return dao.getAllFolders()
     }
 

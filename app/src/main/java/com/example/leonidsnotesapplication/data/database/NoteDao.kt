@@ -5,6 +5,7 @@ import androidx.room.*
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.model.relations.FolderWithNotes
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface NoteDao {
@@ -33,17 +34,21 @@ interface NoteDao {
     @Query("SELECT * FROM Folder WHERE id = :id")
     fun getFolderWithNotesByFolderId(id : Int) : FolderWithNotes
 
+    @Transaction
     @Query("SELECT * FROM Note WHERE folderId = :id ORDER BY isStarred")
-    fun getNotesByFolderId(id : Int) : LiveData<List<Note>>
+    fun getNotesByFolderId(id : Int) : Flow<List<Note>>
 
+    @Transaction
     @Query("SELECT * FROM note WHERE content LIKE :query ORDER BY isStarred")
-    fun searchAllNotes(query : String?) : LiveData<List<Note>>
+    fun searchAllNotes(query : String?) : Flow<List<Note>>
 
+    @Transaction
     @Query("SELECT * FROM note WHERE folderId = :id AND content LIKE :query ORDER BY isStarred" )
-    fun searchNotesByFolderId(query : String?, id : Int) : LiveData<List<Note>>
+    fun searchNotesByFolderId(query : String?, id : Int) : Flow<List<Note>>
 
+    @Transaction
     @Query("SELECT * FROM Note ORDER BY isStarred")
-    fun getAllNotes() : LiveData<List<Note>>
+    fun getAllNotes() : Flow<List<Note>>
 
     @Query("SELECT * FROM  Folder WHERE id = :id")
     fun getFolderWithNotes(id : Int) : List<FolderWithNotes>
@@ -51,8 +56,9 @@ interface NoteDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertFolder(folder : Folder)
 
+    @Transaction
     @Query("SELECT * FROM Folder")
-    fun getAllFolders() : LiveData<List<Folder>>
+    fun getAllFolders() : Flow<List<Folder>>
 
     @Query("UPDATE folder SET noteCount = noteCount + 1 WHERE id = :id")
     fun updateOnInsertNote(id : Int)

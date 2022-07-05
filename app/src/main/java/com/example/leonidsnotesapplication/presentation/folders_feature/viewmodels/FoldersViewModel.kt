@@ -1,9 +1,6 @@
 package com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,7 +15,7 @@ class FoldersViewModel @Inject constructor(
 
 
 
-    private var _foldersLiveData : LiveData<List<Folder>> = foldersRepository.getAllFolders()
+    private var _foldersLiveData : LiveData<List<Folder>> = foldersRepository.getAllFolders().asLiveData()
 
     val foldersLiveData get() =  _foldersLiveData
 

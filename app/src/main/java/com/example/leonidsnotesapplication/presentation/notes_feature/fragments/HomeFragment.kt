@@ -49,8 +49,8 @@ SearchView.OnQueryTextListener{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        binding.vm = vm
         binding.adapter = adapter
+        binding.vm = vm
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner

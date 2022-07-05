@@ -1,9 +1,6 @@
 package com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
@@ -20,14 +17,14 @@ class NotesViewModel  @Inject constructor (
     private val foldersRepository : FoldersRepository
 ) : ViewModel() {
 
-    private var _notesLiveData : LiveData<List<Note>> = noteRepository.getAllNotes()
+    private var _notesLiveData : LiveData<List<Note>> = noteRepository.getAllNotes().asLiveData()
     val notesLiveData get() =  _notesLiveData
 
 
 
     fun searchNotes(query : String?, folder: Folder){
         viewModelScope.launch(Dispatchers.IO) {
-           _notesLiveData = noteRepository.searchNotesByFolder(query,folder)
+           _notesLiveData = noteRepository.searchNotesByFolder(query,folder).asLiveData()
         }
     }
 
@@ -56,7 +53,7 @@ class NotesViewModel  @Inject constructor (
 
 
     private fun getNotesByFolder(folder : Folder) : LiveData<List<Note>> {
-        return noteRepository.getNotesByFolder(folder)
+        return noteRepository.getNotesByFolder(folder).asLiveData()
     }
 
 

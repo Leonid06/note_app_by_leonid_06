@@ -36,6 +36,7 @@ fun submitNoteList(recyclerView: RecyclerView, data : List<Note>?){
     adapter.setData((data as ArrayList<Note>? ?: arrayListOf()))
 }
 
+
 @BindingAdapter("setFolderVisibility")
 fun setFolderImageVisibility(view: ImageView, state : Boolean){
     view.isVisible = state

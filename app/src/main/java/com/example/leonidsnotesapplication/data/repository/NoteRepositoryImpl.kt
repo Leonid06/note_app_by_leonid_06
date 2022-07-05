@@ -5,11 +5,12 @@ import com.example.leonidsnotesapplication.data.database.NoteDao
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
+import kotlinx.coroutines.flow.Flow
 
 class NoteRepositoryImpl(
     private val dao : NoteDao
 ) : NoteRepository {
-    override fun getAllNotes(): LiveData<List<Note>> {
+    override fun getAllNotes(): Flow<List<Note>> {
         return dao.getAllNotes()
     }
 
@@ -25,15 +26,15 @@ class NoteRepositoryImpl(
         return dao.getNoteById(id)
     }
 
-    override fun searchAllNotes(query: String?): LiveData<List<Note>> {
+    override fun searchAllNotes(query: String?): Flow<List<Note>> {
         return dao.searchAllNotes(query)
     }
 
-    override fun searchNotesByFolder(query: String?, folder: Folder): LiveData<List<Note>> {
+    override fun searchNotesByFolder(query: String?, folder: Folder): Flow<List<Note>> {
         return dao.searchNotesByFolderId(query, folder.id)
     }
 
-    override fun getNotesByFolder(folder: Folder): LiveData<List<Note>> {
+    override fun getNotesByFolder(folder: Folder): Flow<List<Note>> {
         return  dao.getNotesByFolderId(folder.id)
     }
 

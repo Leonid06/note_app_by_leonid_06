@@ -2,10 +2,11 @@ package com.example.leonidsnotesapplication.domain.repository
 
 import androidx.lifecycle.LiveData
 import com.example.leonidsnotesapplication.domain.model.Folder
+import kotlinx.coroutines.flow.Flow
 
 interface FoldersRepository {
 
-    fun getAllFolders() : LiveData<List<Folder>>
+    fun getAllFolders() : Flow<List<Folder>>
 
     fun getFolderTitleById(id : Int) : String
 
