@@ -5,6 +5,7 @@ import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -15,9 +16,18 @@ class FoldersViewModel @Inject constructor(
 
 
 
-    private var _foldersLiveData : LiveData<List<Folder>> = foldersRepository.getAllFolders().asLiveData()
+    private var _foldersLiveData : MutableLiveData<List<Folder>> = MutableLiveData<List<Folder>>()
 
-    val foldersLiveData get() =  _foldersLiveData
+    val foldersLiveData : LiveData<List<Folder>> =  _foldersLiveData
+
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            foldersRepository.getAllFolders().collect{
+                _foldersLiveData.postValue(it)
+            }
+        }
+
+    }
 
 
     fun updateFolderTitle(folder : Folder, title : String){
