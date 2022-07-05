@@ -5,7 +5,7 @@ import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 
 
-@Database(entities = [Note::class, Folder::class] , version =  11 )
+@Database(entities = [Note::class, Folder::class] , version =  12 )
 abstract class NoteDatabase : RoomDatabase() {
     abstract fun NoteDao() : NoteDao
 }

@@ -5,9 +5,9 @@ import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,19 +17,30 @@ class NotesViewModel  @Inject constructor (
     private val foldersRepository : FoldersRepository
 ) : ViewModel() {
 
-    private var _notesLiveData : LiveData<List<Note>> = noteRepository.getAllNotes().asLiveData()
-    val notesLiveData get() =  _notesLiveData
+    private val _notesLiveData  = MutableLiveData<List<Note>>()
+    val notesLiveData : LiveData<List<Note>> = _notesLiveData
 
-
-
+//    init {
+//        viewModelScope.launch(Dispatchers.IO){
+//            noteRepository.getAllNotes().collect{
+//                _notesLiveData.postValue(it)
+//            }
+//        }
+//    }
     fun searchNotes(query : String?, folder: Folder){
         viewModelScope.launch(Dispatchers.IO) {
-           _notesLiveData = noteRepository.searchNotesByFolder(query,folder).asLiveData()
+           noteRepository.searchNotesByFolder(query, folder).collect{
+               _notesLiveData.postValue(it)
+           }
         }
     }
 
     fun updateNotesByFolder(folder : Folder){
-        _notesLiveData = getNotesByFolder(folder)
+        viewModelScope.launch(Dispatchers.IO){
+            noteRepository.getNotesByFolder(folder).collect{
+                _notesLiveData.postValue(it)
+            }
+        }
     }
 
     fun addNote(note : Note, isNew : Boolean){
@@ -50,11 +61,5 @@ class NotesViewModel  @Inject constructor (
             foldersRepository.updateFolderTitle(folder, title)
         }
     }
-
-
-    private fun getNotesByFolder(folder : Folder) : LiveData<List<Note>> {
-        return noteRepository.getNotesByFolder(folder).asLiveData()
-    }
-
 
 }

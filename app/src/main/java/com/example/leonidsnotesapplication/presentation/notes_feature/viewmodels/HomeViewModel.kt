@@ -1,5 +1,6 @@
 package com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.leonidsnotesapplication.domain.model.NoteViewData
 import com.example.leonidsnotesapplication.domain.model.Note
@@ -7,6 +8,7 @@ import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -17,14 +19,23 @@ class HomeViewModel @Inject constructor (
 ) : ViewModel() {
 
 
-    private var _notesLiveData : LiveData<List<Note>> = noteRepository.getAllNotes().asLiveData()
-    val notesLiveData  get()= _notesLiveData
+    private val _notesLiveData  = MutableLiveData<List<Note>>()
+    val notesLiveData  : LiveData<List<Note>> = _notesLiveData
 
-
+    init {
+        viewModelScope.launch(Dispatchers.IO) {
+            noteRepository.getAllNotes().collect{
+                Log.d("livedata", "Collected: $it")
+                _notesLiveData.postValue(it)
+            }
+        }
+    }
 
     fun searchNotes(query : String){
         viewModelScope.launch(Dispatchers.IO){
-            _notesLiveData = noteRepository.searchAllNotes(query).asLiveData()
+            noteRepository.searchAllNotes(query).collect{
+                _notesLiveData.postValue(it)
+            }
         }
     }
 
