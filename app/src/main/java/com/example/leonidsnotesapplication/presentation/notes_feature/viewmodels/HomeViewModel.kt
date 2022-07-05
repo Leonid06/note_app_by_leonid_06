@@ -20,7 +20,7 @@ class HomeViewModel @Inject constructor (
 
 
     private val _notesLiveData  = MutableLiveData<List<Note>>()
-    val notesLiveData  : LiveData<List<Note>> = _notesLiveData
+    val notesLiveData : LiveData<List<Note>> = _notesLiveData
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
