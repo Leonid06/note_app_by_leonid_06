@@ -81,6 +81,8 @@ class NoteCardAdapter(
         this.notes.clear()
         this.notes.addAll(notes)
 
+        Log.d("livedata" , "Data is set : $notes")
+
         diffResult.dispatchUpdatesTo(notesListCallback)
 
         notes.reverse()

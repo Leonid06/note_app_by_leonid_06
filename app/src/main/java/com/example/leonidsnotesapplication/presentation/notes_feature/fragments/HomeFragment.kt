@@ -5,13 +5,16 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentHomeBinding
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.extensions.getDate
@@ -24,7 +27,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(),
-NoteCardAdapter.NoteTouchListener,
+NoteCardAdapter.NoteTouchListener,PopupMenu.OnMenuItemClickListener,
 SearchView.OnQueryTextListener{
 
     private var _binding : FragmentHomeBinding? = null
@@ -52,6 +55,10 @@ SearchView.OnQueryTextListener{
         binding.adapter = adapter
         binding.vm = vm
 
+        vm.notesLiveData.observe(viewLifecycleOwner){
+            adapter.setData(it as ArrayList<Note>)
+        }
+
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
             homeRecyclerView.isNestedScrollingEnabled = false
@@ -73,11 +80,22 @@ SearchView.OnQueryTextListener{
             findNavController().navigate(action)
         }
 
+        binding.ibSort.setOnClickListener{
+            showSortMenu()
+        }
+
         binding.foldersButton.setOnClickListener{
             findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToFoldersFragment())
         }
     }
 
+    private fun showSortMenu() {
+        val menu = PopupMenu(context!!, binding.ibSort)
+        val inflater = menu.menuInflater
+        inflater.inflate(R.menu.sort_menu,  menu.menu)
+        menu.setOnMenuItemClickListener(this as PopupMenu.OnMenuItemClickListener)
+        menu.show()
+    }
 
 
     override fun onQueryTextSubmit(query: String?): Boolean {
@@ -108,6 +126,20 @@ SearchView.OnQueryTextListener{
 
     override fun onStarCheckBoxClick(note: Note) {
         vm.updateNoteChecked(note)
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when(item?.itemId){
+            R.id.byDate -> {
+                vm.sortNotesByDate()
+                true
+            }
+            R.id.byTitle -> {
+                vm.sortNotesByTitle()
+                true
+            }
+            else -> false
+        }
     }
 
 }

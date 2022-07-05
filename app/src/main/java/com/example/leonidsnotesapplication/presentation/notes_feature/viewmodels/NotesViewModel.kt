@@ -5,6 +5,7 @@ import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.SortOption
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
@@ -19,25 +20,18 @@ class NotesViewModel  @Inject constructor (
 
     private val _notesLiveData  = MutableLiveData<List<Note>>()
     val notesLiveData : LiveData<List<Note>> = _notesLiveData
-
-//    init {
-//        viewModelScope.launch(Dispatchers.IO){
-//            noteRepository.getAllNotes().collect{
-//                _notesLiveData.postValue(it)
-//            }
-//        }
-//    }
-    fun searchNotes(query : String?, folder: Folder){
+    
+    fun searchNotes(query : String?, folder: Folder, option: SortOption){
         viewModelScope.launch(Dispatchers.IO) {
-           noteRepository.searchNotesByFolder(query, folder).collect{
+           noteRepository.searchNotesByFolder(query, folder, option).collect{
                _notesLiveData.postValue(it)
            }
         }
     }
 
-    fun updateNotesByFolder(folder : Folder){
+    fun updateNotesByFolder(option : SortOption, folder : Folder){
         viewModelScope.launch(Dispatchers.IO){
-            noteRepository.getNotesByFolder(folder).collect{
+            noteRepository.getNotesByFolder(folder, option).collect{
                 _notesLiveData.postValue(it)
             }
         }
@@ -61,5 +55,6 @@ class NotesViewModel  @Inject constructor (
             foldersRepository.updateFolderTitle(folder, title)
         }
     }
+
 
 }

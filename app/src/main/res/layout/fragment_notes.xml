@@ -47,6 +47,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/notesSearchView" />
 
+        <ImageButton
+            android:id="@+id/ibSort"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="16dp"
+            android:background="@drawable/ic_sort"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/notesSearchView"
+            />
+
         <androidx.recyclerview.widget.RecyclerView
             tools:listitem="@layout/note_card_view"
             android:scrollbars="vertical"

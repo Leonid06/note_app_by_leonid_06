@@ -3,8 +3,10 @@ package com.example.leonidsnotesapplication.presentation.notes_feature.fragments
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.core.widget.doOnTextChanged
 import androidx.fragment.app.activityViewModels
@@ -20,6 +22,7 @@ import com.example.leonidsnotesapplication.presentation.folders_feature.viewmode
 import com.example.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter
 import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.SortOption
 import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NoteSharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -28,7 +31,8 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class NotesFragment : Fragment()  ,
     NoteCardAdapter.NoteTouchListener,
-    SearchView.OnQueryTextListener{
+    SearchView.OnQueryTextListener,PopupMenu.OnMenuItemClickListener
+{
 
     private var _binding : FragmentNotesBinding? = null
     private val binding get() = _binding!!
@@ -43,8 +47,10 @@ class NotesFragment : Fragment()  ,
 
     private val sharedFolderViewModel :FolderSharedViewModel by activityViewModels()
 
+    private val sortOption by lazy { sharedNoteViewModel.sortOption }
 
-    override fun onCreateView(
+
+        override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
@@ -55,7 +61,9 @@ class NotesFragment : Fragment()  ,
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        vm.updateNotesByFolder(sharedFolderViewModel.selectedFolder.value!!)
+
+
+        vm.updateNotesByFolder(sortOption.value!!,sharedFolderViewModel.selectedFolder.value!!)
 
         binding.tvFolderTitle.doOnTextChanged { text, _, _, _ ->
             vm.updateFolderTitle(text.toString(), sharedFolderViewModel.selectedFolder.value!!)
@@ -71,6 +79,10 @@ class NotesFragment : Fragment()  ,
 
         binding.goToFoldersFragmentButton.setOnClickListener {
             findNavController().navigate(R.id.action_notesFragment_to_foldersFragment)
+        }
+
+        binding.ibSort.setOnClickListener{
+            showSortMenu()
         }
 
         binding.apply {
@@ -110,16 +122,40 @@ class NotesFragment : Fragment()  ,
 
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        sharedFolderViewModel.selectedFolder.value?.let { vm.searchNotes("%$query%", it) }
+        sharedFolderViewModel.selectedFolder.value?.let { vm.searchNotes("%$query%", it, sortOption.value!!) }
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        sharedFolderViewModel.selectedFolder.value?.let { vm.searchNotes("%$query%", it) }
+        sharedFolderViewModel.selectedFolder.value?.let { vm.searchNotes("%$query%", it, sortOption.value!!) }
         return true
     }
 
     override fun onNoteSwipedLeft(note: Note): Boolean {
           return true
+    }
+
+    private fun showSortMenu() {
+        val menu = PopupMenu(context!!, binding.ibSort)
+        val inflater = menu.menuInflater
+        inflater.inflate(R.menu.sort_menu,  menu.menu)
+        menu.setOnMenuItemClickListener(this as PopupMenu.OnMenuItemClickListener)
+        menu.show()
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when(item?.itemId){
+            R.id.byTitle -> {
+                sharedNoteViewModel.selectSortOption(SortOption.ByTitle)
+                onQueryTextChange(binding.notesSearchView.query.toString())
+                true
+            }
+            R.id.byDate -> {
+                sharedNoteViewModel.selectSortOption(SortOption.ByDate)
+                onQueryTextChange(binding.notesSearchView.query.toString())
+                true
+            }
+            else -> false
+        }
     }
 }

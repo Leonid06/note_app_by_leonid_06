@@ -2,12 +2,14 @@ package com.example.leonidsnotesapplication.presentation.notes_feature.viewmodel
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.NoteViewData
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -22,8 +24,10 @@ class HomeViewModel @Inject constructor (
     private val _notesLiveData  = MutableLiveData<List<Note>>()
     val notesLiveData : LiveData<List<Note>> = _notesLiveData
 
+    private var currentJob : Job = Job()
+
     init {
-        viewModelScope.launch(Dispatchers.IO) {
+       currentJob = viewModelScope.launch(Dispatchers.IO) {
             noteRepository.getAllNotes().collect{
                 Log.d("livedata", "Collected: $it")
                 _notesLiveData.postValue(it)
@@ -32,7 +36,8 @@ class HomeViewModel @Inject constructor (
     }
 
     fun searchNotes(query : String){
-        viewModelScope.launch(Dispatchers.IO){
+        currentJob.cancel()
+        currentJob = viewModelScope.launch(Dispatchers.IO){
             noteRepository.searchAllNotes(query).collect{
                 _notesLiveData.postValue(it)
             }
@@ -40,14 +45,34 @@ class HomeViewModel @Inject constructor (
     }
 
     fun deleteNote(note : Note){
-        viewModelScope.launch(Dispatchers.IO){
+        currentJob.cancel()
+        currentJob = viewModelScope.launch(Dispatchers.IO){
             noteRepository.deleteNote(note)
         }
     }
 
     fun updateNoteChecked(note : Note){
-        viewModelScope.launch(Dispatchers.IO){
-            noteRepository.updateNoteChecked(note.id, note.isStarred)
+        currentJob.cancel()
+        currentJob = viewModelScope.launch(Dispatchers.IO){
+            noteRepository.insertNote(note, false)
+        }
+    }
+
+    fun sortNotesByDate(){
+        currentJob.cancel()
+        currentJob = viewModelScope.launch(Dispatchers.IO) {
+            noteRepository.getAllNotes().collect{
+                _notesLiveData.postValue(it)
+            }
+        }
+    }
+
+    fun sortNotesByTitle(){
+        currentJob.cancel()
+        currentJob = viewModelScope.launch(Dispatchers.IO){
+            noteRepository.getNotesSortedByTitle().collect{
+                _notesLiveData.postValue(it)
+            }
         }
     }
 

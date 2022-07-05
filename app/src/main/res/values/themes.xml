@@ -17,4 +17,8 @@
     <style name="AppSearchView" parent="Widget.AppCompat.SearchView">
         <item name="android:tint">@color/font_color_2</item>
     </style>
+
+    <style name="SortSpinnerTheme" parent="Widget.AppCompat.Spinner">
+        <item name="background">@drawable/sort_spinner_style</item>
+    </style>
 </resources>

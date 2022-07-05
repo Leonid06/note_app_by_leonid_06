@@ -9,4 +9,6 @@
     <string name="folders_title">Мои папки</string>
     <string name="test_folder_title">Название папки</string>
     <string name="recent">Недавнее</string>
+    <string name="by_date">По дате создания</string>
+    <string name="by_title">По названию</string>
 </resources>

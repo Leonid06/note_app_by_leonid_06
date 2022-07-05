@@ -13,6 +13,12 @@ interface NoteDao {
     @Delete
     fun deleteFolder(folder: Folder)
 
+    @Query("SELECT * FROM Note WHERE folderId = :id ORDER BY isStarred,title DESC")
+    fun getNotesByFolderIdSortedByTitle(id : Int) : Flow<List<Note>>
+
+    @Query("SELECT * FROM Note  ORDER BY isStarred,title ASC")
+    fun getNotesSortedByTitle() : Flow<List<Note>>
+
     @Query("UPDATE Note SET isStarred = :state WHERE id = :id")
     fun updateNoteChecked(id : Int, state : Boolean)
 
@@ -45,6 +51,9 @@ interface NoteDao {
     @Transaction
     @Query("SELECT * FROM note WHERE folderId = :id AND content LIKE :query ORDER BY isStarred" )
     fun searchNotesByFolderId(query : String?, id : Int) : Flow<List<Note>>
+
+    @Query("SELECT * FROM note WHERE folderId = :id AND content LIKE :query ORDER BY isStarred, title DESC" )
+    fun searchNotesByFolderIdSortByTitle(query : String?, id : Int) : Flow<List<Note>>
 
     @Transaction
     @Query("SELECT * FROM Note ORDER BY isStarred")

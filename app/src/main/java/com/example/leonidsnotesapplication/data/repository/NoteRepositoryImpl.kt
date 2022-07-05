@@ -1,10 +1,10 @@
 package com.example.leonidsnotesapplication.data.repository
 
-import androidx.lifecycle.LiveData
 import com.example.leonidsnotesapplication.data.database.NoteDao
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.SortOption
 import kotlinx.coroutines.flow.Flow
 
 class NoteRepositoryImpl(
@@ -12,6 +12,10 @@ class NoteRepositoryImpl(
 ) : NoteRepository {
     override fun getAllNotes(): Flow<List<Note>> {
         return dao.getAllNotes()
+    }
+
+    override fun getNotesSortedByTitle(): Flow<List<Note>> {
+        return dao.getNotesSortedByTitle()
     }
 
     override suspend fun updateNoteChecked(id: Int, isChecked: Boolean) {
@@ -30,12 +34,22 @@ class NoteRepositoryImpl(
         return dao.searchAllNotes(query)
     }
 
-    override fun searchNotesByFolder(query: String?, folder: Folder): Flow<List<Note>> {
-        return dao.searchNotesByFolderId(query, folder.id)
+    override fun searchNotesByFolder(query: String?, folder: Folder, option: SortOption): Flow<List<Note>> {
+        return when(option){
+            SortOption.ByDate -> dao.searchNotesByFolderId(query, folder.id)
+            SortOption.ByTitle -> dao.searchNotesByFolderIdSortByTitle(query, folder.id)
+        }
     }
 
-    override fun getNotesByFolder(folder: Folder): Flow<List<Note>> {
-        return  dao.getNotesByFolderId(folder.id)
+    override fun getNotesByFolder(folder: Folder, option: SortOption): Flow<List<Note>> {
+        return when(option){
+            SortOption.ByDate -> {
+                dao.getNotesByFolderId(folder.id)
+            }
+            SortOption.ByTitle -> {
+                dao.getNotesByFolderIdSortedByTitle(folder.id)
+            }
+        }
     }
 
     override suspend fun deleteNote(note: Note) {
