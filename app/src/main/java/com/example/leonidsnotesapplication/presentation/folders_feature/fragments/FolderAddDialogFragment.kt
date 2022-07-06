@@ -12,7 +12,7 @@ import com.example.leonidsnotesapplication.presentation.folders_feature.viewmode
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class FolderAddDialogFragment() : DialogFragment() {
+class FolderAddDialogFragment : DialogFragment() {
 
     private val vm : FoldersViewModel by activityViewModels()
 
@@ -35,8 +35,10 @@ class FolderAddDialogFragment() : DialogFragment() {
         }
 
         binding.createButton.setOnClickListener{
-            vm.addFolder(Folder(binding.etTitleInput.text.toString()))
-            dismiss()
+            if(binding.etTitleInput.text.toString() != ""){
+                vm.addFolder(Folder(binding.etTitleInput.text.toString()))
+                dismiss()
+            }
         }
     }
 }
