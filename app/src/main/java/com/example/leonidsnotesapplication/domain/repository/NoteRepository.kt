@@ -8,7 +8,7 @@ import com.example.leonidsnotesapplication.presentation.notes_feature.util.SortO
 import kotlinx.coroutines.flow.Flow
 
 interface NoteRepository {
-    fun getAllNotes() : Flow<List<Note>>
+    fun getAllNotes(option : SortOption) : Flow<List<Note>>
 
     fun getNotesSortedByTitle() : Flow<List<Note>>
 
@@ -18,7 +18,7 @@ interface NoteRepository {
 
     fun getNoteById(id : Int) : Note
 
-    fun searchAllNotes(query: String?) : Flow<List<Note>>
+    fun searchAllNotes(query: String, option: SortOption) : Flow<List<Note>>
 
     fun searchNotesByFolder(query : String?, folder : Folder, option: SortOption) : Flow<List<Note>>
 

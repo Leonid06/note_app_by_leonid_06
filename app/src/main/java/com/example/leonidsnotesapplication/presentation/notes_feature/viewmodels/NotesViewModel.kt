@@ -8,6 +8,8 @@ import com.example.leonidsnotesapplication.domain.repository.NoteRepository
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.SortOption
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -20,18 +22,22 @@ class NotesViewModel  @Inject constructor (
 
     private val _notesLiveData  = MutableLiveData<List<Note>>()
     val notesLiveData : LiveData<List<Note>> = _notesLiveData
+
+    var currentJob : Job  = Job()
     
     fun searchNotes(query : String?, folder: Folder, option: SortOption){
-        viewModelScope.launch(Dispatchers.IO) {
-           noteRepository.searchNotesByFolder(query, folder, option).collect{
+        currentJob.cancel()
+        currentJob = viewModelScope.launch(Dispatchers.IO) {
+           noteRepository.searchNotesByFolder(query, folder, option).cancellable().collect{
                _notesLiveData.postValue(it)
            }
         }
     }
 
     fun updateNotesByFolder(option : SortOption, folder : Folder){
-        viewModelScope.launch(Dispatchers.IO){
-            noteRepository.getNotesByFolder(folder, option).collect{
+        currentJob.cancel()
+        currentJob = viewModelScope.launch(Dispatchers.IO){
+            noteRepository.getNotesByFolder(folder, option).cancellable().collect{
                 _notesLiveData.postValue(it)
             }
         }
@@ -44,7 +50,6 @@ class NotesViewModel  @Inject constructor (
     }
 
     fun deleteNote(note : Note){
-
         viewModelScope.launch(Dispatchers.IO) {
             noteRepository.deleteNote(note)
         }

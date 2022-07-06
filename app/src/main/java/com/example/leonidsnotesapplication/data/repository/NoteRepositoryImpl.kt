@@ -10,8 +10,11 @@ import kotlinx.coroutines.flow.Flow
 class NoteRepositoryImpl(
     private val dao : NoteDao
 ) : NoteRepository {
-    override fun getAllNotes(): Flow<List<Note>> {
-        return dao.getAllNotes()
+    override fun getAllNotes(option: SortOption): Flow<List<Note>> {
+        return when(option){
+            SortOption.ByDate -> dao.getAllNotes()
+            SortOption.ByTitle -> dao.getAllNotesSortedByTitle()
+        }
     }
 
     override fun getNotesSortedByTitle(): Flow<List<Note>> {
@@ -30,8 +33,11 @@ class NoteRepositoryImpl(
         return dao.getNoteById(id)
     }
 
-    override fun searchAllNotes(query: String?): Flow<List<Note>> {
-        return dao.searchAllNotes(query)
+    override fun searchAllNotes(query: String, option: SortOption): Flow<List<Note>> {
+        return when(option){
+            SortOption.ByDate -> dao.searchAllNotes(query)
+            SortOption.ByTitle -> dao.searchAllNotesSortedByTitle(query)
+        }
     }
 
     override fun searchNotesByFolder(query: String?, folder: Folder, option: SortOption): Flow<List<Note>> {

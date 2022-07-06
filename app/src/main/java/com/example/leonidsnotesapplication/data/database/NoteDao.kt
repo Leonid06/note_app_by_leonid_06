@@ -13,6 +13,12 @@ interface NoteDao {
     @Delete
     fun deleteFolder(folder: Folder)
 
+    @Query("SELECT * FROM Note WHERE content LIKE :query ORDER BY isStarred, title")
+    fun searchAllNotesSortedByTitle(query : String) : Flow<List<Note>>
+
+    @Query("SELECT * FROM Note ORDER BY isStarred, title")
+    fun getAllNotesSortedByTitle() : Flow<List<Note>>
+
     @Query("SELECT * FROM Note WHERE folderId = :id ORDER BY isStarred,title DESC")
     fun getNotesByFolderIdSortedByTitle(id : Int) : Flow<List<Note>>
 

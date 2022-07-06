@@ -16,6 +16,7 @@ import com.example.leonidsnotesapplication.presentation.notes_feature.adapters.N
 fun setNoteAdapter(recyclerView: RecyclerView, adapter: NoteCardAdapter){
     adapter.let {
         recyclerView.adapter = it
+        recyclerView.smoothScrollToPosition(0)
     }
 }
 

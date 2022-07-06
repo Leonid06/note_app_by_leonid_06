@@ -21,6 +21,7 @@ import com.example.leonidsnotesapplication.presentation.extensions.getDate
 import com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels.FolderSharedViewModel
 import com.example.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.SortOption
 import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.HomeViewModel
 import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NoteSharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,6 +42,8 @@ SearchView.OnQueryTextListener{
 
     private val noteSharedViewModel : NoteSharedViewModel by activityViewModels()
 
+    private var currentOption : SortOption = SortOption.ByDate
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +57,8 @@ SearchView.OnQueryTextListener{
 
         binding.adapter = adapter
         binding.vm = vm
+
+        vm.sortNotes(currentOption)
 
         vm.notesLiveData.observe(viewLifecycleOwner){
             adapter.setData(it as ArrayList<Note>)
@@ -99,12 +104,12 @@ SearchView.OnQueryTextListener{
 
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        vm.searchNotes(query!!)
+        vm.searchNotes(query!!, currentOption)
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        vm.searchNotes(query!!)
+        vm.searchNotes(query!!, currentOption)
         return true
     }
 
@@ -118,7 +123,7 @@ SearchView.OnQueryTextListener{
         findNavController().navigate(action)
     }
 
-    override fun onDeleteButtonClick(note : Note) {
+    override fun onDeleteButtonClick(note : Note) { 
         noteSharedViewModel.selectDeleteNote(note)
         val action = HomeFragmentDirections.actionHomeFragmentToHomeDeleteDialogFragment()
         findNavController().navigate(action)
@@ -131,11 +136,13 @@ SearchView.OnQueryTextListener{
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when(item?.itemId){
             R.id.byDate -> {
-                vm.sortNotesByDate()
+                currentOption = SortOption.ByDate
+                vm.sortNotes(currentOption)
                 true
             }
             R.id.byTitle -> {
-                vm.sortNotesByTitle()
+                currentOption = SortOption.ByTitle
+                vm.sortNotes(currentOption)
                 true
             }
             else -> false
