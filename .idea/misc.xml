@@ -16,6 +16,7 @@
         <entry key="app/src/main/res/drawable/ic_card_folder.xml" value="0.234" />
         <entry key="app/src/main/res/drawable/ic_check.xml" value="0.1685" />
         <entry key="app/src/main/res/drawable/ic_circle_arrow.xml" value="0.1655" />
+        <entry key="app/src/main/res/drawable/ic_close.xml" value="0.2215" />
         <entry key="app/src/main/res/drawable/ic_create.xml" value="0.1655" />
         <entry key="app/src/main/res/drawable/ic_delete.xml" value="0.2455" />
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.1815" />
@@ -46,7 +47,7 @@
         <entry key="app/src/main/res/layout/fragment_home_fragment.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_notes.xml" value="0.3943695068359375" />
         <entry key="app/src/main/res/layout/fragment_settings.xml" value="0.29583333333333334" />
-        <entry key="app/src/main/res/layout/fragment_single_note.xml" value="0.1939655172413793" />
+        <entry key="app/src/main/res/layout/fragment_single_note.xml" value="0.4805637228077856" />
         <entry key="app/src/main/res/layout/home_note_card_view.xml" value="0.5936731974283854" />
         <entry key="app/src/main/res/layout/note_card_view.xml" value="0.375" />
         <entry key="app/src/main/res/menu/sort_menu.xml" value="0.30885416666666665" />

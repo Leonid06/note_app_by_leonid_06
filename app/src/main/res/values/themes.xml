@@ -21,4 +21,8 @@
     <style name="SortSpinnerTheme" parent="Widget.AppCompat.Spinner">
         <item name="background">@drawable/sort_spinner_style</item>
     </style>
+
+    <style name="FixedScrollViewTheme" parent="Theme.AppCompat">
+        <item name="android:windowFullscreen">false</item>
+    </style>
 </resources>
