@@ -130,6 +130,7 @@ SearchView.OnQueryTextListener{
     }
 
     override fun onStarCheckBoxClick(note: Note) {
+        binding.homeRecyclerView.smoothScrollToPosition(0)
         vm.updateNoteChecked(note)
     }
 

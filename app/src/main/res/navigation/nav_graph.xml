@@ -16,12 +16,14 @@
             android:id="@+id/action_notesFragment_to_singleNoteFragment"
             app:destination="@id/singleNoteFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/slide_out"
+            app:popExitAnim="@anim/slide_out"
             app:popUpTo="@id/notesFragment" />
 
         <action
             android:id="@+id/action_notesFragment_to_foldersFragment"
-            app:destination="@id/foldersFragment" />
+            app:destination="@id/foldersFragment"
+            app:enterAnim="@anim/slide_in"
+            app:popExitAnim="@anim/slide_out"/>
         <action
             android:id="@+id/action_notesFragment_to_noteDeleteDialogFragment"
             app:destination="@id/NoteDeleteDialogFragment" />
@@ -64,12 +66,12 @@
             android:id="@+id/action_homeFragment_to_singleNoteFragment"
             app:destination="@id/singleNoteFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/slide_out" />
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_homeFragment_to_foldersFragment"
             app:destination="@id/foldersFragment"
             app:enterAnim="@anim/slide_in"
-            app:exitAnim="@anim/slide_out" />
+            app:popExitAnim="@anim/slide_out" />
         <action
             android:id="@+id/action_homeFragment_to_homeDeleteDialogFragment"
             app:destination="@id/homeDeleteDialogFragment" />

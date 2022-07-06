@@ -117,6 +117,7 @@ class NotesFragment : Fragment()  ,
     }
 
     override fun onStarCheckBoxClick(note: Note) {
+       binding.notesRecyclerView.smoothScrollToPosition(0)
        vm.addNote(note, false)
     }
 
