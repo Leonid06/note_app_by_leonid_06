@@ -1,6 +1,7 @@
 package com.example.leonidsnotesapplication.presentation.notes_feature.util
 
 import android.opengl.Visibility
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -32,9 +33,10 @@ fun setNoteAdapter(recyclerView: RecyclerView, adapter: NoteCardAdapter){
 //    adapter.setData((data ?: arrayListOf()))
 //}
 @BindingAdapter("submitNoteList")
-fun submitNoteList(recyclerView: RecyclerView, data : List<Note>?){
+fun submitNoteList(recyclerView: RecyclerView, data : ArrayList<Note>?){
     val adapter = recyclerView.adapter as NoteCardAdapter
-    adapter.setData((data as ArrayList<Note>? ?: arrayListOf()))
+    adapter.setData((data ?: arrayListOf()))
+    Log.d("Debug", "Submitted ${data?.size.toString()} items to recyclerview")
 }
 
 

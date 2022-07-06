@@ -60,9 +60,9 @@ SearchView.OnQueryTextListener{
 
         vm.sortNotes(currentOption)
 
-        vm.notesLiveData.observe(viewLifecycleOwner){
-            adapter.setData(it as ArrayList<Note>)
-        }
+//        vm.notesLiveData.observe(viewLifecycleOwner){
+//            adapter.setData(it as ArrayList<Note>)
+//        }
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner

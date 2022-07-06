@@ -23,25 +23,16 @@ class HomeViewModel @Inject constructor (
 ) : ViewModel() {
 
 
-    private val _notesLiveData  = MutableLiveData<List<Note>>()
-    val notesLiveData : LiveData<List<Note>> = _notesLiveData
+    private val _notesLiveData  = MutableLiveData<ArrayList<Note>>()
+    val notesLiveData : LiveData<ArrayList<Note>> = _notesLiveData
 
     private var currentJob : Job = Job()
-
-//    init {
-//       currentJob = viewModelScope.launch(Dispatchers.IO) {
-//            noteRepository.getAllNotes(SortOption.ByDate).cancellable().collect{
-//                Log.d("livedata", "Collected: $it")
-//                _notesLiveData.postValue(it)
-//            }
-//        }
-//    }
 
     fun searchNotes(query : String, option: SortOption){
         currentJob.cancel()
         currentJob = viewModelScope.launch(Dispatchers.IO){
             noteRepository.searchAllNotes(query, option).cancellable().collect{
-                _notesLiveData.postValue(it)
+                _notesLiveData.postValue(it as ArrayList<Note>)
             }
         }
     }
@@ -50,7 +41,7 @@ class HomeViewModel @Inject constructor (
         currentJob.cancel()
         currentJob = viewModelScope.launch(Dispatchers.IO) {
             noteRepository.getAllNotes(option).cancellable().collect{
-                _notesLiveData.postValue(it)
+                _notesLiveData.postValue(it as ArrayList<Note>)
             }
         }
     }
@@ -67,30 +58,4 @@ class HomeViewModel @Inject constructor (
         }
     }
 
-
-
-//    fun convertDataToNote(data : NoteViewData) : Note{
-//        val job = viewModelScope.launch(Dispatchers.IO){
-//            noteRepository.getNoteById(data.id)
-//            updateNotes()
-//        }
-//
-//        return
-//    }
-
-//    private fun reformatToViewData(notes : ArrayList<Note>) : ArrayList<NoteViewData>{
-//        val viewData = arrayListOf<NoteViewData>()
-//        notes.forEach { note ->
-//            val item : NoteViewData = if(note.folderId == -1){
-//                NoteViewData(
-//                    note.id,note.title!!, note.subtitle!!,note.isStarred,"", true
-//                )
-//            }else{
-//                NoteViewData(note.id, note.title!!, note.subtitle!!, note.isStarred, "", false)
-//            }
-//
-//            viewData.add(item)
-//        }
-//        return  viewData
-//    }
 }

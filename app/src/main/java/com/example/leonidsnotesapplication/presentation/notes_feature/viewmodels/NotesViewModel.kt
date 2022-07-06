@@ -20,8 +20,8 @@ class NotesViewModel  @Inject constructor (
     private val foldersRepository : FoldersRepository
 ) : ViewModel() {
 
-    private val _notesLiveData  = MutableLiveData<List<Note>>()
-    val notesLiveData : LiveData<List<Note>> = _notesLiveData
+    private val _notesLiveData  = MutableLiveData<ArrayList<Note>>()
+    val notesLiveData : LiveData<ArrayList<Note>> = _notesLiveData
 
     var currentJob : Job  = Job()
     
@@ -29,7 +29,7 @@ class NotesViewModel  @Inject constructor (
         currentJob.cancel()
         currentJob = viewModelScope.launch(Dispatchers.IO) {
            noteRepository.searchNotesByFolder(query, folder, option).cancellable().collect{
-               _notesLiveData.postValue(it)
+               _notesLiveData.postValue(it as ArrayList<Note>)
            }
         }
     }
@@ -38,7 +38,7 @@ class NotesViewModel  @Inject constructor (
         currentJob.cancel()
         currentJob = viewModelScope.launch(Dispatchers.IO){
             noteRepository.getNotesByFolder(folder, option).cancellable().collect{
-                _notesLiveData.postValue(it)
+                _notesLiveData.postValue(it as ArrayList<Note>)
             }
         }
     }
