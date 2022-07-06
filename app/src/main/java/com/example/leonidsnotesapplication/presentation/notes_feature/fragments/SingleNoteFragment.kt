@@ -50,6 +50,16 @@ class SingleNoteFragment : Fragment() {
         activity?.showKeyboard(binding.etNoteContent)
 
         binding.etNoteContent.setText(selectedNote.content)
+
+        val backUpContent : String = binding.etNoteContent.text.toString()
+
+        binding.ivCancel.setOnClickListener{
+            findNavController().navigateUp()
+        }
+
+        binding.ivBackup.setOnClickListener{
+            binding.etNoteContent.setText(backUpContent)
+        }
         binding.addNoteButton.setOnClickListener{
 
             val content = binding.etNoteContent.text.toString()
