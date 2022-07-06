@@ -53,7 +53,7 @@
                 android:id="@+id/tvNoteCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="48dp"
+                android:layout_marginEnd="24dp"
                 android:text="@{String.valueOf(folder.noteCount)}"
                 android:textColor="@color/font_color_2"
                 app:layout_constraintBottom_toBottomOf="parent"
