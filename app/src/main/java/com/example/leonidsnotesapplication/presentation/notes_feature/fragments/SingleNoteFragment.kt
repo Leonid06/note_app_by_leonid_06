@@ -1,28 +1,28 @@
 package com.example.leonidsnotesapplication.presentation.notes_feature.fragments
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.leonidsnotesapplication.R
 import com.example.leonidsnotesapplication.databinding.FragmentSingleNoteBinding
-import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.presentation.extensions.showKeyboard
-import com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels.FolderSharedViewModel
 import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NoteSharedViewModel
-import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel
 import com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.SingleNoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class SingleNoteFragment : Fragment() {
+class SingleNoteFragment : Fragment(),
+PopupMenu.OnMenuItemClickListener{
 
     private val vm : SingleNoteViewModel by viewModels()
 
@@ -52,6 +52,10 @@ class SingleNoteFragment : Fragment() {
         binding.etNoteContent.setText(selectedNote.content)
 
         val backUpContent : String = binding.etNoteContent.text.toString()
+
+//        binding.ivFolderChange.setOnClickListener{
+//            showFolderEditMenu()
+//        }
 
         binding.ivCancel.setOnClickListener{
             findNavController().navigateUp()
@@ -86,6 +90,17 @@ class SingleNoteFragment : Fragment() {
 
     }
 
+//    private fun showFolderEditMenu() {
+//        val menu = PopupMenu(context!!, binding.ivFolderChange)
+//        val inflater = menu.menuInflater
+//        inflater.inflate(R.menu.sort_menu,  menu.menu)
+//        vm.foldersLiveData.value!!.forEach {
+//            menu.menu.add(it.title)
+//        }
+//        menu.setOnMenuItemClickListener(this as PopupMenu.OnMenuItemClickListener)
+//        menu.show()
+//    }
+
     private fun createNote(
         title: String,
         subtitle: String,
@@ -104,5 +119,9 @@ class SingleNoteFragment : Fragment() {
             id,
             folderId
         )
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return true
     }
 }
