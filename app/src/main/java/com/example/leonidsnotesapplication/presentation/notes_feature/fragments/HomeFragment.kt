@@ -56,7 +56,7 @@ SearchView.OnQueryTextListener{
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         binding.adapter = adapter
-        binding.vm = vm
+        binding.viewModel = vm
 
         vm.sortNotes(currentOption)
 

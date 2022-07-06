@@ -7,7 +7,7 @@
     
     <data>
         <variable
-            name="vm"
+            name="viewModel"
             type="com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.HomeViewModel" />
 
         <variable
@@ -78,7 +78,7 @@
             android:layout_height="515dp"
             android:layout_marginTop="2dp"
             app:setNoteAdapter="@{adapter}"
-            app:submitNoteList="@{vm.notesLiveData}"
+            app:submitNoteList="@{viewModel.notesLiveData}"
             app:layout_constraintTop_toBottomOf="@id/tvRecentTitle"
             app:layout_constraintStart_toStartOf="parent"
             />
