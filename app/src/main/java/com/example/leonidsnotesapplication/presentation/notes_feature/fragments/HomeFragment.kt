@@ -109,10 +109,6 @@ SearchView.OnQueryTextListener{
         return true
     }
 
-    override fun onNoteSwipedLeft(note: Note): Boolean {
-        return false
-    }
-
     override fun onNoteClicked(note : Note) {
         noteSharedViewModel.selectNote(note)
         val action = HomeFragmentDirections.actionHomeFragmentToSingleNoteFragment(false)

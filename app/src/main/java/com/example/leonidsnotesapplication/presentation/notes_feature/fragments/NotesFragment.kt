@@ -132,10 +132,6 @@ class NotesFragment : Fragment()  ,
         return true
     }
 
-    override fun onNoteSwipedLeft(note: Note): Boolean {
-          return true
-    }
-
     private fun showSortMenu() {
         val menu = PopupMenu(context!!, binding.ibSort)
         val inflater = menu.menuInflater

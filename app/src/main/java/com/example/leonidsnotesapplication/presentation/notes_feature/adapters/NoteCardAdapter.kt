@@ -20,7 +20,6 @@ class NoteCardAdapter(
 
 
     interface NoteTouchListener {
-        fun onNoteSwipedLeft(note : Note) : Boolean
         fun onNoteClicked(note : Note)
         fun onDeleteButtonClick(note : Note)
         fun onStarCheckBoxClick(note : Note)
@@ -36,10 +35,6 @@ class NoteCardAdapter(
 
         init {
             binding.root.setOnTouchListener(object : OnTouchListener(binding.root.context){
-                override fun onSwipeLeft(): Boolean {
-                    onTouchListener.onNoteSwipedLeft(binding.note!!)
-                    return true
-                }
 
                 override fun onClick(): Boolean {
                     onTouchListener.onNoteClicked(binding.note!!)

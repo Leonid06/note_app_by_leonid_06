@@ -74,12 +74,4 @@ class FoldersFragment : Fragment(), FoldersAdapter.FolderClickListener {
         vm.updateFolderTitle(folder, title)
     }
 
-    override fun setUpOnItemSwiped(swipe: SwipeCallback) {
-        val itemTouchHelper = ItemTouchHelper(swipe)
-        itemTouchHelper.attachToRecyclerView(binding.foldersRecyclerView)
-    }
-
-    override fun onDeleteSwiped(folder: Folder) {
-        vm.deleteFolder(folder)
-    }
 }
