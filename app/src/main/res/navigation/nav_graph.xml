@@ -27,6 +27,11 @@
         <action
             android:id="@+id/action_notesFragment_to_noteDeleteDialogFragment"
             app:destination="@id/NoteDeleteDialogFragment" />
+        <action
+            android:id="@+id/action_notesFragment_to_deleteFolderDialogFragment"
+            app:destination="@id/deleteFolderDialogFragment"
+            app:enterAnim="@anim/slide_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/singleNoteFragment"
@@ -93,4 +98,15 @@
         android:id="@+id/editFolderDialogFragment"
         android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.EditFolderDialogFragment"
         android:label="EditFolderDialogFragment" />
+    <dialog
+        android:id="@+id/deleteFolderDialogFragment"
+        android:name="com.example.leonidsnotesapplication.presentation.folders_feature.fragments.DeleteFolderDialogFragment"
+        android:label="DeleteFolderDialogFragment" >
+
+        <action
+            android:id="@+id/action_deleteFolderDialogFragment_to_foldersFragment"
+            app:destination="@id/foldersFragment"
+            app:enterAnim="@anim/slide_in"
+            app:popExitAnim="@anim/slide_out" />
+    </dialog>
 </navigation>

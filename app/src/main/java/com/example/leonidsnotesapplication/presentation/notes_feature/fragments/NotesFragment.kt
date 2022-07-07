@@ -68,6 +68,11 @@ class NotesFragment : Fragment()  ,
         binding.tvFolderTitle.doOnTextChanged { text, _, _, _ ->
             vm.updateFolderTitle(text.toString(), sharedFolderViewModel.selectedFolder.value!!)
         }
+
+        binding.ibDeleteFolder.setOnClickListener {
+            findNavController().navigate(NotesFragmentDirections.actionNotesFragmentToDeleteFolderDialogFragment())
+        }
+
         binding.goToAddNoteFragmentButton.setOnClickListener{
             val note = Note("","","",false, activity?.getDate(),
                 folderId = sharedFolderViewModel.selectedFolder.value!!.id)

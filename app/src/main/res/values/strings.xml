@@ -11,4 +11,6 @@
     <string name="recent">Недавнее</string>
     <string name="by_date">По дате создания</string>
     <string name="by_title">По названию</string>
+    <string name="delete">удалить</string>
+    <string name="confirm">подтвердить</string>
 </resources>
