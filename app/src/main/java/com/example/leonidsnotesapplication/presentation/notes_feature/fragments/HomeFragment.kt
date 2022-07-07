@@ -100,12 +100,14 @@ SearchView.OnQueryTextListener{
 
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        vm.searchNotes(query!!, currentOption)
+        if(query!!.isNotEmpty())
+        vm.searchNotes(query, currentOption)
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        vm.searchNotes(query!!, currentOption)
+        if(query!!.isNotEmpty())
+            vm.searchNotes(query, currentOption)
         return true
     }
 
