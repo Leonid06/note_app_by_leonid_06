@@ -100,14 +100,19 @@ SearchView.OnQueryTextListener{
 
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        if(query!!.isNotEmpty())
-        vm.searchNotes(query, currentOption)
+        if(query!!.isNotEmpty()){
+            vm.searchNotes("%$query%", currentOption)
+        }
+
+
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        if(query!!.isNotEmpty())
-            vm.searchNotes(query, currentOption)
+        if(query!!.isNotEmpty()){
+            vm.searchNotes("%$query%", currentOption)
+        }
+
         return true
     }
 
@@ -132,11 +137,12 @@ SearchView.OnQueryTextListener{
         return when(item?.itemId){
             R.id.byDate -> {
                 currentOption = SortOption.ByDate
-                vm.sortNotes(currentOption)
+                onQueryTextChange(binding.homeSearchView.query.toString())
                 true
             }
             R.id.byTitle -> {
                 currentOption = SortOption.ByTitle
+                onQueryTextChange(binding.homeSearchView.query.toString())
                 vm.sortNotes(currentOption)
                 true
             }
