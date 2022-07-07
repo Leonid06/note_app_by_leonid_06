@@ -19,10 +19,10 @@ fun setFolderAdapter(
 @BindingAdapter("submitFolderList")
 fun submitFolderList(
     recyclerView: RecyclerView,
-    data : ArrayList<Folder>?,
+    data : List<Folder>?,
 ){
     val adapter = recyclerView.adapter as FoldersAdapter
-    adapter.setData((data ?: arrayListOf()))
+    adapter.setData((data as ArrayList<Folder>? ?: arrayListOf()))
 }
 
 

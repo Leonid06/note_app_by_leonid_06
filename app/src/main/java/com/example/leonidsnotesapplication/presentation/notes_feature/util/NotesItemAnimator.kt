@@ -11,17 +11,15 @@ class NotesItemAnimator : DefaultItemAnimator() {
         supportsChangeAnimations = false
     }
 
-//    override fun animateRemove(holder: RecyclerView.ViewHolder?): Boolean {
-//        val animation = AnimationUtils.loadAnimation(holder?.itemView?.context, R.anim.slide_out)
-//        holder?.itemView?.startAnimation(animation)
-//        return super.animateRemove(holder)
-//    }
-//
-//    override fun animateAdd(holder: RecyclerView.ViewHolder?): Boolean {
-//        val animation = AnimationUtils.loadAnimation(holder?.itemView?.context, R.anim.slide_in)
-//        holder?.itemView?.startAnimation(animation)
-//        return  super.animateAdd(holder)
-//    }
+    override fun animateRemove(holder: RecyclerView.ViewHolder?): Boolean {
+        val animation = AnimationUtils.loadAnimation(holder?.itemView?.context, R.anim.slide_out)
+        holder?.itemView?.startAnimation(animation)
+        return super.animateRemove(holder)
+    }
 
-
+    override fun animateAdd(holder: RecyclerView.ViewHolder?): Boolean {
+        val animation = AnimationUtils.loadAnimation(holder?.itemView?.context, R.anim.slide_in)
+        holder?.itemView?.startAnimation(animation)
+        return  super.animateAdd(holder)
+    }
 }

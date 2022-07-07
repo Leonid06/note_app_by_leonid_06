@@ -16,13 +16,13 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="75dp"
+            android:layout_height="50dp"
             android:background="@drawable/folder_card_view_style_2">
 
             <ImageView
                 android:id="@+id/ivFolder"
-                android:layout_width="45dp"
-                android:layout_height="37dp"
+                android:layout_width="40dp"
+                android:layout_height="30dp"
                 android:layout_marginStart="20dp"
                 android:src="@drawable/ic_folders_2"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -35,7 +35,7 @@
                 android:layout_width="220dp"
                 android:layout_height="20dp"
                 android:layout_margin="10dp"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="8dp"
                 android:background="@null"
                 android:enabled="false"
                 android:textAlignment="textStart"
@@ -45,15 +45,15 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toEndOf="@id/ivFolder"
                 app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.333"
                 app:text="@{folder.title.toString()}"
                 tools:text="Title" />
-
 
             <TextView
                 android:id="@+id/tvNoteCount"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="48dp"
+                android:layout_marginEnd="24dp"
                 android:text="@{String.valueOf(folder.noteCount)}"
                 android:textColor="@color/font_color_2"
                 app:layout_constraintBottom_toBottomOf="parent"

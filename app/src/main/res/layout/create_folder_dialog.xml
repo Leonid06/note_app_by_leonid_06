@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@null">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="250dp"
@@ -26,7 +27,7 @@
             android:id="@+id/etTitleInput"
             android:layout_width ="200dp"
             android:layout_height="40dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="18dp"
             app:layout_constraintTop_toBottomOf="@id/tvEnterTitle"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -37,10 +38,11 @@
             android:layout_height="30dp"
             android:layout_marginStart="24dp"
             android:layout_marginTop="13dp"
-            android:textSize="15sp"
+            android:textSize="18sp"
+            android:textColor="@color/button_color_2"
             android:text="@string/cancel"
             android:textAllCaps="false"
-            android:background="@drawable/dialog_button_style"
+            android:background="@null"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etTitleInput"/>
 
@@ -50,10 +52,11 @@
             android:layout_height="30dp"
             android:layout_marginTop="13dp"
             android:layout_marginEnd="24dp"
-            android:background="@drawable/dialog_button_style"
+            android:background="@null"
             android:text="@string/create"
+            android:textColor="@color/button_color_2"
             android:textAllCaps="false"
-            android:textSize="15sp"
+            android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/etTitleInput">
 

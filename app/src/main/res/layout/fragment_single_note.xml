@@ -5,16 +5,57 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".presentation.single_note_feature.SingleNoteFragment"
+        tools:context=".presentation.notes_feature.fragments.SingleNoteFragment"
         android:background="@color/note_background_color_3"
-        android:fitsSystemWindows="true">
+        >
 
+        <ImageButton
+            android:background="@drawable/ic_cancel"
+            android:id="@+id/ivCancel"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            >
+
+        </ImageButton>
+
+        <ImageButton
+            android:background="@drawable/ic_folders_stack"
+            android:id="@+id/ivFolderChange"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/ivBackup"
+            />
+
+        <ImageButton
+            android:background="@drawable/ic_backup"
+            android:id="@+id/ivBackup"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="15dp"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            >
+
+        </ImageButton>
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="575dp"
+            android:requiresFadingEdge="horizontal"
+            android:fadingEdge="horizontal"
+            android:fadingEdgeLength="10dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/ivCancel"
             android:focusable="true"
+            style="@style/FixedScrollViewTheme"
             >
 
             <LinearLayout

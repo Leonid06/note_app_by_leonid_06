@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.LeonidsNotesApplication" parent="Theme.AppCompat.DayNight.NoActionBar">
+    <style name="Theme.LeonidsNotesApplication" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_500</item>
         <item name="colorPrimaryVariant">@color/purple_700</item>
@@ -16,5 +16,13 @@
 
     <style name="AppSearchView" parent="Widget.AppCompat.SearchView">
         <item name="android:tint">@color/font_color_2</item>
+    </style>
+
+    <style name="SortSpinnerTheme" parent="Widget.AppCompat.Spinner">
+        <item name="background">@drawable/sort_spinner_style</item>
+    </style>
+
+    <style name="FixedScrollViewTheme" parent="Theme.AppCompat">
+        <item name="android:windowFullscreen">false</item>
     </style>
 </resources>

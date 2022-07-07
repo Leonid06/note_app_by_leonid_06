@@ -1,13 +1,14 @@
-package com.example.leonidsnotesapplication.presentation.notes_feature
+package com.example.leonidsnotesapplication.presentation.notes_feature.adapters
 
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.leonidsnotesapplication.databinding.NoteCardViewBinding
 import com.example.leonidsnotesapplication.domain.model.Note
-import com.example.leonidsnotesapplication.presentation.notes_feature.callbacks.NotesListCallback
+import com.example.leonidsnotesapplication.presentation.notes_feature.callbacks.AdapterCallback
 import com.example.leonidsnotesapplication.presentation.notes_feature.callbacks.OnTouchListener
 import com.example.leonidsnotesapplication.presentation.notes_feature.util.NotesDiffUtil
 
@@ -19,14 +20,13 @@ class NoteCardAdapter(
 
 
     interface NoteTouchListener {
-        fun onNoteSwipedLeft(note : Note) : Boolean
         fun onNoteClicked(note : Note)
         fun onDeleteButtonClick(note : Note)
         fun onStarCheckBoxClick(note : Note)
     }
 
     private val notes = ArrayList<Note>()
-    private val notesListCallback =  NotesListCallback(this)
+    private val notesListCallback =  AdapterCallback(this)
 
     class ViewHolder(private val binding: NoteCardViewBinding ,
                      private val onTouchListener: NoteTouchListener
@@ -35,10 +35,6 @@ class NoteCardAdapter(
 
         init {
             binding.root.setOnTouchListener(object : OnTouchListener(binding.root.context){
-                override fun onSwipeLeft(): Boolean {
-                    onTouchListener.onNoteSwipedLeft(binding.note!!)
-                    return true
-                }
 
                 override fun onClick(): Boolean {
                     onTouchListener.onNoteClicked(binding.note!!)
@@ -79,6 +75,8 @@ class NoteCardAdapter(
 
         this.notes.clear()
         this.notes.addAll(notes)
+
+        Log.d("livedata" , "Data is set : $notes")
 
         diffResult.dispatchUpdatesTo(notesListCallback)
 

@@ -1,13 +1,11 @@
-package com.example.leonidsnotesapplication.presentation.folders_feature
+package com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -17,43 +15,36 @@ class FoldersViewModel @Inject constructor(
 ) : ViewModel(){
 
 
+
+    private var _foldersLiveData : MutableLiveData<List<Folder>> = MutableLiveData<List<Folder>>()
+
+    val foldersLiveData : LiveData<List<Folder>> =  _foldersLiveData
+
     init {
-        updateAllFolders()
+        viewModelScope.launch(Dispatchers.IO) {
+            foldersRepository.getAllFolders().collect{
+                _foldersLiveData.postValue(it)
+            }
+        }
+
     }
 
-    private val _foldersLiveData : MutableLiveData<ArrayList<Folder>> =
-        MutableLiveData<ArrayList<Folder>>()
-
-    val foldersLiveData : LiveData<ArrayList<Folder>> =  _foldersLiveData
-
-    private fun getAllFolders() : ArrayList<Folder> {
-        return foldersRepository.getAllFolders() as ArrayList<Folder>
-    }
 
     fun updateFolderTitle(folder : Folder, title : String){
         viewModelScope.launch(Dispatchers.IO){
             foldersRepository.updateFolderTitle(folder, title)
-            updateAllFolders()
         }
     }
 
     fun deleteFolder(folder : Folder){
         viewModelScope.launch(Dispatchers.IO) {
             foldersRepository.deleteFolder(folder)
-            updateAllFolders()
         }
     }
 
     fun addFolder(folder : Folder){
         viewModelScope.launch(Dispatchers.IO) {
             foldersRepository.addFolder(folder)
-            updateAllFolders()
-        }
-    }
-
-    fun updateAllFolders(){
-        viewModelScope.launch(Dispatchers.IO){
-            _foldersLiveData.postValue(getAllFolders())
         }
     }
 
