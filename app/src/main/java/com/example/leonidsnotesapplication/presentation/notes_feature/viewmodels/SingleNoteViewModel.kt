@@ -22,15 +22,21 @@ class SingleNoteViewModel @Inject constructor(
     private val foldersRepository: FoldersRepository,
 ) : ViewModel(){
 
-    private val _foldersLiveData : MutableLiveData<List<Folder>> = MutableLiveData()
+    private val _foldersLiveData : MutableLiveData<ArrayList<Folder>> = MutableLiveData()
 
-    val foldersLiveData : LiveData<List<Folder>> = _foldersLiveData
+    val foldersLiveData : LiveData<ArrayList<Folder>> = _foldersLiveData
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             foldersRepository.getAllFolders().cancellable().collect{
-                _foldersLiveData.postValue(it)
+                _foldersLiveData.postValue(it as ArrayList<Folder>)
             }
+        }
+    }
+
+    fun changeNoteFolder(note : Note, folder : Folder){
+        viewModelScope.launch(Dispatchers.IO) {
+            noteRepository.changeNoteFolder(note, folder)
         }
     }
 

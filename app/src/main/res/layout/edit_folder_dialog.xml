@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.SingleNoteViewModel" />
+        <variable
+            name="adapter"
+            type="com.example.leonidsnotesapplication.presentation.notes_feature.adapters.FolderEditAdapter" />
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/note_background_color_3">
+        <androidx.recyclerview.widget.RecyclerView
+            android:scrollbars="vertical"
+            android:id="@+id/editFolderRecyclerView"
+            android:layout_width="match_parent"
+            android:requiresFadingEdge="vertical"
+            android:fadingEdge="vertical"
+            android:fadingEdgeLength="10dp"
+            android:layout_height="match_parent"
+            app:setEditFolderAdapter="@{adapter}"
+            app:submitEditFolderList="@{viewModel.foldersLiveData}"
+            tools:listitem="@layout/edit_folder_card_view"/>
+    </LinearLayout>
+</layout>
+

@@ -21,8 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class SingleNoteFragment : Fragment(),
-PopupMenu.OnMenuItemClickListener{
+class SingleNoteFragment : Fragment(){
 
     private val vm : SingleNoteViewModel by viewModels()
 
@@ -53,9 +52,9 @@ PopupMenu.OnMenuItemClickListener{
 
         val backUpContent : String = binding.etNoteContent.text.toString()
 
-//        binding.ivFolderChange.setOnClickListener{
-//            showFolderEditMenu()
-//        }
+        binding.ivFolderChange.setOnClickListener{
+            findNavController().navigate(SingleNoteFragmentDirections.actionSingleNoteFragmentToEditFolderDialogFragment())
+        }
 
         binding.ivCancel.setOnClickListener{
             findNavController().navigateUp()
@@ -119,9 +118,5 @@ PopupMenu.OnMenuItemClickListener{
             id,
             folderId
         )
-    }
-
-    override fun onMenuItemClick(item: MenuItem?): Boolean {
-        return true
     }
 }

@@ -36,6 +36,11 @@
         <argument
             android:name="isNew"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_singleNoteFragment_to_editFolderDialogFragment"
+            app:destination="@id/editFolderDialogFragment"
+            app:enterAnim="@anim/slide_in"
+            app:popExitAnim="@anim/slide_out" />
     </fragment>
     <fragment
         android:id="@+id/foldersFragment"
@@ -84,4 +89,8 @@
         android:id="@+id/homeDeleteDialogFragment"
         android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.HomeDeleteDialogFragment"
         android:label="HomeDeleteDialogFragment" />
+    <dialog
+        android:id="@+id/editFolderDialogFragment"
+        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.EditFolderDialogFragment"
+        android:label="EditFolderDialogFragment" />
 </navigation>

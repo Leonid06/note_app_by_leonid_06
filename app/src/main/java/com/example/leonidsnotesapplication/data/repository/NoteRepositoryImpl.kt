@@ -17,6 +17,12 @@ class NoteRepositoryImpl(
         }
     }
 
+    override suspend fun changeNoteFolder(note: Note, folder: Folder) {
+        dao.updateOnDeleteNote(note.folderId)
+        dao.changeNoteFolder(note.id, folder.id)
+        dao.updateOnInsertNote(folder.id)
+    }
+
     override fun getNotesSortedByTitle(): Flow<List<Note>> {
         return dao.getNotesSortedByTitle()
     }

@@ -10,6 +10,8 @@ import kotlinx.coroutines.flow.Flow
 interface NoteRepository {
     fun getAllNotes(option : SortOption) : Flow<List<Note>>
 
+    suspend fun changeNoteFolder(note : Note, folder : Folder)
+
     fun getNotesSortedByTitle() : Flow<List<Note>>
 
     suspend fun updateNoteChecked(id : Int, isChecked : Boolean)

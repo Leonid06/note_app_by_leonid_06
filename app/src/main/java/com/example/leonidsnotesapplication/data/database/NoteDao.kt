@@ -10,6 +10,9 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface NoteDao {
 
+    @Query("UPDATE Note SET folderId = :folderId WHERE id = :noteId ")
+    suspend fun changeNoteFolder(noteId : Int, folderId : Int)
+
     @Delete
     fun deleteFolder(folder: Folder)
 
