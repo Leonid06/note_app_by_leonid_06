@@ -1,10 +1,7 @@
 package com.example.leonidsnotesapplication.presentation.di
 
 import android.app.Application
-import androidx.room.AutoMigration
 import androidx.room.Room
-import androidx.room.RoomDatabase
-import com.example.leonidsnotesapplication.data.database.DatabaseCallback
 import com.example.leonidsnotesapplication.data.database.NoteDao
 import com.example.leonidsnotesapplication.data.database.NoteDatabase
 import com.example.leonidsnotesapplication.data.repository.FoldersRepositoryImpl
