@@ -120,7 +120,7 @@ SearchView.OnQueryTextListener{
 
     override fun onDeleteButtonClick(note : Note) { 
         noteSharedViewModel.selectDeleteNote(note)
-        val action = HomeFragmentDirections.actionHomeFragmentToHomeDeleteDialogFragment()
+        val action = HomeFragmentDirections.actionHomeFragmentToNoteDeleteDialogFragment()
         findNavController().navigate(action)
     }
 

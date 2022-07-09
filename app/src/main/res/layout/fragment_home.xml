@@ -43,15 +43,15 @@
             app:layout_constraintTop_toBottomOf="@id/homeSearchView"
             app:layout_constraintStart_toStartOf="parent"/>
 
-        <ImageView
-            android:id="@+id/ivLoading"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="14dp"
-            android:background="@drawable/ic_circle_arrow"
-            app:layout_constraintStart_toEndOf="@id/tvRecentTitle"
-            app:layout_constraintTop_toBottomOf="@id/homeSearchView" />
+<!--        <ImageView-->
+<!--            android:id="@+id/ivLoading"-->
+<!--            android:layout_width="24dp"-->
+<!--            android:layout_height="24dp"-->
+<!--            android:layout_marginStart="16dp"-->
+<!--            android:layout_marginTop="14dp"-->
+<!--            android:background="@drawable/ic_circle_arrow"-->
+<!--            app:layout_constraintStart_toEndOf="@id/tvRecentTitle"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/homeSearchView" />-->
 
         <ImageButton
             android:id="@+id/ibSort"
@@ -74,8 +74,8 @@
             android:layout_width="match_parent"
             android:requiresFadingEdge="vertical"
             android:fadingEdge="vertical"
-            android:fadingEdgeLength="10dp"
-            android:layout_height="515dp"
+            android:fadingEdgeLength="20dp"
+            android:layout_height="540dp"
             android:layout_marginTop="10dp"
             app:setNoteAdapter="@{adapter}"
             app:submitNoteList="@{viewModel.notesLiveData}"

@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import com.example.leonidsnotesapplication.databinding.CreateFolderDialogBinding
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels.FoldersViewModel
@@ -14,7 +15,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class FolderAddDialogFragment : DialogFragment() {
 
-    private val vm : FoldersViewModel by activityViewModels()
+    private val vm : FoldersViewModel by viewModels()
 
     private var _binding : CreateFolderDialogBinding ? = null
     private val binding get() = _binding!!

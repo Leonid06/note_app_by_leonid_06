@@ -33,7 +33,7 @@
             <TextView
                 android:id="@+id/tvFolderTitle"
                 android:layout_width="220dp"
-                android:layout_height="20dp"
+                android:layout_height="25dp"
                 android:layout_margin="10dp"
                 android:layout_marginStart="8dp"
                 android:background="@null"
