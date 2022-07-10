@@ -4,8 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
+import androidx.core.content.ContextCompat.getSystemService
 import java.time.LocalDate
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
@@ -19,6 +18,12 @@ fun Activity.showKeyboard(view : View){
             showSoftInput(view, InputMethodManager.SHOW_IMPLICIT)
         }
 }
+
+fun Activity.hideKeyBoard(view : View){
+    val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(view.windowToken,0)
+}
+
 
 fun Activity.getDate() : String {
     val localDate = LocalDate.now()

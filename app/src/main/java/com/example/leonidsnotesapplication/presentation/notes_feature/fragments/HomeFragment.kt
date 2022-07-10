@@ -100,18 +100,14 @@ SearchView.OnQueryTextListener{
 
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        if(query!!.isNotEmpty()){
             vm.searchNotes("%$query%", currentOption)
-        }
 
 
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        if(query!!.isNotEmpty()){
             vm.searchNotes("%$query%", currentOption)
-        }
 
         return true
     }
@@ -124,7 +120,7 @@ SearchView.OnQueryTextListener{
 
     override fun onDeleteButtonClick(note : Note) { 
         noteSharedViewModel.selectDeleteNote(note)
-        val action = HomeFragmentDirections.actionHomeFragmentToHomeDeleteDialogFragment()
+        val action = HomeFragmentDirections.actionHomeFragmentToNoteDeleteDialogFragment()
         findNavController().navigate(action)
     }
 
@@ -136,14 +132,13 @@ SearchView.OnQueryTextListener{
     override fun onMenuItemClick(item: MenuItem?): Boolean {
         return when(item?.itemId){
             R.id.byDate -> {
-                currentOption = SortOption.ByDate
+                noteSharedViewModel.selectSortOption(SortOption.ByDate)
                 onQueryTextChange(binding.homeSearchView.query.toString())
                 true
             }
             R.id.byTitle -> {
-                currentOption = SortOption.ByTitle
+                noteSharedViewModel.selectSortOption(SortOption.ByTitle)
                 onQueryTextChange(binding.homeSearchView.query.toString())
-                vm.sortNotes(currentOption)
                 true
             }
             else -> false

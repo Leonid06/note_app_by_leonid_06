@@ -83,17 +83,13 @@
             app:enterAnim="@anim/slide_in"
             app:popExitAnim="@anim/slide_out" />
         <action
-            android:id="@+id/action_homeFragment_to_homeDeleteDialogFragment"
-            app:destination="@id/homeDeleteDialogFragment" />
+            android:id="@+id/action_homeFragment_to_NoteDeleteDialogFragment"
+            app:destination="@id/NoteDeleteDialogFragment" />
     </fragment>
     <dialog
         android:id="@+id/NoteDeleteDialogFragment"
         android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.NotesDeleteDialogFragment"
-        android:label="noteDeleteDialogFragment"/>
-    <dialog
-        android:id="@+id/homeDeleteDialogFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.HomeDeleteDialogFragment"
-        android:label="HomeDeleteDialogFragment" />
+        android:label="noteDeleteDialogFragment" />
     <dialog
         android:id="@+id/editFolderDialogFragment"
         android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.EditFolderDialogFragment"
