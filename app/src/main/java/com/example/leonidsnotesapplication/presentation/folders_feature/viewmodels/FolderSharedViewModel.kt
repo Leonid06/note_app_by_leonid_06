@@ -16,7 +16,7 @@ class FolderSharedViewModel @Inject constructor(
     private val _selectedFolder: MutableLiveData<Folder> = MutableLiveData<Folder>()
     val selectedFolder: LiveData<Folder> get() = _selectedFolder
 
-    private val _option : MutableLiveData<SortOption> = MutableLiveData<SortOption>()
+    private val _option : MutableLiveData<SortOption> = MutableLiveData<SortOption>(SortOption.ByDate)
     val option : LiveData<SortOption> get()= _option
 
     fun selectOption(option: SortOption){

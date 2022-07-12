@@ -38,6 +38,8 @@ class FoldersFragment : Fragment(),
 
     private val folderSharedViewModel : FolderSharedViewModel by activityViewModels()
 
+    private val option by lazy { folderSharedViewModel.option}
+
     private val adapter by lazy { FoldersAdapter(this as FoldersAdapter.FolderClickListener)  }
 
     override fun onCreateView(
@@ -53,11 +55,15 @@ class FoldersFragment : Fragment(),
 
         super.onViewCreated(view, savedInstanceState)
 
+        vm.sortAllFolders(option.value!!)
+
         binding.apply {
             viewModel = vm
             lifecycleOwner = viewLifecycleOwner
         }
         binding.adapter = adapter
+
+        binding.folderSearchView.setOnQueryTextListener(this as SearchView.OnQueryTextListener)
 
         binding.ibSort.setOnClickListener {
             showSortMenu()
@@ -96,12 +102,12 @@ class FoldersFragment : Fragment(),
     }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-        vm.searchAllFolders("%$query%", folderSharedViewModel.option.value!!)
+        vm.searchAllFolders("%$query%", option.value!!)
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-        vm.searchAllFolders("%$query%", folderSharedViewModel.option.value!!)
+        vm.searchAllFolders("%$query%", option.value!!)
         return true
     }
 

@@ -25,11 +25,8 @@ class FoldersViewModel @Inject constructor(
 
     private var currentJob  : Job = Job()
 
-    init {
-        sortAllFolders(SortOption.ByDate)
-    }
 
-    private fun sortAllFolders(option: SortOption){
+   fun sortAllFolders(option: SortOption){
         currentJob.cancel()
         currentJob = viewModelScope.launch(Dispatchers.IO){
             foldersRepository.getAllFolders(option).cancellable().collect{
