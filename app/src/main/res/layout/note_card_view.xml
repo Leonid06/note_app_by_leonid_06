@@ -5,7 +5,7 @@
     <data>
         <variable
             name="note"
-            type="com.example.leonidsnotesapplication.domain.model.Note" />
+            type="com.leonid.leonidsnotesapplication.domain.model.Note" />
     </data>
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"

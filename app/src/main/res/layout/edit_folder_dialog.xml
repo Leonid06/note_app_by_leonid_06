@@ -5,10 +5,10 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.SingleNoteViewModel" />
+            type="com.leonid.leonidsnotesapplication.presentation.notes_feature.viewmodels.SingleNoteViewModel" />
         <variable
             name="adapter"
-            type="com.example.leonidsnotesapplication.presentation.notes_feature.adapters.FolderEditAdapter" />
+            type="com.leonid.leonidsnotesapplication.presentation.notes_feature.adapters.FolderEditAdapter" />
     </data>
     <LinearLayout
         android:layout_width="match_parent"

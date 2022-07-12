@@ -1,0 +1,128 @@
+package com.leonid.leonidsnotesapplication.presentation.folders_feature.fragments
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewGroup
+import androidx.appcompat.widget.PopupMenu
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.leonid.leonidsnotesapplication.R
+import com.leonid.leonidsnotesapplication.databinding.FragmentFoldersBinding
+import com.leonid.leonidsnotesapplication.domain.model.Folder
+import com.leonid.leonidsnotesapplication.presentation.folders_feature.FoldersAdapter
+import com.leonid.leonidsnotesapplication.presentation.folders_feature.viewmodels.FoldersViewModel
+import com.leonid.leonidsnotesapplication.presentation.folders_feature.viewmodels.FolderSharedViewModel
+import com.leonid.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
+import com.leonid.leonidsnotesapplication.presentation.notes_feature.util.SortOption
+import dagger.hilt.android.AndroidEntryPoint
+
+
+@AndroidEntryPoint
+class FoldersFragment : Fragment(),
+    FoldersAdapter.FolderClickListener,
+    SearchView.OnQueryTextListener,
+    PopupMenu.OnMenuItemClickListener {
+
+    private var _binding : FragmentFoldersBinding? = null
+    private val binding  get() = _binding!!
+
+    private val vm : FoldersViewModel by viewModels()
+
+    private val folderSharedViewModel : FolderSharedViewModel by activityViewModels()
+
+    private val option by lazy { folderSharedViewModel.option}
+
+    private val adapter by lazy { FoldersAdapter(this as FoldersAdapter.FolderClickListener)  }
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentFoldersBinding.inflate(inflater)
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?){
+
+        super.onViewCreated(view, savedInstanceState)
+
+        vm.sortAllFolders(option.value!!)
+
+        binding.apply {
+            viewModel = vm
+            lifecycleOwner = viewLifecycleOwner
+        }
+        binding.adapter = adapter
+
+        binding.folderSearchView.setOnQueryTextListener(this as SearchView.OnQueryTextListener)
+
+        binding.ibSort.setOnClickListener {
+            showSortMenu()
+        }
+
+        binding.addFolderButton.setOnClickListener {
+            findNavController().navigate(FoldersFragmentDirections.actionFoldersFragmentToFolderAddDialog())
+        }
+
+        binding.homeButton.setOnClickListener {
+            findNavController().navigate(FoldersFragmentDirections.actionFoldersFragmentToHomeFragment())
+        }
+
+        binding.foldersRecyclerView.itemAnimator = NotesItemAnimator()
+        binding.foldersRecyclerView.isNestedScrollingEnabled = false
+        binding.foldersRecyclerView.layoutManager = LinearLayoutManager(view.context)
+
+    }
+
+    override fun onClickedFolder(folder : Folder) {
+        folderSharedViewModel.selectFolder(folder)
+        val action = FoldersFragmentDirections.actionFoldersFragmentToNotesFragment()
+        findNavController().navigate(action)
+    }
+
+    override fun onTitleTextChanged(title: String, folder: Folder) {
+        vm.updateFolderTitle(folder, title)
+    }
+
+    private fun showSortMenu() {
+        val menu = PopupMenu(context!!, binding.ibSort)
+        val inflater = menu.menuInflater
+        inflater.inflate(R.menu.sort_menu,  menu.menu)
+        menu.setOnMenuItemClickListener(this as PopupMenu.OnMenuItemClickListener)
+        menu.show()
+    }
+
+    override fun onQueryTextSubmit(query: String?): Boolean {
+        vm.searchAllFolders("%$query%", option.value!!)
+        return true
+    }
+
+    override fun onQueryTextChange(query: String?): Boolean {
+        vm.searchAllFolders("%$query%", option.value!!)
+        return true
+    }
+
+    override fun onMenuItemClick(item: MenuItem?): Boolean {
+        return when(item?.itemId){
+            R.id.byTitle -> {
+                folderSharedViewModel.selectOption(SortOption.ByTitle)
+                onQueryTextChange(binding.folderSearchView.query.toString())
+                true
+            }
+            R.id.byDate -> {
+                folderSharedViewModel.selectOption(SortOption.ByDate)
+                onQueryTextChange(binding.folderSearchView.query.toString())
+                true
+            }
+            else -> false
+        }
+    }
+
+}

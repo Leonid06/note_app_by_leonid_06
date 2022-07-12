@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/notesFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.NotesFragment"
+        android:name="com.leonid.leonidsnotesapplication.presentation.notes_feature.fragments.NotesFragment"
         android:label="fragment_notes"
         tools:layout="@layout/fragment_notes"
         >
@@ -35,7 +35,7 @@
     </fragment>
     <fragment
         android:id="@+id/singleNoteFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.SingleNoteFragment"
+        android:name="com.leonid.leonidsnotesapplication.presentation.notes_feature.fragments.SingleNoteFragment"
         android:label="fragment_single_note"
         tools:layout="@layout/fragment_single_note" >
         <argument
@@ -49,7 +49,7 @@
     </fragment>
     <fragment
         android:id="@+id/foldersFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.folders_feature.fragments.FoldersFragment"
+        android:name="com.leonid.leonidsnotesapplication.presentation.folders_feature.fragments.FoldersFragment"
         android:label="fragment_settings"
         tools:layout="@layout/fragment_folders" >
         <action
@@ -66,11 +66,11 @@
     </fragment>
     <dialog
         android:id="@+id/folderAddDialog"
-        android:name="com.example.leonidsnotesapplication.presentation.folders_feature.fragments.FolderAddDialogFragment"
+        android:name="com.leonid.leonidsnotesapplication.presentation.folders_feature.fragments.FolderAddDialogFragment"
         android:label="FolderAddDialog" />
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.HomeFragment"
+        android:name="com.leonid.leonidsnotesapplication.presentation.notes_feature.fragments.HomeFragment"
         android:label="HomeFragment" >
         <action
             android:id="@+id/action_homeFragment_to_singleNoteFragment"
@@ -88,15 +88,15 @@
     </fragment>
     <dialog
         android:id="@+id/NoteDeleteDialogFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.NotesDeleteDialogFragment"
+        android:name="com.leonid.leonidsnotesapplication.presentation.notes_feature.fragments.NotesDeleteDialogFragment"
         android:label="noteDeleteDialogFragment" />
     <dialog
         android:id="@+id/editFolderDialogFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.notes_feature.fragments.EditFolderDialogFragment"
+        android:name="com.leonid.leonidsnotesapplication.presentation.notes_feature.fragments.EditFolderDialogFragment"
         android:label="EditFolderDialogFragment" />
     <dialog
         android:id="@+id/deleteFolderDialogFragment"
-        android:name="com.example.leonidsnotesapplication.presentation.folders_feature.fragments.DeleteFolderDialogFragment"
+        android:name="com.leonid.leonidsnotesapplication.presentation.folders_feature.fragments.DeleteFolderDialogFragment"
         android:label="DeleteFolderDialogFragment" >
 
         <action

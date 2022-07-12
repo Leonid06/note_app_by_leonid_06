@@ -8,11 +8,11 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.HomeViewModel" />
+            type="com.leonid.leonidsnotesapplication.presentation.notes_feature.viewmodels.HomeViewModel" />
 
         <variable
             name="adapter"
-            type="com.example.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter" />
+            type="com.leonid.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
