@@ -12,6 +12,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.LiveData
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.leonidsnotesapplication.R
@@ -42,7 +43,7 @@ SearchView.OnQueryTextListener{
 
     private val noteSharedViewModel : NoteSharedViewModel by activityViewModels()
 
-    private var currentOption : SortOption = SortOption.ByDate
+    private val currentOption by lazy { noteSharedViewModel.sortOption }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +59,7 @@ SearchView.OnQueryTextListener{
         binding.adapter = adapter
         binding.viewModel = vm
 
-        vm.sortNotes(currentOption)
+        vm.sortNotes(currentOption.value!!)
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
@@ -100,15 +101,14 @@ SearchView.OnQueryTextListener{
 
 
     override fun onQueryTextSubmit(query: String?): Boolean {
-            vm.searchNotes("%$query%", currentOption)
+            vm.searchNotes("%$query%", currentOption.value!!)
 
 
         return true
     }
 
     override fun onQueryTextChange(query: String?): Boolean {
-            vm.searchNotes("%$query%", currentOption)
-
+            vm.searchNotes("%$query%", currentOption.value!!)
         return true
     }
 

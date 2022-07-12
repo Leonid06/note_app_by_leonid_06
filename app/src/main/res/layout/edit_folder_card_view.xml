@@ -21,9 +21,10 @@
 
 
             <TextView
+                android:gravity="center"
                 android:id="@+id/tvFolderTitle"
                 android:layout_width="220dp"
-                android:layout_height="20dp"
+                android:layout_height="40dp"
                 android:layout_margin="10dp"
                 android:layout_marginStart="8dp"
                 android:background="@null"
@@ -38,7 +39,6 @@
                 app:layout_constraintVertical_bias="0.333"
                 app:text="@{folder.title.toString()}"
                 tools:text="Title" />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

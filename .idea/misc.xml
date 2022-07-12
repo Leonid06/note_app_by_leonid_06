@@ -48,6 +48,7 @@
         <entry key="app/src/main/res/layout/edit_folder_dialog.xml" value="0.30885416666666665" />
         <entry key="app/src/main/res/layout/folder_card_view.xml" value="0.3341708542713568" />
         <entry key="app/src/main/res/layout/folder_card_view_v2.xml" value="0.30885416666666665" />
+        <entry key="app/src/main/res/layout/fragment_all_notes.xml" value="0.30885416666666665" />
         <entry key="app/src/main/res/layout/fragment_create_folder.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_folders.xml" value="0.35667521158854176" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.335" />
