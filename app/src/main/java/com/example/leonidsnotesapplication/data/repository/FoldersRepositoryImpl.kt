@@ -4,13 +4,24 @@ import androidx.lifecycle.LiveData
 import com.example.leonidsnotesapplication.data.database.NoteDao
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.SortOption
 import kotlinx.coroutines.flow.Flow
 
 class FoldersRepositoryImpl(
     private val dao : NoteDao
 ) : FoldersRepository {
-    override fun getAllFolders(): Flow<List<Folder>> {
-        return dao.getAllFolders()
+    override fun getAllFolders(option: SortOption): Flow<List<Folder>> {
+        return when(option){
+            SortOption.ByDate -> dao.getAllFolders()
+            SortOption.ByTitle -> dao.getAllFoldersSortedByTitle()
+        }
+    }
+
+    override fun searchAllFolders(query: String, option: SortOption): Flow<List<Folder>> {
+        return when(option){
+            SortOption.ByDate -> dao.searchAllFolders(query)
+            SortOption.ByTitle -> dao.searchAllFoldersSortedByTitle(query)
+        }
     }
 
     override fun getFolderTitleById(id : Int): String {
