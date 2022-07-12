@@ -3,8 +3,11 @@ package com.example.leonidsnotesapplication.presentation.folders_feature.viewmod
 import androidx.lifecycle.*
 import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.SortOption
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.cancellable
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -16,17 +19,32 @@ class FoldersViewModel @Inject constructor(
 
 
 
-    private var _foldersLiveData : MutableLiveData<List<Folder>> = MutableLiveData<List<Folder>>()
+    private var _foldersLiveData : MutableLiveData<ArrayList<Folder>> = MutableLiveData<ArrayList<Folder>>()
 
-    val foldersLiveData : LiveData<List<Folder>> =  _foldersLiveData
+    val foldersLiveData : LiveData<ArrayList<Folder>> =  _foldersLiveData
+
+    private var currentJob  : Job = Job()
 
     init {
-        viewModelScope.launch(Dispatchers.IO) {
-            foldersRepository.getAllFolders().collect{
-                _foldersLiveData.postValue(it)
+        sortAllFolders(SortOption.ByDate)
+    }
+
+    private fun sortAllFolders(option: SortOption){
+        currentJob.cancel()
+        currentJob = viewModelScope.launch(Dispatchers.IO){
+            foldersRepository.getAllFolders(option).cancellable().collect{
+                _foldersLiveData.postValue(it as ArrayList<Folder>)
             }
         }
+    }
 
+    fun searchAllFolders(query: String, option: SortOption){
+        currentJob.cancel()
+        currentJob = viewModelScope.launch(Dispatchers.IO){
+            foldersRepository.searchAllFolders(query, option).cancellable().collect{
+                _foldersLiveData.postValue(it as ArrayList<Folder>)
+            }
+        }
     }
 
 

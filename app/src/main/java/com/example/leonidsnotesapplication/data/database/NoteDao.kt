@@ -13,10 +13,19 @@ interface NoteDao {
     @Query("UPDATE Note SET folderId = :folderId WHERE id = :noteId ")
     suspend fun changeNoteFolder(noteId : Int, folderId : Int)
 
+    @Query("SELECT * FROM Folder ORDER BY Title DESC")
+    fun getAllFoldersSortedByTitle() : Flow<List<Folder>>
+
+    @Query("SELECT * FROM Folder WHERE title LIKE :query")
+    fun searchAllFolders(query : String) : Flow<List<Folder>>
+
+    @Query("SELECT * FROM Folder WHERE title LIKE :query ORDER BY title DESC")
+    fun searchAllFoldersSortedByTitle(query: String) : Flow<List<Folder>>
+
     @Delete
     fun deleteFolder(folder: Folder)
 
-    @Query("SELECT * FROM Note WHERE content LIKE :query ORDER BY isStarred, title")
+    @Query("SELECT * FROM Note WHERE content LIKE :query ORDER BY isStarred, title DESC")
     fun searchAllNotesSortedByTitle(query : String) : Flow<List<Note>>
 
     @Query("SELECT * FROM Note ORDER BY isStarred, title DESC")

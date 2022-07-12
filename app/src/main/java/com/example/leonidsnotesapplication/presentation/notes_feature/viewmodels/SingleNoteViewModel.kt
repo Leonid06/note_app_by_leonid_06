@@ -8,6 +8,7 @@ import com.example.leonidsnotesapplication.domain.model.Folder
 import com.example.leonidsnotesapplication.domain.model.Note
 import com.example.leonidsnotesapplication.domain.repository.FoldersRepository
 import com.example.leonidsnotesapplication.domain.repository.NoteRepository
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.SortOption
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -28,7 +29,7 @@ class SingleNoteViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
-            foldersRepository.getAllFolders().cancellable().collect{
+            foldersRepository.getAllFolders(SortOption.ByDate).cancellable().collect{
                 _foldersLiveData.postValue(it as ArrayList<Folder>)
             }
         }

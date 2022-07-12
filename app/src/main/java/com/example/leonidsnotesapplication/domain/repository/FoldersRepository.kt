@@ -1,12 +1,14 @@
 package com.example.leonidsnotesapplication.domain.repository
 
-import androidx.lifecycle.LiveData
 import com.example.leonidsnotesapplication.domain.model.Folder
+import com.example.leonidsnotesapplication.presentation.notes_feature.util.SortOption
 import kotlinx.coroutines.flow.Flow
 
 interface FoldersRepository {
 
-    fun getAllFolders() : Flow<List<Folder>>
+    fun getAllFolders(option: SortOption) : Flow<List<Folder>>
+
+    fun searchAllFolders(query: String, option: SortOption)  : Flow<List<Folder>>
 
     fun getFolderTitleById(id : Int) : String
 
