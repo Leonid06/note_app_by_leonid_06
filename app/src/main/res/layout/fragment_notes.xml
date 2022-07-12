@@ -5,14 +5,14 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel"
+            type="com.leonid.leonidsnotesapplication.presentation.notes_feature.viewmodels.NotesViewModel"
             />
         <variable
             name="sharedFolderViewModel"
-            type="com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels.FolderSharedViewModel" />
+            type="com.leonid.leonidsnotesapplication.presentation.folders_feature.viewmodels.FolderSharedViewModel" />
         <variable
             name="adapter"
-            type="com.example.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter"
+            type="com.leonid.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter"
             />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout

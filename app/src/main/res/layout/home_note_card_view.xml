@@ -5,7 +5,7 @@
     <data>
         <variable
             name="viewData"
-            type="com.example.leonidsnotesapplication.domain.model.NoteViewData" />
+            type="com.leonid.leonidsnotesapplication.domain.model.NoteViewData" />
 
     </data>
     <androidx.cardview.widget.CardView

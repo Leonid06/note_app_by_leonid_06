@@ -5,11 +5,11 @@
     <data>
         <variable
             name="viewModel"
-            type="com.example.leonidsnotesapplication.presentation.folders_feature.viewmodels.FoldersViewModel" />
+            type="com.leonid.leonidsnotesapplication.presentation.folders_feature.viewmodels.FoldersViewModel" />
 
         <variable
             name="adapter"
-            type="com.example.leonidsnotesapplication.presentation.folders_feature.FoldersAdapter" />
+            type="com.leonid.leonidsnotesapplication.presentation.folders_feature.FoldersAdapter" />
     </data>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
