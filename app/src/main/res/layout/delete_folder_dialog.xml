@@ -6,7 +6,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="280dp"
-        android:layout_height="150dp"
+        android:layout_height="130dp"
         android:background="@drawable/folders_recycler_view_style"
         xmlns:app="http://schemas.android.com/apk/res-auto">
 
