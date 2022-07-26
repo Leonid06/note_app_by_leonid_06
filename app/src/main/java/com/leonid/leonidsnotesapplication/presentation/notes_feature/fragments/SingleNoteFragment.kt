@@ -50,20 +50,16 @@ class SingleNoteFragment : Fragment(){
         }
 
         binding.ivCancel.setOnClickListener{
-            vm.addNote(getCurrentNote(), args.isNew)
-            findNavController().navigateUp()
-        }
-
-        binding.ivBackup.setOnClickListener{
-            binding.etNoteContent.setText(backUpContent)
-        }
-        binding.addNoteButton.setOnClickListener{
-
             val currentNote = getCurrentNote()
             if(currentNote.content!!.isNotEmpty()){
                 vm.addNote(currentNote, args.isNew)
                 findNavController().navigateUp()
             }
+
+        }
+
+        binding.ivBackup.setOnClickListener{
+            binding.etNoteContent.setText(backUpContent)
         }
 
     }
