@@ -1,9 +1,14 @@
 package com.leonid.leonidsnotesapplication.presentation.notes_feature.callbacks
 
+
+import android.widget.Adapter
+import androidx.constraintlayout.helper.widget.Carousel
 import androidx.recyclerview.widget.ListUpdateCallback
+import androidx.recyclerview.widget.RecyclerView
+import com.leonid.leonidsnotesapplication.presentation.notes_feature.adapters.HomeNoteCardAdapter
 import com.leonid.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter
 
-class AdapterCallback(private val adapter: NoteCardAdapter) : ListUpdateCallback {
+class HomeNoteCardAdapterCallback(private val adapter: HomeNoteCardAdapter) : ListUpdateCallback {
 
     override fun onInserted(position: Int, count: Int) {
         adapter.notifyItemRangeInserted(position, count)
