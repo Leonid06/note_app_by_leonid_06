@@ -17,6 +17,7 @@ import com.leonid.leonidsnotesapplication.R
 import com.leonid.leonidsnotesapplication.databinding.FragmentHomeBinding
 import com.leonid.leonidsnotesapplication.domain.model.Note
 import com.leonid.leonidsnotesapplication.presentation.extensions.getDate
+import com.leonid.leonidsnotesapplication.presentation.notes_feature.adapters.HomeNoteCardAdapter
 import com.leonid.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter
 import com.leonid.leonidsnotesapplication.presentation.notes_feature.util.NotesItemAnimator
 import com.leonid.leonidsnotesapplication.presentation.notes_feature.util.SortOption
@@ -26,14 +27,14 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class HomeFragment : Fragment(),
-NoteCardAdapter.NoteTouchListener,PopupMenu.OnMenuItemClickListener,
+HomeNoteCardAdapter.NoteTouchListener,PopupMenu.OnMenuItemClickListener,
 SearchView.OnQueryTextListener{
 
     private var _binding : FragmentHomeBinding? = null
     val binding get() = _binding!!
 
     private val adapter by lazy {
-        NoteCardAdapter(this as NoteCardAdapter.NoteTouchListener)
+        HomeNoteCardAdapter(this as HomeNoteCardAdapter.NoteTouchListener)
     }
 
     private val vm : HomeViewModel by viewModels()

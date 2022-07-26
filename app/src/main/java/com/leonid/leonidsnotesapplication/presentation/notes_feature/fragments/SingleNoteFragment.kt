@@ -39,11 +39,9 @@ class SingleNoteFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val selectedNote = noteSharedViewModel.selectedNote.value!!
-
         activity?.showKeyboard(binding.etNoteContent)
 
-        binding.etNoteContent.setText(selectedNote.content)
+        binding.etNoteContent.setText(noteSharedViewModel.selectedNote.value?.content)
 
         val backUpContent : String = binding.etNoteContent.text.toString()
 
@@ -52,36 +50,43 @@ class SingleNoteFragment : Fragment(){
         }
 
         binding.ivCancel.setOnClickListener{
-            findNavController().navigateUp()
+            val currentNote = getCurrentNote()
+            if(currentNote.content!!.isNotEmpty()){
+                vm.addNote(currentNote, args.isNew)
+                findNavController().navigateUp()
+            }
+
         }
 
         binding.ivBackup.setOnClickListener{
             binding.etNoteContent.setText(backUpContent)
         }
-        binding.addNoteButton.setOnClickListener{
 
-            val content = binding.etNoteContent.text.toString()
-            val isStarred = selectedNote.isStarred
-            val title : String
-            val subtitle : String
+    }
+
+    private fun getCurrentNote() : Note{
+        val selectedNote = noteSharedViewModel.selectedNote.value!!
+        val content = binding.etNoteContent.text.toString()
+        val title : String
+        val subtitle : String
 
 
-            if(content.contains("\n")){
-                title = content.split("\n")[0]
-                subtitle = content.split("\n")[1]
-            }else{
-                title = content
-                subtitle = ""
-            }
-
-            val note = createNote(title, subtitle,  content,isStarred, selectedNote.datetime!!, selectedNote.id, folderId = selectedNote.folderId)
-
-            if(content.isNotEmpty()){
-                vm.addNote(note, args.isNew)
-                findNavController().navigateUp()
-            }
+        if(content.contains("\n")){
+            title = content.split("\n")[0]
+            subtitle = content.split("\n")[1]
+        }else{
+            title = content
+            subtitle = ""
         }
 
+        return createNote(
+            title,
+            subtitle,
+            content,
+            selectedNote.isStarred,
+            selectedNote.datetime!!,
+            selectedNote.id,
+            folderId = selectedNote.folderId)
     }
 
 //    private fun showFolderEditMenu() {

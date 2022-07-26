@@ -4,8 +4,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
         <variable
-            name="viewData"
-            type="com.leonid.leonidsnotesapplication.domain.model.NoteViewData" />
+            name = "note"
+            type = "com.leonid.leonidsnotesapplication.domain.model.Note"
+            />
+        <variable
+            name="folder"
+            type="com.leonid.leonidsnotesapplication.domain.model.Folder" />
 
     </data>
     <androidx.cardview.widget.CardView
@@ -32,7 +36,7 @@
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:text="@{viewData.title}"
+                android:text="@{note.title}"
                 tools:text="Title" />
 
 
@@ -43,7 +47,6 @@
                 android:layout_marginStart="20dp"
                 android:layout_marginTop="11dp"
                 android:background="@drawable/ic_card_folder"
-                setFolderVisibility="@{viewData.defaultFolder}"
                 app:layout_constraintStart_toEndOf="@id/tvNoteDatetime"
                 app:layout_constraintTop_toBottomOf="@id/tvNoteTitle" />
 
@@ -54,6 +57,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/font_color_2"
+                android:text="@{folder.title}"
                 app:layout_constraintStart_toEndOf="@id/ivFolder"
                 app:layout_constraintTop_toBottomOf="@id/tvNoteTitle"
                 tools:text="Folder title" />
@@ -70,7 +74,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tvNoteTitle"
                 tools:text="31 Jun 2008 11:05:30"
-                android:text="@{viewData.folderTitle}"/>
+                android:text="@{note.datetime}"/>
 
 
             <ImageButton
@@ -89,7 +93,7 @@
                 android:layout_height="30dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="4dp"
-                android:checked="@{viewData.isStarred}"
+                android:checked="@{note.isStarred}"
                 android:button="@drawable/star_button"
                 app:layout_constraintStart_toEndOf="@id/tvNoteTitle"
                 app:layout_constraintTop_toTopOf="parent" />

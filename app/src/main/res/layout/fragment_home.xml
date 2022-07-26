@@ -12,7 +12,7 @@
 
         <variable
             name="adapter"
-            type="com.leonid.leonidsnotesapplication.presentation.notes_feature.adapters.NoteCardAdapter" />
+            type="com.leonid.leonidsnotesapplication.presentation.notes_feature.adapters.HomeNoteCardAdapter" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -81,8 +81,9 @@
             android:fadingEdgeLength="20dp"
             android:layout_height="540dp"
             android:layout_marginTop="10dp"
-            app:setNoteAdapter="@{adapter}"
-            app:submitNoteList="@{viewModel.notesLiveData}"
+            app:setHomeNoteAdapter="@{adapter}"
+            app:notes = "@{viewModel.notes}"
+            app:folders="@{viewModel.folders}"
             app:layout_constraintTop_toBottomOf="@id/tvRecentTitle"
             app:layout_constraintStart_toStartOf="parent"
             />
