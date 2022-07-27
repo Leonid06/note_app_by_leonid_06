@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.leonid.leonidsnotesapplication.databinding.EditFolderDialogBinding
 import com.leonid.leonidsnotesapplication.domain.model.Folder
+import com.leonid.leonidsnotesapplication.presentation.folders_feature.viewmodels.FolderSharedViewModel
 import com.leonid.leonidsnotesapplication.presentation.notes_feature.adapters.FolderEditAdapter
 import com.leonid.leonidsnotesapplication.presentation.notes_feature.viewmodels.NoteSharedViewModel
 import com.leonid.leonidsnotesapplication.presentation.notes_feature.viewmodels.SingleNoteViewModel
@@ -22,6 +23,8 @@ FolderEditAdapter.FolderClickListener {
     private val vm : SingleNoteViewModel by viewModels()
 
     private val sharedNoteViewModel : NoteSharedViewModel by activityViewModels()
+
+    private val sharedFolderViewModel : FolderSharedViewModel by activityViewModels()
 
     private val adapter by lazy{ FolderEditAdapter(this as FolderEditAdapter.FolderClickListener)}
 
@@ -50,6 +53,7 @@ FolderEditAdapter.FolderClickListener {
 
     override fun onClickedFolder(folder: Folder) {
         vm.changeNoteFolder(sharedNoteViewModel.selectedNote.value!!, folder)
+        sharedFolderViewModel.selectFolder(folder)
         dismiss()
     }
 }

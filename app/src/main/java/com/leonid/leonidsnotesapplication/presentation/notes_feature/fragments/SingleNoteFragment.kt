@@ -10,6 +10,7 @@ import androidx.navigation.fragment.navArgs
 import com.leonid.leonidsnotesapplication.databinding.FragmentSingleNoteBinding
 import com.leonid.leonidsnotesapplication.domain.model.Note
 import com.leonid.leonidsnotesapplication.presentation.extensions.showKeyboard
+import com.leonid.leonidsnotesapplication.presentation.folders_feature.viewmodels.FolderSharedViewModel
 import com.leonid.leonidsnotesapplication.presentation.notes_feature.viewmodels.NoteSharedViewModel
 import com.leonid.leonidsnotesapplication.presentation.notes_feature.viewmodels.SingleNoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +22,7 @@ class SingleNoteFragment : Fragment(){
     private val vm : SingleNoteViewModel by viewModels()
 
     private val noteSharedViewModel : NoteSharedViewModel  by activityViewModels()
+    private val folderSharedViewModel : FolderSharedViewModel by activityViewModels()
 
     private var _binding : FragmentSingleNoteBinding? = null
 
@@ -86,7 +88,7 @@ class SingleNoteFragment : Fragment(){
             selectedNote.isStarred,
             selectedNote.datetime!!,
             selectedNote.id,
-            folderId = selectedNote.folderId)
+            folderId = folderSharedViewModel.selectedFolder.value!!.id)
     }
 
 //    private fun showFolderEditMenu() {

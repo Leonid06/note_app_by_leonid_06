@@ -27,6 +27,10 @@ class FoldersRepositoryImpl(
         return dao.getFolderTitleById(id)
     }
 
+    override suspend fun deleteNotesByFolder(folder: Folder) {
+        dao.deleteNotesByFolderId(folder.id)
+    }
+
     override suspend fun updateFolderTitle(folder: Folder, title: String) {
         dao.updateFolderTitle(folder.id, title)
     }

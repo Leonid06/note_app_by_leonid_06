@@ -13,7 +13,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FoldersViewModel @Inject constructor(
-    private val foldersRepository: FoldersRepository
+    private val foldersRepository: FoldersRepository,
+    private val notesRepository: FoldersRepository
 ) : ViewModel(){
 
 
@@ -52,6 +53,7 @@ class FoldersViewModel @Inject constructor(
 
     fun deleteFolder(folder : Folder){
         viewModelScope.launch(Dispatchers.IO) {
+            notesRepository.deleteNotesByFolder(folder)
             foldersRepository.deleteFolder(folder)
         }
     }

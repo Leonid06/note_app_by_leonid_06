@@ -12,6 +12,8 @@ interface FoldersRepository {
 
     fun getFolderTitleById(id : Int) : String
 
+    suspend fun deleteNotesByFolder(folder : Folder)
+
     suspend fun updateFolderTitle(folder : Folder, title : String)
 
     suspend fun addFolder(folder: Folder)
